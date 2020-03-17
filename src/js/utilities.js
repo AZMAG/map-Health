@@ -56,32 +56,3 @@ function GetCOG() {
         return 'CAG';
     }
 }
-
-async function GetAllMPAS() {
-    return new Promise(function (resolve, reject) {
-        let where = config.defExpression[GetCOG()].include;
-
-        $.getJSON(`${config.mainUrl}/2/query?where=${where}&outFields=MPA_FULLNAME,MPA&returnGeometry=false&orderByFields=MPA&returnDistinctValues=true&f=pjson`,
-            function (res) {
-                resolve(res.features.map(function (feature) {
-                    return {
-                        name: feature.attributes["MPA_FULLNAME"],
-                        id: feature.attributes["MPA"]
-                    };
-                }));
-            });
-    });
-}
-$(() => {
-    let $mpaDropdown = $("#mpaDropdown");
-    GetAllMPAS().then(function (mpas) {
-        config.MPAs = mpas;
-        let mpaDropdownHTML = '<option value="all">Show All</option>';
-        mpas.forEach(mpa => {
-            mpaDropdownHTML += `<option value="${mpa.id}">${mpa.name}</option>`;
-        });
-
-        $mpaDropdown.html(mpaDropdownHTML);
-        $mpaDropdown.selectpicker("refresh");
-    })
-});

@@ -6,16 +6,16 @@ require([
     "esri/geometry/Extent",
     "dojo/topic",
     "dojo/domReady!"
-], function (Map, MapView, Extent, tp) {
+], function(Map, MapView, Extent, tp) {
 
     let $splashModal = $('#splashModal');
 
-    $(window).on('load', function () {
+    $(window).on('load', function() {
         $splashModal.modal('show');
     });
 
     app.map = new Map({
-        basemap: "gray-vector"
+        basemap: "streets-night-vector"
     });
 
     app.view = new MapView({
@@ -24,7 +24,7 @@ require([
         extent: config.initExtent,
         constraints: {
             rotationEnabled: false,
-            minZoom: 7
+            minZoom: 3
         },
         ui: {
             components: []
@@ -39,29 +39,12 @@ require([
         }
     });
 
-    let fldDropdownHTML = '';
-
-    config.fields.forEach(function (fld) {
-        fld.subFields.forEach(function (subField) {
-            fldDropdownHTML += `<option value="${subField.name}">${subField.description}</option>`
-        })
-    })
-
-    $("#fldDropdown").html(fldDropdownHTML);
-
-    let yearChoiceHTML = '';
-    config.years.forEach(function (year, i) {
-        yearChoiceHTML += `<option value="${year}">${year}</option>`;
-    })
-
-    $("#yearDropdown").html(yearChoiceHTML);
-
     app.view.when(() => tp.publish('map-loaded'));
 
     // Instantiate a slider
     var mySlider = $("#transparencySlider").slider();
 
-    mySlider.on('slide', function (e) {
+    mySlider.on('slide', function(e) {
 
         let taz = app.map.findLayerById('TAZ');
         let raz = app.map.findLayerById('RAZ');
@@ -75,14 +58,14 @@ require([
 
 
     var maxExtent = new Extent({
-        xmax: -12186641.103296215,
-        xmin: -12773677.480526084,
-        ymax: 4062579.825911005,
-        ymin: 3776093.843898303,
+        xmin: -13574253.11189688,
+        ymin: 3469475.629806112,
+        xmax: -11226102.906676117,
+        ymax: 4615421.849749786,
         spatialReference: 102100
     });
 
-    app.view.watch('extent', function (extent) {
+    app.view.watch('extent', function(extent) {
         let currentCenter = extent.center;
         if (!maxExtent.contains(currentCenter)) {
             let newCenter = extent.center;
@@ -105,16 +88,16 @@ require([
         }
     });
 
-    $(".infoBtn").click(function () {
+    $(".infoBtn").click(function() {
         $("#contactModal").modal("show");
     })
 
-    $(".btnInstructions").click(function () {
+    $(".btnInstructions").click(function() {
         $("#contactModal").modal("hide");
         $("#splashModal").modal("show");
     })
 
-    $("#layerChoice :input").change(function () {
+    $("#layerChoice :input").change(function() {
         let layerId = $(this).data("id");
         let layer = app.map.findLayerById(layerId);
         let grayLayer = app.map.findLayerById(layerId + 'noData');
@@ -123,7 +106,7 @@ require([
         grayLayer.visible = true;
     });
 
-    $('#mpaDropdown').on('change', function () {
+    $('#mpaDropdown').on('change', function() {
         tp.publish("render-update");
         if (this.value === "all") {
             SetDefinitionExpressionOnAllLayers(GetQueryStringWhere().include);
@@ -133,13 +116,13 @@ require([
     });
 
     function TurnOffAllLayers() {
-        app.map.layers.forEach(function (layer) {
+        app.map.layers.forEach(function(layer) {
             layer.visible = false;
         });
     }
 
     function SetDefinitionExpressionOnAllLayers(where) {
-        app.map.layers.forEach(function (layer) {
+        app.map.layers.forEach(function(layer) {
             if (layer.id.indexOf('noData') === -1) {
                 layer.definitionExpression = where;
             }

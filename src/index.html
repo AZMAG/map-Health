@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Projections Review Viewer</title>
+    <title>Health Viewer</title>
     <!-- comments:uncomment-block html -->
     <!-- <script type="text/javascript">
             if (window.location.protocol !== 'https:') {
@@ -13,7 +13,7 @@
         </script> -->
     <!-- endcomments -->
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="url" content="https://geo.azmag.gov/maps/ProjectionsReview/">
+    <meta name="url" content="https://geo.azmag.gov/maps/Health/">
     <meta name="creation-date" content="2019-02-15">
     <meta name="revision-date" content="">
     <link rel="apple-touch-icon" type="image/png" sizes="152x152" href="./img/icon_144.png">
@@ -35,31 +35,7 @@
         <div class="card-body">
             <i class="fas fa-question-circle infoBtn"></i>
             <img width="90px" src="./img/MagIcon.png" alt="Mag Logo">
-            <h5 class="card-title">2019 Draft Projections Review</h5>
-            <b style="font-size:13px;">Final Draft Projections Updated 5/28/2019 (subject to committee approval)</b>
-            <div class="borderArea">
-                <b>Toggle visible planning area</b>
-                <div id="layerChoice" class="btn-group btn-group-toggle" data-toggle="buttons">
-                    <label class="btn btn-secondary active">
-                        <input type="radio" name="options" data-id="TAZ" autocomplete="off" checked> TAZ
-                    </label>
-                    <label class="btn btn-secondary">
-                        <input type="radio" name="options" data-id="RAZ" autocomplete="off"> RAZ
-                    </label>
-                    <label class="btn btn-secondary">
-                        <input type="radio" name="options" data-id="MPA" autocomplete="off"> MPA
-                    </label>
-                    <!-- <label class="btn btn-secondary">
-                        <input type="radio" name="options" data-id="COUNTY" autocomplete="off"> COUNTY
-                    </label> -->
-                </div>
-            </div>
-            <div class="borderArea">
-                <b>Select MPA</b>
-                <div class="dropdown">
-                    <select data-live-search="true" class="selectpicker" name="mpaDropdown" id="mpaDropdown"></select>
-                </div>
-            </div>
+            <h5 class="card-title">Health Map</h5>
             <div class="borderArea">
                 <b>Contextual Layers</b>
                 <div id="contextLayersList"></div>
@@ -87,11 +63,6 @@
                     <select data-live-search="true" class="selectpicker" name="yearDropdown" id="yearDropdown">
                     </select>
                 </div>
-                <br>
-                <div class="form-check">
-                    <input type="checkbox" class="form-check-input" id="normalize">
-                    <label class="form-check-label" for="normalize">Normalize</label>
-                </div>
             </div>
         </div>
     </div>
@@ -101,7 +72,6 @@
         <span class="esri-icon-font-fallback-text">Toggle Basemap</span>
     </div>
     <div id="viewDiv"></div>
-    <div class="successMessage"> Thank you, we have received your feedback.</div>
 
     <div id="contactModal" class="modal" tabindex="-1" role="dialog">
         <div class="modal-dialog" role="document">
@@ -114,84 +84,11 @@
                 </div>
                 <div class="modal-body">
                     <div>
-                        <button title="View Instructions" class="btn btn-primary btn-sm btnInstructions"><i class="fas fa-info-circle"></i>
-                            Instructions</button>
-                        <br>
-                        <br>
                         <a class="link" href="http://www.azmag.gov/" target="_blank"><strong>Maricopa Association of
                                 Goverments</strong></a>
                         <br>302 N 1st Avenue, Suite 300<br>Phoenix, Arizona
                         85219<br><em class="fas fa-phone"></em>&nbsp;Phone: (602) 254-6300<br>
-                        <br>Jesse Ayers - Socioeconomic Modeling Program Manager<br><em class="fas fa-envelope"></em>&nbsp;Email: <a class="link" href="mailto:jayers@azmag.gov">jayers@azmag.gov</a>
-                        <br><br>
-                        <h6>NOTES AND CAVEATS FOR 2019 PROJECTIONS</h6>
-                        <ol>
-                            <li>The projections by municipal planning area (MPA) and regional analysis zone (RAZ) were
-                                prepared to be consistent with the July 1, 2018 population estimates and have been
-                                prepared
-                                for
-                                July 1st of the base year 2018 and projected for July 1st of 2020, 2030, 2040, 2050, and
-                                2055.</li>
-
-                            <li>The 2018 housing and population base was developed by aggregating 2013-2017 American
-                                Community Survey data to traffic analysis zones (TAZs). Census place mismatches were
-                                corrected
-                                in this process and are reflected in the base 2018 MPA and RAZ numbers.</li>
-
-                            <li>The population projections are for resident population only and do not include
-                                non-resident
-                                seasonal or transient population.</li>
-
-                            <li>The projections are required to use the latest census as the base. The 2013-2017 ACS
-                                data
-                                were released in January 2019. Subsequent to the release, the Arizona State Demographer
-                                prepared
-                                a new set of Maricopa County projections consistent with the 2018 population estimate.
-                                These
-                                county projections were recommended for approval by the MAG Population Technical
-                                Advisory
-                                Committee (POPTAC) in January 2019 and the Management Committee in February 2019. The
-                                projections were approved by the Regional Council in February 2019.</li>
-
-                            <li>The MAG socioeconomic projections by MPA and RAZ will be considered for approval by the
-                                MAG
-                                POPTAC on June 4, 2019, and by the MAG Management Committee on June 12, 2019. The
-                                projections
-                                were approved by MAG Regional Council on June 26, 2019. These projections are DRAFT and
-                                not
-                                for
-                                distribution or attribution.</li>
-
-                            <li>The projections include the Maricopa County portions of Peoria and Wickenburg only with
-                                the
-                                exception of the jurisdiction level numbers, which do include the population in Yavapai
-                                County
-                                for Wickenburg and Peoria.</li>
-
-                            <li>
-                                The projections were based upon the latest version of each member agency’s general plan
-                                and
-                                known developments. These plans are subject to change.</li>
-
-                            <li>
-                                The databases and assumptions upon which the projections are based have been reviewed by
-                                MAG
-                                member agencies, revised by MAG staff based on input received and approved by members of
-                                the
-                                MAG
-                                POPTAC.
-                            </li>
-
-                            <li>The projections are based upon previous review and local insight by members of the MAG
-                                POPTAC.
-                            </li>
-
-                            <li>The projections should be used with caution. They are subject to change as a result of
-                                fluctuation in economic and development conditions, local development policies and
-                                updated data.
-                            </li>
-
-                        </ol>
+                        <br>Jesse Ayers - Socioeconomic Modeling Program Manager<br><em class="fas fa-envelope"></em>&nbsp;Email: <a class="link" href="mailto:jayers@azmag.gov">jayers@azmag.gov</a>                        
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -252,10 +149,7 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h6 style="font-weight: bold;" class="modal-title">Welcome to the MAG Projections Review
-                        Viewer<br><b style="font-size:13px;">Final Draft Projections Updated 5/28/2019 (subject to
-                            committee approval)</b></h6>
-
+                    <h6 style="font-weight: bold;" class="modal-title">Welcome to the MAG Health Viewer</h6>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -283,14 +177,12 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.2/js/bootstrap-select.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/10.6.1/bootstrap-slider.min.js"></script>
-    <script src="https://js.arcgis.com/4.11/"></script>
+    <script src="https://js.arcgis.com/4.14/"></script>
 
     <!-- comments:comment html -->
     <script src="./js/config.js"></script>
     <script src="./js/utilities.js"></script>
     <script src="./js/widgets.js"></script>
-    <script src="./js/feedback.js"></script>
-    <script src="./js/staticClassBreaks.js"></script>
     <script src="./js/layer.js"></script>
     <!-- endcomments -->
 

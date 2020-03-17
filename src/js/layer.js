@@ -3,26 +3,26 @@ require([
     "esri/layers/TileLayer",
     "esri/layers/MapImageLayer",
     "dojo/topic"
-], function (FeatureLayer, TileLayer, MapImageLayer, tp) {
+], function(FeatureLayer, TileLayer, MapImageLayer, tp) {
 
     tp.subscribe("map-loaded", addLayers);
-    tp.subscribe("render-update", UpdateFeatureLayerRenderers);
+    // tp.subscribe("render-update", UpdateFeatureLayerRenderers);
 
-    let $fldDropdown = $("#fldDropdown");
-    let $yearDropdown = $("#yearDropdown");
-    let $normalize = $("#normalize");
+    // let $fldDropdown = $("#fldDropdown");
+    // let $yearDropdown = $("#yearDropdown");
+    // let $normalize = $("#normalize");
 
-    $normalize.change(function () {
-        tp.publish("render-update");
-    })
+    // $normalize.change(function () {
+    //     tp.publish("render-update");
+    // })
 
-    $fldDropdown.change(function () {
-        tp.publish("render-update");
-    })
+    // $fldDropdown.change(function () {
+    //     tp.publish("render-update");
+    // })
 
-    $yearDropdown.change(function () {
-        tp.publish("render-update");
-    })
+    // $yearDropdown.change(function () {
+    //     tp.publish("render-update");
+    // })
 
     function GetClassBreaks(breaks) {
         let cbrInfos = [];
@@ -107,77 +107,42 @@ require([
         return rend;
     }
 
-    function UpdateFeatureLayerRenderers() {
-        config.layers.forEach(conf => {
-            if (conf.type === "feature") {
-                let lyr = app.map.findLayerById(conf.id);
-                let newRend = GetRenderer(conf);
-                lyr.renderer = newRend;
-                let expression = `Text($feature.${newRend.field}, '#,###')`;
-
-                if (newRend.normalizationField) {
-                    expression = `Text($feature.${newRend.field} / $feature.${newRend.normalizationField}, '#,###')`;
-                }
-
-                lyr.labelingInfo[0].labelExpressionInfo = {
-                    expression: expression
-                }
-            }
-        })
-    }
-
     function addLayers() {
         config.layers.forEach(conf => {
             if (conf.type === "feature") {
-                var grayLyr = new FeatureLayer({
-                    url: config.mainUrl + conf.index,
-                    title: conf.title,
-                    opacity: .5,
-                    definitionExpression: GetQueryStringWhere().exclude,
-                    legendEnabled: false,
-                    id: conf.id + 'noData',
-                    visible: conf.visible,
-                    renderer: {
-                        type: "simple",
-                        symbol: {
-                            type: "simple-fill",
-                            color: 'gray',
-                            outline: {
-                                color: "gray",
-                                width: 0.1
-                            }
-                        }
-                    }
-                });
-                app.map.add(grayLyr);
-
                 var lyr = new FeatureLayer({
                     url: config.mainUrl + conf.index,
                     title: conf.title,
                     displayField: conf.displayField,
                     outFields: ["*"],
-                    definitionExpression: GetQueryStringWhere().include,
+                    // definitionExpression: GetQueryStringWhere().include,
                     popupTemplate: {
                         title: conf.title + ": <strong>{" + conf.displayField + "}</strong>",
-                        content: GetPopupContent()
+                        // content: GetPopupContent()
                     },
                     opacity: .7,
                     id: conf.id,
+                    featureReduction: {
+                        type: "selection"
+                    },
                     visible: conf.visible,
-                    renderer: GetRenderer(conf)
+                    // renderer: GetRenderer(conf)
                 });
 
                 lyr.labelingInfo = [{
                     labelExpressionInfo: {
-                        expression: `Text($feature.total_pop_2018, '#,###')`
+                        expression: `$feature.Name`
                     },
                     symbol: {
+                        size: "10px",
                         type: "text",
-                        color: "black",
-                        haloSize: 1,
-                        haloColor: "white"
+                        color: "white",
+                        font: {
+                            size: 5,
+                            weight: "bold"
+                        }
                     },
-                    minScale: 207790
+                    minScale: 800000
                 }];
 
                 app.map.add(lyr);
@@ -238,7 +203,7 @@ require([
             // }
         });
 
-        $(".form-check-input").change(function (e) {
+        $(".form-check-input").change(function(e) {
             let layId = $(this).data("id");
             let lay = app.map.findLayerById(layId);
             if (lay) {
@@ -252,20 +217,20 @@ require([
 
         let tazLyr = app.map.findLayerById("TAZ");
         let once = false;
-        app.view.whenLayerView(tazLyr).then(function (lyrView) {
-            lyrView.watch("updating", function (val) {
+        app.view.whenLayerView(tazLyr).then(function(lyrView) {
+            lyrView.watch("updating", function(val) {
                 if (!val && !once) {
-                    lyrView.queryExtent().then(function (res) {
+                    lyrView.queryExtent().then(function(res) {
                         app.view.goTo(res.extent);
                     })
                     once = true;
                     $("#legendId").html('MAG Data');
                 }
             })
-            tazLyr.watch("definitionExpression", function (val) {
+            tazLyr.watch("definitionExpression", function(val) {
                 let mpa = $('#mpaDropdown').selectpicker('val');
                 window.history.pushState('ProjectionsReview', 'Updated Def Expression', `?mpa=${mpa}`);
-                tazLyr.queryExtent().then(function (res) {
+                tazLyr.queryExtent().then(function(res) {
                     app.view.goTo(res.extent);
                 })
             })
@@ -274,63 +239,9 @@ require([
 
     }
 
-
-    function GetCBInfos(breaks, colorRamp) {
-        const rtnData = [];
-        for (let i = 0; i < breaks.length - 1; i++) {
-            const min = breaks[i];
-            const max = breaks[i + 1];
-
-            let minLabel = Math.round(min).toLocaleString("en-US");
-            let maxLabel = Math.round(max).toLocaleString("en-US");
-
-            rtnData.push({
-                minValue: min,
-                maxValue: max,
-                symbol: {
-                    type: "simple-fill",
-                    color: colorRamp[i],
-                    outline: {
-                        color: [0, 0, 0, .5],
-                        width: 0.5
-                    }
-                },
-                label: `${minLabel} - ${maxLabel}`
-            });
-        }
-        return rtnData;
-    };
-
-    // function SetupRenderer(layer, res) {
-    //     let field = "total_pop_2050";
-    //     let cbrCount = 5;
-
-    //     let arr = res.features.map(function (feature) {
-    //         let val = feature.attributes[field];
-    //         return val;
-    //     })
-
-    //     let s = new geostats();
-    //     s.setSerie(arr);
-
-    //     let breaks = s.jenks(arr, cbrCount);
-
-    //     let rend = {
-    //         type: "class-breaks",
-    //         field: field,
-    //         // normalizationField: data.conf.NormalizeField,
-    //         classBreakInfos: GetCBInfos(breaks, config.colorRamp),
-    //         legendOptions: {
-    //             title: 'Total Population in 2050'
-    //         }
-    //     }
-
-    //     layer.renderer = rend;
-    // }
-
     function GetTableHTML(flds) {
         let rows = '';
-        flds.forEach(function (fld) {
+        flds.forEach(function(fld) {
             rows += `<tr>
             <th scope="row">${fld.description}</th>
             `

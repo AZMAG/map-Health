@@ -42,19 +42,19 @@ require([
     app.view.when(() => tp.publish('map-loaded'));
 
     // Instantiate a slider
-    var mySlider = $("#transparencySlider").slider();
+    // var mySlider = $("#transparencySlider").slider();
 
-    mySlider.on('slide', function(e) {
+    // mySlider.on('slide', function(e) {
 
-        let taz = app.map.findLayerById('TAZ');
-        let raz = app.map.findLayerById('RAZ');
-        let mpa = app.map.findLayerById('MPA');
+    //     let taz = app.map.findLayerById('TAZ');
+    //     let raz = app.map.findLayerById('RAZ');
+    //     let mpa = app.map.findLayerById('MPA');
 
-        taz.opacity = e.value;
-        raz.opacity = e.value;
-        mpa.opacity = e.value;
+    //     taz.opacity = e.value;
+    //     raz.opacity = e.value;
+    //     mpa.opacity = e.value;
 
-    }).data('slider');
+    // }).data('slider');
 
 
     var maxExtent = new Extent({
@@ -97,35 +97,9 @@ require([
         $("#splashModal").modal("show");
     })
 
-    $("#layerChoice :input").change(function() {
-        let layerId = $(this).data("id");
-        let layer = app.map.findLayerById(layerId);
-        let grayLayer = app.map.findLayerById(layerId + 'noData');
-        TurnOffAllLayers();
-        layer.visible = true;
-        grayLayer.visible = true;
-    });
-
-    $('#mpaDropdown').on('change', function() {
-        tp.publish("render-update");
-        if (this.value === "all") {
-            SetDefinitionExpressionOnAllLayers(GetQueryStringWhere().include);
-        } else {
-            SetDefinitionExpressionOnAllLayers(GetQueryStringWhere(this.value).include);
-        }
-    });
-
     function TurnOffAllLayers() {
         app.map.layers.forEach(function(layer) {
             layer.visible = false;
-        });
-    }
-
-    function SetDefinitionExpressionOnAllLayers(where) {
-        app.map.layers.forEach(function(layer) {
-            if (layer.id.indexOf('noData') === -1) {
-                layer.definitionExpression = where;
-            }
         });
     }
 });

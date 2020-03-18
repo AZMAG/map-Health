@@ -1,21 +1,5 @@
 let cachedQS;
 
-function qs(key) {
-    if (cachedQS) {
-        return cachedQS;
-    }
-    key = key.replace(/[*+?^$.\[\]{}()|\\\/]/g, "\\$&"); // escape RegEx meta chars
-    let match = location.search.match(new RegExp("[?&]" + key + "=([^&]+)(&|$)"));
-    let data = match && decodeURIComponent(match[1].replace(/\+/g, " "));
-    let mpa = config.MPAs.filter((mpa) => {
-        return mpa.id === data;
-    });
-    if (mpa.length > 0) {
-        cachedQS = data;
-        return cachedQS;
-    }
-}
-
 //https://stackoverflow.com/questions/5999118/how-can-i-add-or-update-a-query-string-parameter
 function updateQueryStringParameter(uri, key, value) {
     var re = new RegExp("([?&])" + key + "=.*?(&|#|$)", "i");

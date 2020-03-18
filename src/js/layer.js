@@ -1,11 +1,15 @@
-require([
+define([
+    "mag/config",
+    "mag/map",
     "esri/layers/FeatureLayer",
     "esri/layers/TileLayer",
     "esri/layers/MapImageLayer",
+    "esri/layers/GraphicsLayer",
     "dojo/topic"
-], function(FeatureLayer, TileLayer, MapImageLayer, tp) {
+], function(config, { map }, FeatureLayer, TileLayer, MapImageLayer, GraphicsLayer, tp) {
 
-    tp.subscribe("map-loaded", addLayers);
+    // tp.subscribe("map-loaded", addLayers);
+    addLayers();
     // tp.subscribe("render-update", UpdateFeatureLayerRenderers);
 
     // let $fldDropdown = $("#fldDropdown");
@@ -91,14 +95,16 @@ require([
                 //     minScale: 800000
                 // }];
 
-                app.map.add(lyr);
+                map.add(lyr);
             } else if (conf.type === "tile") {
                 var tileLyr = new TileLayer({
                     url: conf.url,
                     id: conf.title,
-                    visible: conf.visible
+                    visible: conf.visible,
+                    opacity: conf.opacity,
+                    title: conf.title
                 });
-                app.map.add(tileLyr);
+                map.add(tileLyr);
             } else if (conf.type === "image") {
                 var imgLayer = new MapImageLayer({
                     url: conf.url,
@@ -115,7 +121,7 @@ require([
                         opacity: 1
                     }]
                 });
-                app.map.add(imgLayer);
+                map.add(imgLayer);
             }
 
             if (conf.showToc) {
@@ -134,11 +140,22 @@ require([
             let layId = $(this).data("id");
             console.log(layId);
 
-            let lay = app.map.findLayerById(layId);
+            let lay = map.findLayerById(layId);
             if (lay) {
                 lay.visible = !lay.visible;
             }
         })
+
+        const graphicsLayer = new GraphicsLayer({
+            id: 'graphicsLayer'
+        });
+        const graphicsLayer2 = new GraphicsLayer({
+            id: 'graphicsLayer2'
+        });
+
+        map.add(graphicsLayer2);
+        map.add(graphicsLayer);
+        tp.publish("layers-added");
     }
 
     function GetPopupContent(res) {

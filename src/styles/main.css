@@ -123,6 +123,17 @@ body,
   margin-right: 5px;
 }
 
+#reportPanel {
+  display: none;
+  background: #fff;
+  font: "Avenir Next W00";
+  line-height: 1.5em;
+  overflow: auto;
+  padding: 10px;
+  width: 580px;
+  height: 300px;
+}
+
 .marginLeft10 {
   margin-left: 10px;
 }

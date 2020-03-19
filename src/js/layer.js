@@ -10,16 +10,64 @@ define([
 
     let $rendererDropdown = $("#rendererDropdown");
 
-    let titles = {
-        TOTAL_POP: "Total Population",
-        Totoal_Pop_Under_Poverty: "Population in Poverty"
+    let popMetricsConf = {
+        Vulnerability: {
+            title: "Vulnerability",
+            definition: "The vulnerability index is a weighted sum of selected Census attributes deemed to increase the risk to the population.  The attributes are focused on the elderly, very young, those with disabilities, those under the poverty level, and households that lack modern communications (e.g. internet, telephone)."
+        },
+        TOTAL_POP: {
+            title: "Total Population",
+            cRamp: [
+                [237, 248, 251],
+                [178, 226, 226],
+                [102, 194, 164],
+                [44, 162, 95],
+                [0, 109, 44]
+            ]
+        },
+        Totoal_Pop_Under_Poverty: {
+            title: "Population in Poverty",
+            cRamp: [
+                [254, 240, 217],
+                [253, 204, 138],
+                [252, 141, 89],
+                [227, 74, 51],
+                [179, 0, 0]
+            ]
+        }
     }
+
+    Object.keys(popMetricsConf).forEach((key) => {
+        let conf = popMetricsConf[key];
+
+        if (key === "Vulnerability") {
+            $("#populationMetrics").append(`
+            <div class="form-check">
+                <div class="layerBox">
+                    <input checked type="checkbox" ${conf.visible ? 'checked' : ''} class="form-check-input" data-id="${conf.id}" id="cBox${conf.id}">
+                    <label class="form-check-label" for="cBox${key}">${conf.title} <i class="fas fa-question-circle"></i></label>
+                </div>
+            </div>
+        `);
+        } else {
+            $("#populationMetrics").append(`
+            <div class="form-check">
+                <div class="layerBox">
+                    <input type="checkbox" ${conf.visible ? 'checked' : ''} class="form-check-input" data-id="${conf.id}" id="cBox${conf.id}">
+                    <label class="form-check-label" for="cBox${key}">${conf.title}</label>
+                </div>
+            </div>
+        `);
+        }
+    })
+
+
+
+
 
     $rendererDropdown.change(function(e) {
 
         let val = $rendererDropdown.val();
-        let title = $rendererDropdown.find(".selected");
-
 
         let lyr = map.findLayerById("tracts");
 
@@ -30,12 +78,13 @@ define([
                 classBreakInfos: GetVulnerabilityCB()
             }
         } else {
+            let title = titles[val];
             lyr.renderer = {
                 type: "class-breaks",
                 field: val,
-                classBreakInfos: GetClassBreaks(config.breaks[val])
+                classBreakInfos: GetClassBreaks(config.breaks[val], title.cRamp)
             }
-            lyr.title = titles[val];
+            lyr.title = title.title;
         }
 
     })
@@ -81,7 +130,7 @@ define([
         return cbrInfos;
     }
 
-    function GetClassBreaks(breaks) {
+    function GetClassBreaks(breaks, cRamp) {
         let cbrInfos = [];
         for (let i = 0; i < breaks.length - 1; i++) {
             const min = breaks[i];
@@ -98,7 +147,7 @@ define([
                 maxValue: max,
                 symbol: {
                     type: "simple-fill",
-                    color: config.colorRamp[i],
+                    color: cRamp[i],
                     outline: {
                         color: [0, 0, 0, 0.1],
                         width: 0.2
@@ -145,7 +194,7 @@ define([
         //     // renderer: GetRenderer(conf)
         // })
 
-        config.layers.forEach(conf => {
+        config.layers.forEach(async conf => {
             if (conf.type === "feature") {
                 var lyr = new FeatureLayer({
                     url: config.mainUrl + conf.index,
@@ -157,6 +206,7 @@ define([
                         title: conf.title + '<div style="display: none;">{*}</div>',
                         content: GetMedicalFacilitiesPopup
                     },
+                    definitionExpression: `SubType <> 'ABORTION CLINIC'`,
                     opacity: .9,
                     id: conf.id,
                     featureReduction: {
@@ -165,6 +215,9 @@ define([
                     visible: conf.visible,
                     // renderer: GetRenderer(conf)
                 });
+
+
+
 
                 // lyr.labelingInfo = [{
                 //     labelExpressionInfo: {
@@ -183,13 +236,15 @@ define([
                 // }];
 
                 map.add(lyr);
+
             } else if (conf.type === "tile") {
                 var tileLyr = new TileLayer({
                     url: conf.url,
                     id: conf.title,
                     visible: conf.visible,
                     opacity: conf.opacity,
-                    title: conf.title
+                    title: conf.title,
+                    legendEnabled: false
                 });
                 map.add(tileLyr);
             } else if (conf.type === "image") {

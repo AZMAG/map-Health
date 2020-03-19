@@ -11,13 +11,6 @@ define([], function() {
                 wkid: 102100
             }
         },
-        colorRamp: [
-            [171, 217, 233],
-            [44, 123, 182],
-            [255, 255, 191],
-            [215, 25, 28],
-            [253, 174, 97]
-        ],
 
         breaks: {
             "TOTAL_POP": [0, 2879, 4487, 6170, 8907, 17951],
@@ -85,14 +78,16 @@ define([], function() {
                 showToc: true,
                 index: 4
             },
+
+            // {
+            //     type: 'feature',
+            //     title: 'Child Care Facility',
+            //     id: 'Child_Care_Facility',
+            //     visible: false,
+            //     showToc: true,
+            //     index: 3
+            // }, 
             {
-                type: 'feature',
-                title: 'Child Care Facility',
-                id: 'Child_Care_Facility',
-                visible: false,
-                showToc: true,
-                index: 3
-            }, {
                 type: 'feature',
                 title: 'Medical Facility',
                 id: 'Medical_Facility',
@@ -113,6 +108,14 @@ define([], function() {
                 visible: true,
                 showToc: true,
                 index: 0
+            },
+            {
+                type: "tile",
+                url: 'http://server.arcgisonline.com/arcgis/rest/services/Reference/World_Transportation/MapServer',
+                title: "Streets",
+                id: "Streets",
+                visible: true,
+                showToc: false
             }
         ]
     }

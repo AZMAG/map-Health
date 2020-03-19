@@ -192,9 +192,10 @@ body,
     padding: 10px;
 }
 
-.layerBox {
-    // border: 1px solid black;
-}
+// .layerBox {
+//     // border: 1px solid black;
+//     display: flex;
+// }
 
 .esri-view .esri-view-surface--inset-outline:focus::after {
     outline: none;

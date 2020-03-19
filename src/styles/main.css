@@ -28,6 +28,14 @@ body,
   font-family: 'Poppins', sans-serif;
 }
 
+.legal {
+  font-size: x-small;
+}
+
+.esri-ui {
+  z-index: 2 !important;
+}
+
 .esri-legend__layer-caption {
   display: none;
 }

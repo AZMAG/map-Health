@@ -6,14 +6,21 @@ define([
     "esri/widgets/Search",
     "esri/tasks/Locator",
     "esri/geometry/Extent",
-    "esri/widgets/BasemapToggle"
-], function({ map, view }, Zoom, Home, Legend, Search, Locator, Extent, BasemapToggle) {
+    "esri/widgets/BasemapToggle",
+    "esri/widgets/Locate",
+], function({ map, view }, Zoom, Home, Legend, Search, Locator, Extent, BasemapToggle, Locate) {
 
     //Add home widget
     // var home = new Home({
     //     view: app.view
     // });
     // app.view.ui.add(home, 'bottom-left');
+    var basemapToggle = new BasemapToggle({
+        view,
+        nextBasemap: "hybrid"
+    });
+    view.ui.add(basemapToggle, "bottom-left");
+
 
     //Add zoom widget
     var zoom = new Zoom({
@@ -28,10 +35,10 @@ define([
     });
     view.ui.add(legend, 'bottom-right');
 
-    var basemapToggle = new BasemapToggle({
-        view,
-        nextBasemap: "hybrid"
+    //Add locate widget
+    var locate = new Locate({
+        view: view
     });
-    view.ui.add(basemapToggle, "bottom-left");
+    view.ui.add(locate, 'bottom-left');
 
 })

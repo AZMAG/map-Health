@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Health Viewer</title>
+    <title>Arizona Heathcare Assets Map</title>
     <!-- comments:uncomment-block html -->
     <!-- <script type="text/javascript">
             if (window.location.protocol !== 'https:') {
@@ -23,9 +23,9 @@
     <link rel="shortcut icon" type="image-favorites-icon" href="./img/icon_57.png">
     <link href='https://fonts.googleapis.com/css?family=Poppins' rel='stylesheet'>
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
-    <link async defer rel="stylesheet" href="https://js.arcgis.com/4.15/esri/css/main.css">
-    <link async defer rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
-    <link async defer rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.2/css/bootstrap-select.min.css">
+    <link rel="stylesheet" href="https://js.arcgis.com/4.15/esri/css/main.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.2/css/bootstrap-select.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/10.6.1/css/bootstrap-slider.min.css" />
     <link rel="stylesheet" type="text/css" media="screen" href="./styles/main.css">
 </head>
@@ -35,15 +35,20 @@
         <div class="card-body">
             <i class="fas fa-question-circle infoBtn"></i>
             <!-- <img width="60px" src="./img/MagIcon.png" alt="Mag Logo"> -->
-            <h6 class="card-title">MAG Statewide Healthcare Map</h6>
+            <h6 class="card-title">Arizona Healthcare Assets Map</h6>
             <div class="borderArea">
-                <b>Layers</b>
+                <b>Background Tracts</b><br>
+                <select class="selectpicker" name="rendererDropdown" id="rendererDropdown">
+                    <option data-title="Vulnerability" value="Vulnerability">Vulnerability</option>
+                    <option value="TOTAL_POP">Total Population</option>
+                    <option data-title="Population in Poverty" value="Totoal_Pop_Under_Poverty">Population in Poverty</option>
+                </select>
+            </div>
+            <div class="borderArea">
+                <b>Healthcare Facilities</b>
                 <div id="layersList"></div>
             </div>
-            <!-- <div class="borderArea">
-                <b>Report</b>
-                <div id="test"></div>
-            </div> -->
+            <span class="legal">Source: MAG, AZDHS and The U.S. Census Bureau</span>
         </div>
     </div>
     <div id="basemapToggle" class="customWidget esri-component esri-widget--button esri-widget" role="button" tabindex="0" aria-label="Satellite" title="Satellite">
@@ -68,7 +73,6 @@
                                 Goverments</strong></a>
                         <br>302 N 1st Avenue, Suite 300<br>Phoenix, Arizona
                         85219<br><em class="fas fa-phone"></em>&nbsp;Phone: (602) 254-6300<br>
-                        <br>Jesse Ayers - Socioeconomic Modeling Program Manager<br><em class="fas fa-envelope"></em>&nbsp;Email: <a class="link" href="mailto:jayers@azmag.gov">jayers@azmag.gov</a>
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -129,7 +133,7 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h6 style="font-weight: bold;" class="modal-title">Welcome to the MAG Health Viewer</h6>
+                    <h6 style="font-weight: bold;" class="modal-title">Welcome to the Arizona Heathcare Assets Map</h6>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -156,6 +160,7 @@
     <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.2/js/bootstrap-select.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/10.6.1/bootstrap-slider.min.js"></script>
     <script>
         var dojoConfig = {

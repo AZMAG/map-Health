@@ -12,7 +12,7 @@ define([
     });
 
     let map = new Map({
-        basemap: "streets-night-vector"
+        basemap: "gray"
     });
 
     let view = new MapView({

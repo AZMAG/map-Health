@@ -1,6 +1,6 @@
 ![](http://geo.azmag.gov/maps/readonaz/app/resources/img/maglogo_black.png)
 
-# MAG Mapping Home Page #
+# MAG Health #
 
 [![Website](https://img.shields.io/website-up-down-green-red/http/shields.io.svg?label=my-website)](http://geo.azmag.gov/maps/health)
 [![GitHub version](https://badge.fury.io/gh/AZMAG%2Fmap-Health.svg)](https://badge.fury.io/gh/AZMAG%2Fmap-Health)
@@ -11,7 +11,7 @@
 [![Built with Grunt](http://cdn.gruntjs.com/builtwith.png)](http://gruntjs.com/)
 [![MIT licensed](https://img.shields.io/badge/license-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 
-The Maricopa Association of Governments (MAG) mapping page showing various healhcare realated faclities and census information.
+The Maricopa Association of Governments (MAG) mapping page showing various healthcare realated faclities and census information.
 
 This JavaScript web-page was developed by MAG staff for MAG member agencies and the public.
 

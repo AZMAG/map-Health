@@ -13,7 +13,7 @@ define([
     let popMetricsConf = {
         Vulnerability: {
             title: "Vulnerability",
-            definition: "The vulnerability index is a weighted sum of selected Census attributes deemed to increase the risk to the population.  The attributes are focused on the elderly, very young, those with disabilities, those under the poverty level, and households that lack modern communications (e.g. internet, telephone)."
+            definition: "The vulnerable population index is a weighted sum of select attributes by Census Tract that indicate increased health risk.  The attributes include factors like elderly and very young population, those with disabilities, those under the poverty level, and households that lack modern communications (e.g. internet, telephone)."
         },
         TOTAL_POP: {
             title: "Total Population",
@@ -44,8 +44,8 @@ define([
             $("#populationMetrics").append(`
             <div class="form-check">
                 <div class="layerBox">
-                    <input checked type="checkbox" ${conf.visible ? 'checked' : ''} class="form-check-input" data-id="${conf.id}" id="cBox${conf.id}">
-                    <label class="form-check-label" for="cBox${key}">${conf.title} <i class="fas fa-question-circle"></i></label>
+                    <input checked type="checkbox" class="popMetricsInput form-check-input" data-field="${key}" id="cBox${key}">
+                    <label class="form-check-label" for="cBox${key}">${conf.title} <i data-toggle="popover" data-content="${conf.definition}" class=" vulnerabilityPopover fas fa-question-circle"></i></label>
                 </div>
             </div>
         `);
@@ -53,11 +53,32 @@ define([
             $("#populationMetrics").append(`
             <div class="form-check">
                 <div class="layerBox">
-                    <input type="checkbox" ${conf.visible ? 'checked' : ''} class="form-check-input" data-id="${conf.id}" id="cBox${conf.id}">
+                    <input type="checkbox" class="popMetricsInput form-check-input" data-field="${key}" id="cBox${key}">
                     <label class="form-check-label" for="cBox${key}">${conf.title}</label>
                 </div>
             </div>
         `);
+        }
+    })
+    $('[data-toggle="popover"]').popover({
+        trigger: "hover"
+    })
+
+
+    $(".popMetricsInput").change(function(e) {
+        let lyr = map.findLayerById("tracts");
+        lyr.visible = true;
+        if (this.checked) {
+            $(".popMetricsInput").prop('checked', false);
+            $(this).prop('checked', true);
+            let val = $(this).data("field");
+            updateTractsRenderer(val);
+        } else {
+            let checked = $(".popMetricsInput:checked").length;
+            if (checked === 0) {
+                lyr.visible = false;
+            }
+
         }
     })
 
@@ -65,10 +86,7 @@ define([
 
 
 
-    $rendererDropdown.change(function(e) {
-
-        let val = $rendererDropdown.val();
-
+    function updateTractsRenderer(val) {
         let lyr = map.findLayerById("tracts");
 
         if (val === "Vulnerability") {
@@ -77,17 +95,18 @@ define([
                 type: "class-breaks",
                 classBreakInfos: GetVulnerabilityCB()
             }
+            lyr.title = "Vulnerability";
         } else {
-            let title = titles[val];
+            let conf = popMetricsConf[val];
             lyr.renderer = {
                 type: "class-breaks",
                 field: val,
-                classBreakInfos: GetClassBreaks(config.breaks[val], title.cRamp)
+                classBreakInfos: GetClassBreaks(config.breaks[val], conf.cRamp)
             }
-            lyr.title = title.title;
+            lyr.title = conf.title;
         }
 
-    })
+    };
 
     function GetVulnerabilityCB() {
         let cbrInfos = [{
@@ -174,7 +193,7 @@ define([
             },
             id: 'tracts',
             title: 'Vulnerability',
-            opacity: .4
+            opacity: .6
         })
         map.add(tractsLayer);
 

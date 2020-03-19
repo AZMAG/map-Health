@@ -10,17 +10,21 @@ define([
     "esri/widgets/Locate",
 ], function({ map, view }, Zoom, Home, Legend, Search, Locator, Extent, BasemapToggle, Locate) {
 
-    //Add home widget
-    // var home = new Home({
-    //     view: app.view
-    // });
-    // app.view.ui.add(home, 'bottom-left');
+    //Add legend widget
+    var legend = new Legend({
+        view,
+        container: "legendContainer"
+    });
+    view.ui.add(legend, 'top-right');
+
+    //Add basemap toggle widget
     var basemapToggle = new BasemapToggle({
         view,
-        nextBasemap: "hybrid"
+        nextBasemap: "hybrid",
+        label: "Aerial",
+        titleVisible: true
     });
     view.ui.add(basemapToggle, "bottom-left");
-
 
     //Add zoom widget
     var zoom = new Zoom({
@@ -28,12 +32,11 @@ define([
     });
     view.ui.add(zoom, 'bottom-left');
 
-    //Add legend widget
-    var legend = new Legend({
-        view,
-        container: "legendContainer"
+    //Add home widget
+    var home = new Home({
+        view
     });
-    view.ui.add(legend, 'bottom-right');
+    view.ui.add(home, 'bottom-left');
 
     //Add locate widget
     var locate = new Locate({

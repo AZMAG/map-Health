@@ -1,55 +1,44 @@
-html,
-body,
-#viewDiv {
-  padding: 0;
-  margin: 0;
-  height: 100%;
-  width: 100%;
-  font-family: 'Poppins', sans-serif;
-}
-
-.esri-legend__layer-row {
-  font-family: 'Poppins', sans-serif;
-}
-
-.esri-legend__layer-caption {
-  font-family: 'Poppins', sans-serif;
-}
-
-.esri-widget__heading {
-  font-family: 'Poppins', sans-serif;
-}
-
-.esri-popup__header-title {
-  font-family: 'Poppins', sans-serif;
-}
-
-.esri-popup__button.esri-popup__action {
-  font-family: 'Poppins', sans-serif;
-}
-
-.legal {
-  font-size: x-small;
-}
-
+/***************
+*  SASS Main 
+****************/
+/****************
+* SASS Modules
+*****************/
+/****************
+* SASS Colors
+*****************/
+/****************
+* SASS Typography
+*****************/
+/* 
+SASS Partials 
+*/
+/****************
+* SASS Widgets
+*****************/
 .esri-ui {
   z-index: 2 !important;
 }
 
+.esri-legend__layer-row {
+  font-family: "Poppins", sans-serif;
+}
+
 .esri-legend__layer-caption {
+  font-family: "Poppins", sans-serif;
   display: none;
 }
 
-#helpInfo {
-  position: absolute;
-  z-index: 1;
-  margin: 20px;
-  background: white;
-  border-radius: 10px;
-  border: 1px solid rgba(128, 128, 128, 0.185);
-  width: 350px;
-  text-align: center;
-  padding: 10px;
+.esri-widget__heading {
+  font-family: "Poppins", sans-serif;
+}
+
+.esri-popup__header-title {
+  font-family: "Poppins", sans-serif;
+}
+
+.esri-popup__button.esri-popup__action {
+  font-family: "Poppins", sans-serif;
 }
 
 #legendDiv {
@@ -65,12 +54,94 @@ body,
   right: 10px;
 }
 
-.slider-selection {
-  background: #BABABA;
-}
-
 #legendContainer {
   max-height: 350px;
+}
+
+.btn-group-toggle label {
+  cursor: pointer;
+}
+
+.esri-popup__main-container {
+  max-height: 500px;
+}
+
+.popupContent {
+  font-size: small;
+}
+
+.popupContent div {
+  font-family: "Poppins", sans-serif;
+  padding-top: 2px;
+  padding-bottom: 2px;
+}
+
+.popupContent .popupDetails {
+  margin-left: 5px;
+  margin-right: 5px;
+}
+
+#basemapToggle {
+  display: none;
+}
+
+#basemapToggleimg {
+  width: 27px;
+  margin-top: 10px;
+}
+
+.esri-widget--button {
+  background-color: #1c314a;
+  color: #ccd1d6;
+}
+
+.esri-widget--button:hover {
+  background-color: #386294;
+  color: #ccd1d6;
+}
+
+.esri-widget--button.esri-widget.esri-disabled {
+  background-color: #ccd1d6;
+}
+
+.esri-basemap-toggle__title {
+  background-color: rgba(28, 49, 74, 0.8);
+  color: #ccd1d6;
+  font-weight: 900;
+}
+
+html,
+body,
+#viewDiv {
+  padding: 0;
+  margin: 0;
+  height: 100%;
+  width: 100%;
+}
+
+body {
+  font-family: "Poppins", sans-serif;
+  -webkit-font-smoothing: subpixel-antialiased;
+}
+
+.legal {
+  font-size: x-small;
+}
+
+#helpInfo {
+  position: absolute;
+  z-index: 1;
+  margin: 20px;
+  background: white;
+  border-radius: 10px;
+  border: 1px solid rgba(128, 128, 128, 0.185);
+  width: 350px;
+  text-align: center;
+  padding: 10px;
+}
+
+.slider-selection {
+  background: #BABABA;
 }
 
 .infoBtn {
@@ -80,20 +151,12 @@ body,
   cursor: pointer;
 }
 
-.btn-group-toggle label {
-  cursor: pointer;
-}
-
 .table {
   margin-top: 7px;
 }
 
 .table tr {
   font-size: 11.5px;
-}
-
-.esri-popup__main-container {
-  max-height: 500px;
 }
 
 #layerChoice {
@@ -114,21 +177,6 @@ body,
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
-}
-
-.popupContent {
-  font-size: small;
-}
-
-.popupContent div {
-  font-family: 'Poppins', sans-serif;
-  padding-top: 2px;
-  padding-bottom: 2px;
-}
-
-.popupContent .popupDetails {
-  margin-left: 5px;
-  margin-right: 5px;
 }
 
 #reportPanel {
@@ -180,7 +228,7 @@ body,
 
 .btnProvideFeedback {
   margin-bottom: 10px;
-  font-family: 'Poppins', sans-serif;
+  font-family: "Poppins", sans-serif;
 }
 
 .dropdown-toggle {
@@ -201,15 +249,6 @@ body,
 
 .esri-view .esri-view-surface--inset-outline:focus::after {
   outline: none;
-}
-
-#basemapToggle img {
-  width: 27px;
-  margin-top: 10px;
-}
-
-#basemapToggle {
-  display: none;
 }
 
 ol {

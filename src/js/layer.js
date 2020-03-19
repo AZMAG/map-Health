@@ -13,7 +13,7 @@ define([
     let popMetricsConf = {
         Vulnerability: {
             title: "Vulnerability",
-            definition: "The vulnerability index is a weighted sum of selected Census attributes deemed to increase the risk to the population.  The attributes are focused on the elderly, very young, those with disabilities, those under the poverty level, and households that lack modern communications (e.g. internet, telephone)."
+            definition: "The vulnerable population index is a weighted sum of select attributes by Census Tract that indicate increased health risk.  The attributes include factors like elderly and very young population, those with disabilities, those under the poverty level, and households that lack modern communications (e.g. internet, telephone)."
         },
         TOTAL_POP: {
             title: "Total Population",
@@ -95,6 +95,7 @@ define([
                 type: "class-breaks",
                 classBreakInfos: GetVulnerabilityCB()
             }
+            lyr.title = "Vulnerability";
         } else {
             let conf = popMetricsConf[val];
             lyr.renderer = {
@@ -192,7 +193,7 @@ define([
             },
             id: 'tracts',
             title: 'Vulnerability',
-            opacity: .4
+            opacity: .6
         })
         map.add(tractsLayer);
 

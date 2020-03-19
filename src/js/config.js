@@ -72,6 +72,22 @@ define([], function() {
             // }, 
             {
                 type: 'feature',
+                title: 'Hospital',
+                id: 'Hospital',
+                visible: true,
+                showToc: true,
+                index: 0
+            },
+            {
+                type: 'feature',
+                title: 'Medical Facility',
+                id: 'Medical_Facility',
+                visible: true,
+                showToc: true,
+                index: 2
+            },
+            {
+                type: 'feature',
                 title: 'Residential Facility',
                 id: 'Residential_Facility',
                 visible: false,
@@ -87,27 +103,14 @@ define([], function() {
             //     showToc: true,
             //     index: 3
             // }, 
+
             {
-                type: 'feature',
-                title: 'Medical Facility',
-                id: 'Medical_Facility',
-                visible: true,
-                showToc: true,
-                index: 2
-            }, {
                 type: 'feature',
                 title: 'Long-Term Care Facility',
                 id: 'Long_Term_Care_Facility',
                 visible: false,
                 showToc: true,
                 index: 1
-            }, {
-                type: 'feature',
-                title: 'Hospital',
-                id: 'Hospital',
-                visible: true,
-                showToc: true,
-                index: 0
             },
             {
                 type: "tile",
@@ -117,6 +120,11 @@ define([], function() {
                 visible: true,
                 showToc: false
             }
+
+            // hospital,
+            // medical
+            // residen
+            // long term
         ]
     }
 });

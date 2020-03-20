@@ -5,7 +5,10 @@ define([
     "esri/layers/TileLayer",
     "esri/layers/MapImageLayer",
     "esri/layers/GraphicsLayer"
-], function(config, { map, view }, FeatureLayer, TileLayer, MapImageLayer, GraphicsLayer) {
+], function (config, {
+    map,
+    view
+}, FeatureLayer, TileLayer, MapImageLayer, GraphicsLayer) {
     addLayers();
 
     let $rendererDropdown = $("#rendererDropdown");
@@ -65,7 +68,7 @@ define([
     })
 
 
-    $(".popMetricsInput").change(function(e) {
+    $(".popMetricsInput").change(function (e) {
         let lyr = map.findLayerById("tracts");
         lyr.visible = true;
         if (this.checked) {
@@ -226,7 +229,7 @@ define([
                         title: conf.title + '<div style="display: none;">{*}</div>',
                         content: GetMedicalFacilitiesPopup
                     },
-                    opacity: .9,
+                    opacity: 1,
                     id: conf.id,
                     featureReduction: {
                         type: "selection"
@@ -244,19 +247,19 @@ define([
                         type: "size",
                         valueExpression: "$view.scale",
                         stops: [{
-                                size: 7,
+                                size: 9,
                                 value: 1155581
                             },
                             {
-                                size: 8,
+                                size: 9,
                                 value: 750000
                             },
                             {
-                                size: 10,
+                                size: 12,
                                 value: 500000
                             },
                             {
-                                size: 12,
+                                size: 14,
                                 value: 300000
                             }
                         ]
@@ -327,7 +330,7 @@ define([
         //     </div>
         // `);
 
-        $(".form-check-input").change(function(e) {
+        $(".form-check-input").change(function (e) {
             let layId = $(this).data("id");
             console.log(layId);
 
@@ -353,8 +356,20 @@ define([
         console.log(res);
 
 
-        let { attributes } = res.graphic;
-        let { TOTAL_POP, AGE_0_5, AGE_5_10, AGE_10_25, AGE_25_55, AGE_55_75, AGE_75Plus, Roundup_Scale, Totoal_Pop_Under_Poverty } = attributes;
+        let {
+            attributes
+        } = res.graphic;
+        let {
+            TOTAL_POP,
+            AGE_0_5,
+            AGE_5_10,
+            AGE_10_25,
+            AGE_25_55,
+            AGE_55_75,
+            AGE_75Plus,
+            Roundup_Scale,
+            Totoal_Pop_Under_Poverty
+        } = attributes;
 
         let vuln = 'High';
 
@@ -397,8 +412,21 @@ define([
 
     function GetMedicalFacilitiesPopup(res) {
 
-        let { attributes } = res.graphic;
-        let { Name, Capacity, OPERSTDESC, Telephone, P_Address, P_address2, P_zip, P_city, P_State, P_county } = attributes;
+        let {
+            attributes
+        } = res.graphic;
+        let {
+            Name,
+            Capacity,
+            OPERSTDESC,
+            Telephone,
+            P_Address,
+            P_address2,
+            P_zip,
+            P_city,
+            P_State,
+            P_county
+        } = attributes;
 
         let html = `
         <div class="popupContent">

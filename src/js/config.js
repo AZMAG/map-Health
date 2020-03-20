@@ -18,7 +18,14 @@ define([], function() {
         },
 
 
-        layers: [
+        layers: [{
+                type: "tile",
+                url: 'http://server.arcgisonline.com/arcgis/rest/services/Reference/World_Transportation/MapServer',
+                title: "Streets",
+                id: "Streets",
+                visible: true,
+                showToc: false
+            },
             // {
             //     type: "feature",
             //     opacity: .5,
@@ -111,15 +118,8 @@ define([], function() {
                 visible: false,
                 showToc: true,
                 index: 1
-            },
-            {
-                type: "tile",
-                url: 'http://server.arcgisonline.com/arcgis/rest/services/Reference/World_Transportation/MapServer',
-                title: "Streets",
-                id: "Streets",
-                visible: true,
-                showToc: false
             }
+
         ]
     }
 });

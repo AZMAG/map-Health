@@ -77,9 +77,9 @@ define([
                 newCenter.y = maxExtent.ymax;
             }
 
-            let newExtent = app.view.extent.clone();
+            let newExtent = view.extent.clone();
             newExtent.centerAt(newCenter);
-            app.view.extent = newExtent;
+            view.extent = newExtent;
         }
     });
 

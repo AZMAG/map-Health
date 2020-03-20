@@ -32,6 +32,7 @@ define([], function() {
                 title: 'Medical Facility',
                 id: 'Medical_Facility',
                 visible: true,
+                scalable: true,
                 showToc: true,
                 index: 3
             },
@@ -40,6 +41,7 @@ define([], function() {
                 title: 'Residential Facility',
                 id: 'Residential_Facility',
                 visible: false,
+                scalable: true,
                 showToc: true,
                 index: 4
             },
@@ -48,6 +50,7 @@ define([], function() {
                 title: 'Long-Term Care Facility',
                 id: 'Long_Term_Care_Facility',
                 visible: false,
+                scalable: true,
                 showToc: true,
                 index: 2
             }, {
@@ -55,6 +58,7 @@ define([], function() {
                 title: 'Hospital',
                 id: 'Hospital',
                 visible: true,
+                scalable: true,
                 showToc: true,
                 index: 1
             }

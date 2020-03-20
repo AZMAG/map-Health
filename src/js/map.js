@@ -52,36 +52,36 @@ define([
     // }).data('slider');
 
 
-    let maxExtent = new Extent({
-        xmin: -13574253.11189688,
-        ymin: 3469475.629806112,
-        xmax: -11226102.906676117,
-        ymax: 4615421.849749786,
-        spatialReference: 102100
-    });
+    // let maxExtent = new Extent({
+    //     xmin: -13574253.11189688,
+    //     ymin: 3469475.629806112,
+    //     xmax: -11226102.906676117,
+    //     ymax: 4615421.849749786,
+    //     spatialReference: 102100
+    // });
 
-    view.watch('extent', function(extent) {
-        let currentCenter = extent.center;
-        if (!maxExtent.contains(currentCenter)) {
-            let newCenter = extent.center;
-            if (currentCenter.x < maxExtent.xmin) {
-                newCenter.x = maxExtent.xmin;
-            }
-            if (currentCenter.x > maxExtent.xmax) {
-                newCenter.x = maxExtent.xmax;
-            }
-            if (currentCenter.y < maxExtent.ymin) {
-                newCenter.y = maxExtent.ymin;
-            }
-            if (currentCenter.y > maxExtent.ymax) {
-                newCenter.y = maxExtent.ymax;
-            }
+    // view.watch('extent', function(extent) {
+    //     let currentCenter = extent.center;
+    //     if (!maxExtent.contains(currentCenter)) {
+    //         let newCenter = extent.center;
+    //         if (currentCenter.x < maxExtent.xmin) {
+    //             newCenter.x = maxExtent.xmin;
+    //         }
+    //         if (currentCenter.x > maxExtent.xmax) {
+    //             newCenter.x = maxExtent.xmax;
+    //         }
+    //         if (currentCenter.y < maxExtent.ymin) {
+    //             newCenter.y = maxExtent.ymin;
+    //         }
+    //         if (currentCenter.y > maxExtent.ymax) {
+    //             newCenter.y = maxExtent.ymax;
+    //         }
 
-            let newExtent = view.extent.clone();
-            newExtent.centerAt(newCenter);
-            view.extent = newExtent;
-        }
-    });
+    //         let newExtent = view.extent.clone();
+    //         newExtent.centerAt(newCenter);
+    //         view.extent = newExtent;
+    //     }
+    // });
 
     $(".infoBtn").click(function() {
         $("#contactModal").modal("show");

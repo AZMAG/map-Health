@@ -111,7 +111,7 @@ define([
     function GetVulnerabilityCB() {
         let cbrInfos = [{
             minValue: 0,
-            maxValue: 2,
+            maxValue: 1,
             symbol: {
                 type: "simple-fill",
                 color: "#fde0dd",
@@ -122,8 +122,8 @@ define([
             },
             label: `Low`
         }, {
-            minValue: 3,
-            maxValue: 3,
+            minValue: 1,
+            maxValue: 2,
             symbol: {
                 type: "simple-fill",
                 color: "#fa9fb5",
@@ -134,8 +134,8 @@ define([
             },
             label: `Medium`
         }, {
-            minValue: 4,
-            maxValue: 6,
+            minValue: 2,
+            maxValue: 3,
             symbol: {
                 type: "simple-fill",
                 color: "#c51b8a",
@@ -188,7 +188,7 @@ define([
             },
             renderer: {
                 type: "class-breaks",
-                field: "Roundup_Scale",
+                field: "Roundup_Scale_2Pop",
                 classBreakInfos: GetVulnerabilityCB()
             },
             id: 'tracts',
@@ -236,7 +236,6 @@ define([
                 });
 
 
-
                 map.add(lyr);
 
                 view.whenLayerView(lyr).then(() => {
@@ -245,20 +244,20 @@ define([
                         type: "size",
                         valueExpression: "$view.scale",
                         stops: [{
-                                size: 7.5,
-                                value: 1155581.108577
+                                size: 7,
+                                value: 1155581
                             },
                             {
-                                size: 5,
-                                value: 9244648.868618
+                                size: 8,
+                                value: 750000
                             },
                             {
-                                size: 3,
-                                value: 73957190.948944
+                                size: 10,
+                                value: 500000
                             },
                             {
-                                size: 1.5,
-                                value: 591657527.591555
+                                size: 12,
+                                value: 300000
                             }
                         ]
                     }];

@@ -3,10 +3,10 @@ define([], function() {
         mainUrl: "https://services1.arcgis.com/mpVYz37anSdrK4d8/arcgis/rest/services/AZLicensedFacilities/FeatureServer/",
         // mainUrl: "https://geo.azmag.gov/arcgis/rest/services/maps/HealthData/MapServer/",
         initExtent: {
-            xmin: -13574253.11189688,
-            ymin: 3469475.629806112,
-            xmax: -11226102.906676117,
-            ymax: 4615421.849749786,
+            xmin: -12975596.092135236,
+            ymin: 3773390.176100314,
+            xmax: -11862672.960303124,
+            ymax: 4346362.140125967,
             spatialReference: {
                 wkid: 102100
             }
@@ -18,7 +18,14 @@ define([], function() {
         },
 
 
-        layers: [
+        layers: [{
+                type: "tile",
+                url: 'http://server.arcgisonline.com/arcgis/rest/services/Reference/World_Transportation/MapServer',
+                title: "Streets",
+                id: "Streets",
+                visible: true,
+                showToc: false
+            },
             // {
             //     type: "feature",
             //     opacity: .5,
@@ -111,20 +118,8 @@ define([], function() {
                 visible: false,
                 showToc: true,
                 index: 1
-            },
-            {
-                type: "tile",
-                url: 'http://server.arcgisonline.com/arcgis/rest/services/Reference/World_Transportation/MapServer',
-                title: "Streets",
-                id: "Streets",
-                visible: true,
-                showToc: false
             }
 
-            // hospital,
-            // medical
-            // residen
-            // long term
         ]
     }
 });

@@ -114,7 +114,7 @@ define([
             maxValue: 2,
             symbol: {
                 type: "simple-fill",
-                color: "green",
+                color: "#fde0dd",
                 outline: {
                     color: [0, 0, 0, 0.1],
                     width: 0.2
@@ -126,7 +126,7 @@ define([
             maxValue: 3,
             symbol: {
                 type: "simple-fill",
-                color: "yellow",
+                color: "#fa9fb5",
                 outline: {
                     color: [0, 0, 0, 0.1],
                     width: 0.2
@@ -138,7 +138,7 @@ define([
             maxValue: 6,
             symbol: {
                 type: "simple-fill",
-                color: "red",
+                color: "#c51b8a",
                 outline: {
                     color: [0, 0, 0, 0.1],
                     width: 0.2
@@ -193,7 +193,7 @@ define([
             },
             id: 'tracts',
             title: 'Vulnerability',
-            opacity: .6
+            opacity: .95
         })
         map.add(tractsLayer);
 
@@ -238,6 +238,8 @@ define([
 
 
 
+
+
                 // lyr.labelingInfo = [{
                 //     labelExpressionInfo: {
                 //         expression: `$feature.Name`
@@ -255,6 +257,104 @@ define([
                 // }];
 
                 map.add(lyr);
+
+                if (lyr.id === "Medical_Facility") {
+                    lyr.renderer = {
+                        type: "unique-value",
+                        field: "Icon_Category",
+                        uniqueValueInfos: [
+                            // {
+                            //     label: "Abortion Clinic/Center",
+                            //     symbol: {
+                            //         type: "picture-marker",
+                            //         contentType: "image/png",
+                            //         // imageData: "iVBORw0KGgoAAAANSUhEUgAAAA4AAAAOCAYAAAAfSC3RAAAAAXNSR0IB2cksfwAAAAlwSFlzAAAOxAAADsQBlSsOGwAAAQ5JREFUKJGdkDFrwlAUhT/qI48Ojg4uhuKSoYOddMlWFPJPujj7G2x2f0bBSYemQ4a6BIRk6BAdMgjOAeGJmA6Pp6ERi57pnnPueZz7BHdC/BW6Xen2+ypoNjkCrNcUvs8zkF4NWhaW5yF6Pc3nc5TvV/cqwq1VHSPkuWpd2HsqzQcgFQDDIYnncTBOqxR1HORsxofhQUAxHvMoADodaoMBtUuVbBtsG2n4aoUqV70ZAiBNYbE4i+02NBp63mwgy87edsvDKRiG8jUMtZHn6mUy4d0E4xg1GvFWr8sMYL9HgTJB9WledF0J+owTlku+Qf1Uqt59Yxm7HcfplCKONU8SBFD8G4wi9RVF+gOu4RcKulJtShL5pAAAAABJRU5ErkJggg==",
+                            //         url: "https://services1.arcgis.com/mpVYz37anSdrK4d8/arcgis/rest/services/AZLicensedFacilities/FeatureServer/2/images/248448727ceffef6bcb27632a141bdac",
+                            //         height: 10,
+                            //         width: 10
+                            //     },
+                            //     value: "Abortion"
+                            // },
+                            // {
+                            //     label: "Behavioral Health Inpatient Facility",
+                            //     "symbol": {
+                            //         type: "picture-marker",
+                            //         // imageData: "iVBORw0KGgoAAAANSUhEUgAAAA4AAAAMCAYAAABSgIzaAAAAAXNSR0IB2cksfwAAAAlwSFlzAAAOxAAADsQBlSsOGwAAARVJREFUKJGdz79LAnEcxvG3fg++kYPQpouTkFCILUc/4OAGwfBAp0sHh0CKCzShoCvO5QbHm+I2MfoPgri/oMDdxanRve07RA1R9MMT69k+fHjB82j8M1rco9mU5XRarYQhd3+BwrLUqZSIMOQeeFkKOg6OZWEkEohej+Mg4HoZuFarYadSrAJUqxwEAbfA80LouvLSNNX2x20Y7HiePPd95cXCTCazYduzshAkP8cKkvW62vd9hsDTXNjpzC6KRTZ/tiiV2BoMOHNdTn5BXafearE3ZzMAjYY0RyN2p1P18BXKdpvDbJZcHMzl1Hq3y5Hj8Ai8agCVCleFAuZkEsfek89T1XVa4zE3GkAU0Y8i+ovZ97wBDdtA+SL27lcAAAAASUVORK5CYII=",
+                            //         url: "https://services1.arcgis.com/mpVYz37anSdrK4d8/arcgis/rest/services/AZLicensedFacilities/FeatureServer/2/images/a6cd76c5528d878bcc1a38f4109b2b5e",
+                            //         height: 9,
+                            //         width: 10
+                            //     },
+                            //     "value": "BH Inpatient"
+                            // },
+                            {
+                                label: "Home Health Agency",
+                                "symbol": {
+                                    type: "picture-marker",
+                                    // imageData: "iVBORw0KGgoAAAANSUhEUgAAAA4AAAAOCAYAAAAfSC3RAAAAAXNSR0IB2cksfwAAAAlwSFlzAAAOxAAADsQBlSsOGwAAAVNJREFUKJGd0T1IQlEUwPG/rxdPcPCBSuEQFM2tupiTDpZEIUo6hFJOCkJNzY5NgrQ5ObiEBtnglOjQEK3OwROUpgY/LomvQXyVJkpnu4fzu+ece2X+GfLMWYrHifj97NvtbOg6405H0cplUSuXeVwE7YUCuXCYgMWC9TstCAaJeL3cZzJcAr2fcK1Y5DYaJWQyzY+lqmym01zIMnIqxbkBs1mSoRBHfyFjBwkpFiPUavGQz1ORAVwuAorC+rIHUVWsPh8nBrRa2V2GpmGzsWOMajKhrAolaVIrAwyHdIHtVWCvx7sB223leTQSbnn2V2ei3wdNU55ATGClIq6dTg49nsW76jrU67wmEuLG6FgqMQgGOW02uXO72ZrtLAQ0GrQ0jWNgbECAWIyXapW9Wo2cw4HHbMYJjPt93rpdpTYYiKtkks9p/a+7Dw74AM7mBxVzmS97Z2RTu8CDUwAAAABJRU5ErkJggg==",
+                                    url: "https://services1.arcgis.com/mpVYz37anSdrK4d8/arcgis/rest/services/AZLicensedFacilities/FeatureServer/2/images/034a472bfd2f39a9db2b6e7f958b4acd",
+                                    height: 10,
+                                    width: 10
+                                },
+                                "value": "HHA"
+                            },
+                            // {
+                            //     label: "Hospice",
+                            //     "symbol": {
+                            //         type: "picture-marker",
+                            //         // imageData: "iVBORw0KGgoAAAANSUhEUgAAAA4AAAAOCAYAAAAfSC3RAAAAAXNSR0IB2cksfwAAAAlwSFlzAAAOxAAADsQBlSsOGwAAAFZJREFUKJFjYSATsDAwMDBMmsRwQEeH4RsxGq5cYfifl8fgzcLAwMBgbc2gbGTEIEOMRm5uhitwG8l26qjG4aHx1i0GTjY24jTcu8fAC9cYGckgQqqNAEoJDZSH1oKfAAAAAElFTkSuQmCC",
+                            //         url: "https://services1.arcgis.com/mpVYz37anSdrK4d8/arcgis/rest/services/AZLicensedFacilities/FeatureServer/2/images/63b0c87994a1f2bc21cb7cb0826ab3d9",
+                            //         height: 10,
+                            //         width: 10
+                            //     },
+                            //     "value": "Hospice"
+                            // },
+                            // {
+                            //     label: "Other Medical Behavioral Health Facility",
+                            //     "symbol": {
+                            //         type: "picture-marker",
+                            //         // imageData: "iVBORw0KGgoAAAANSUhEUgAAAA4AAAAOCAYAAAAfSC3RAAAAAXNSR0IB2cksfwAAAAlwSFlzAAAOxAAADsQBlSsOGwAAAXBJREFUKJGdkDtIgmEYhR/F+FBpSCWRpijDQUEwMAKDimgoaG4LqqWpi1NTNEZbRRBBS9AYhEKbk9Q//IWQQaSIXTAKvqGIfLvZUEGECXbG8/LAc14b/4ytxs0DPABSFzg1xWQySbZYZK8u0GplYmCA3OZmfaDH58N7cYETaABeqoIulyu6tkZXU9OjGyCblc5YDOftLZZgkA2/X10C3Nw4S7OzHGqtj20AWmu9sMB4LEbb6CiOcBiCQRDBYbczVqkI6+s8ZTJypPWn+rfq+dkZneWyWmptlaG5OdqVArsdolHe5+fJJRLsiLAIvP/e+FwsynQmw5tpMtPdjQUgleI1nWZFhNWaz2lpoT8QwLK9Td7tpjEcprm3l0HTrA06SiU64nHyW1ssRyJ4+/qYuLqiB7AAlapgJMJwocC1YTACnJomFAqufb9f7yqlukTkoCp4cqLuRCQElL87rbVhGASUIvSnqoikfm/+yr2IpH8WHyT2jDbL8dUyAAAAAElFTkSuQmCC",
+                            //         url: "https://services1.arcgis.com/mpVYz37anSdrK4d8/arcgis/rest/services/AZLicensedFacilities/FeatureServer/2/images/ca6199651fbba77d4177dc7735bfddd7",
+                            //         height: 10,
+                            //         width: 10
+                            //     },
+                            //     "value": "BH"
+                            // },
+                            {
+                                label: "Other Medical Facility",
+                                "symbol": {
+                                    type: "picture-marker",
+                                    // imageData: "iVBORw0KGgoAAAANSUhEUgAAAAgAAAAOCAYAAAASVl2WAAAAAXNSR0IB2cksfwAAAAlwSFlzAAAOxAAADsQBlSsOGwAAASZJREFUGJWFkb9LAnEYhx/luhPE0AYhcFLOoaH/4kv44xaJa3GP/oCcampsc2l0yYIjp1MRThoUIpra3BREOWgIvcH6xnE2BJYZ9G4v7zO8z+ej8M8oP5dGQztT1Z2hYbg3G4DjEBkMZCUI3HdgE3Bd6vk8sfmcmGVpl6YpT1dAp0NmPKaYycByCf2+PHEcLoTAUwBGI+2uVJIqQCgEhkG01+MWKCi2TWGxkPvJ5Pez6TR0u4h2mz0FdhORiBv+radphIOAbcUw3OtqVTufzWQ2Hv86Tibg+9pDsSgfFQBdl0fNJk/lMlsAts2brsvDlUUux3Otxv10yoHnQSJBXQhe1nJIpTBbLaa+z0c2y/FGUELgWZZ2parRoRCvwZ9dmKasgFyz+QRR/WbdHBqaDAAAAABJRU5ErkJggg==",
+                                    url: "https://services1.arcgis.com/mpVYz37anSdrK4d8/arcgis/rest/services/AZLicensedFacilities/FeatureServer/2/images/4acf5e7376e8c0e660d06f6e3bcb89cf",
+                                    height: 10,
+                                    width: 6
+                                },
+                                "value": "MED - Other"
+                            },
+                            {
+                                label: "Outpatient (Ambulatory) Surgery Center",
+                                "symbol": {
+                                    type: "picture-marker",
+                                    // imageData: "iVBORw0KGgoAAAANSUhEUgAAAA4AAAAOCAYAAAAfSC3RAAAAAXNSR0IB2cksfwAAAAlwSFlzAAAOxAAADsQBlSsOGwAAAeFJREFUKJGdkk9Ik2Ecxz9brzxOpENEkyQcshgkCC3Fy3hDmremJATDndayf4MdktgEMRaJQQhCjOgQrOSlS3lLDBW8KLzMBQm7xIKGFw+bmuttPMu9dphJL7JLv9Pz+/L98Pye7+9R+M9SGuguTePD3p4wo1HpA2RDsK+Ps8PDvJyf576uo/h8XCqV5A5gC4Xo7O5mKh7nFlCxgOEw70dHuerx0BaPn3kEOwAMDNAZifBWVbnicKDEYty0gIbB81yOi4OD+Mpl48WRfCqRYK6/H28mQ94weHZi1LExPs7McMdm41UoJHuqVXA6aRYCZyZDfmWF4Pg4WQs4Oyu+9vbW31+pYDdNEKJuqFbh8BChqrxbW4NsVvyMxaRXAXC55OmODpyNom9v58Lf8/a2zB/fmEpxDaClBXc4zNTQEF21Wt3Y1ASrq+KzpvHw4EAW9/f5fQwuLZELBnFHIjz2++laXua7x8P53V0M0+TXyIj0trbydHqaG7pO0RKOqoo3fr+8vL7ON00jkUwyV6tRWVggareTCgTwFQqkdZ3rFrBYlA/SafF6a0veTaf5kUzW9YkJPjkc4vbGBk8KBXnvxDomJ/kCsueodW9uUi6VMOurkovA4r+BNfqr+UCAc41SBvgDVamsuI74EA8AAAAASUVORK5CYII=",
+                                    url: "https://services1.arcgis.com/mpVYz37anSdrK4d8/arcgis/rest/services/AZLicensedFacilities/FeatureServer/2/images/ff100af2ab58f15cfb8ffa42981a834b",
+                                    height: 10,
+                                    width: 10
+                                },
+                                "value": "OSC"
+                            },
+                            {
+                                label: "Outpatient Treatment Center",
+                                "symbol": {
+                                    type: "picture-marker",
+                                    // imageData: "iVBORw0KGgoAAAANSUhEUgAAAA4AAAAOCAYAAAAfSC3RAAAAAXNSR0IB2cksfwAAAAlwSFlzAAAOxAAADsQBlSsOGwAAAUpJREFUKJGdzzFIAgEYxfG/54UO4RBOHRhkIOqQIbm0KeLiIDo5BCUuNbkeQaujUUQYDtFQuDs6NOQQEbRliiBiGiiCKOFhng2CJOkVvfXjx/eeyD8jatz0wBhQ/wyTSWxOJ1eKQi+fZz+d5u1XmMmsHLrdnSOXi9XxGCwW7ux2jhMJbhdB480N135/J2Q2swSg04HHw4YkcWky4Y3FOAA+pzCVYsduJ+3z4RTnlJcklqNR4iYTm+Uyu7LMqwhgs3EWCOCct3daxwiRCNvZLBeAVwQYDHgcjdjS67Uo9PswGhnyoEyqCgIn1SpxqxVBC5bL9Go15XS6MRTipVCgaLXi0ILtNs+yTH8KAVotHlQVh7Dg53AIzabhHhRmoKpyXq+zZ7GgmwcrFT4ajUnNGRgO85TLUe12WZsHSyWKssz7DwgQDLKutfF7vgD3kWYK8jnzyAAAAABJRU5ErkJggg==",
+                                    url: "https://services1.arcgis.com/mpVYz37anSdrK4d8/arcgis/rest/services/AZLicensedFacilities/FeatureServer/2/images/9666b045052f09f60f319f18e45e0847",
+                                    height: 10,
+                                    width: 10
+                                },
+                                "value": "OTC"
+                            }
+                        ]
+                    }
+                }
 
             } else if (conf.type === "tile") {
                 var tileLyr = new TileLayer({

@@ -120,11 +120,6 @@ define([], function() {
                 visible: true,
                 showToc: false
             }
-
-            // hospital,
-            // medical
-            // residen
-            // long term
         ]
     }
 });

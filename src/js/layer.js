@@ -193,7 +193,7 @@ define([
             },
             id: 'tracts',
             title: 'Vulnerability',
-            opacity: .6
+            opacity: .95
         })
         map.add(tractsLayer);
 

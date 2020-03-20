@@ -27,14 +27,7 @@ define([], function() {
                 showToc: false
             },
 
-            {
-                type: 'feature',
-                title: 'Medical Facility',
-                id: 'Medical_Facility',
-                visible: true,
-                showToc: true,
-                index: 3
-            },
+
             {
                 type: 'feature',
                 title: 'Residential Facility',
@@ -50,6 +43,14 @@ define([], function() {
                 visible: false,
                 showToc: true,
                 index: 2
+            },
+            {
+                type: 'feature',
+                title: 'Medical Facility',
+                id: 'Medical_Facility',
+                visible: true,
+                showToc: true,
+                index: 3
             }, {
                 type: 'feature',
                 title: 'Hospital',

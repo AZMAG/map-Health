@@ -21,7 +21,7 @@ define([
         extent: config.initExtent,
         constraints: {
             rotationEnabled: false,
-            minZoom: 7
+            minZoom: 3
         },
         ui: {
             components: []

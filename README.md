@@ -31,7 +31,7 @@ And constructed with the following guidelines:
 2. **MINOR** version when you add functionality in a backwards-compatible manner **bumps the minor** resets patch
 3. **PATCH** version when you make backwards-compatible bug fixes and misc changes **bumps only the patch**
 
-### version | 0.0.1 ###
+### version | 0.0.2 ###
 
 * #### Updated | 2020-03-19 ####
 
@@ -43,7 +43,7 @@ And constructed with the following guidelines:
 
 ## Site URL's
 
-* [MAG Mapping](https://geo.azmag.gov/maps/health)
+* [MAG Health Map](https://geo.azmag.gov/maps/health)
 
 ## Documentation
 

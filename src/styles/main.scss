@@ -1,3 +1,10 @@
+/***************
+*  SASS Main 
+****************/
+
+@import "modules/base";
+@import "partials/base";
+
 html,
 body,
 #viewDiv {
@@ -5,40 +12,21 @@ body,
     margin: 0;
     height: 100%;
     width: 100%;
-    font-family: 'Poppins', sans-serif;
 }
 
-.esri-legend__layer-row {
-    font-family: 'Poppins', sans-serif;
+body {
+    font-family: $base-font-family;
+    -webkit-font-smoothing: subpixel-antialiased
 }
 
-.esri-legend__layer-caption {
-    font-family: 'Poppins', sans-serif;
-}
 
-.esri-widget__heading {
-    font-family: 'Poppins', sans-serif;
-}
-
-.esri-popup__header-title {
-    font-family: 'Poppins', sans-serif;
-}
-
-.esri-popup__button.esri-popup__action {
-    font-family: 'Poppins', sans-serif;
-}
 
 .legal {
     font-size: x-small;
 }
 
-.esri-ui {
-    z-index: 2 !important;
-}
 
-.esri-legend__layer-caption {
-    display: none;
-}
+
 
 #helpInfo {
     position: absolute;
@@ -52,26 +40,13 @@ body,
     padding: 10px;
 }
 
-#legendDiv {
-    position: absolute;
-    z-index: 1;
-    margin: 20px;
-    background: white;
-    border-radius: 10px;
-    border: 1px solid rgba(128, 128, 128, 0.185);
-    width: 350px;
-    text-align: center;
-    padding: 10px;
-    right: 10px;
-}
+
 
 .slider-selection {
     background: #BABABA;
 }
 
-#legendContainer {
-    max-height: 350px;
-}
+
 
 .infoBtn {
     position: absolute;
@@ -80,9 +55,7 @@ body,
     cursor: pointer;
 }
 
-.btn-group-toggle label {
-    cursor: pointer;
-}
+
 
 .table {
     margin-top: 7px;
@@ -92,9 +65,7 @@ body,
     font-size: 11.5px;
 }
 
-.esri-popup__main-container {
-    max-height: 500px;
-}
+
 
 #layerChoice {
     margin-top: 10px;
@@ -112,20 +83,7 @@ body,
     align-items: center;
 }
 
-.popupContent {
-    font-size: small;
 
-    div {
-        font-family: 'Poppins', sans-serif;
-        padding-top: 2px;
-        padding-bottom: 2px;
-    }
-
-    .popupDetails {
-        margin-left: 5px;
-        margin-right: 5px;
-    }
-}
 
 #reportPanel {
     display: none;
@@ -173,7 +131,7 @@ body,
 
 .btnProvideFeedback {
     margin-bottom: 10px;
-    font-family: 'Poppins', sans-serif;
+    font-family: $base-font-family;
 }
 
 .dropdown-toggle {
@@ -201,14 +159,7 @@ body,
     outline: none;
 }
 
-#basemapToggle img {
-    width: 27px;
-    margin-top: 10px;
-}
 
-#basemapToggle {
-    display: none;
-}
 
 ol {
     margin: 10px;

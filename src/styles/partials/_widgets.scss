@@ -1,0 +1,104 @@
+/****************
+* SASS Widgets
+*****************/
+
+.esri-ui {
+    z-index: 2 !important;
+}
+
+.esri-legend__layer-row {
+    font-family: $base-font-family
+}
+
+.esri-legend__layer-caption {
+    font-family: $base-font-family;
+    display: none;
+}
+
+.esri-widget__heading {
+    font-family: $base-font-family;
+}
+
+.esri-popup__header-title {
+    font-family: $base-font-family;
+}
+
+.esri-popup__button.esri-popup__action {
+    font-family: $base-font-family;
+}
+
+#legendDiv {
+    position: absolute;
+    z-index: 1;
+    margin: 20px;
+    background: white;
+    border-radius: 10px;
+    border: 1px solid rgba(128, 128, 128, 0.185);
+    width: 350px;
+    text-align: center;
+    padding: 10px;
+    right: 10px;
+}
+
+#legendContainer {
+    max-height: 350px;
+}
+
+.btn-group-toggle label {
+    cursor: pointer;
+}
+
+.esri-popup__main-container {
+    max-height: 500px;
+}
+
+.popupContent {
+    font-size: small;
+
+    div {
+        font-family: $base-font-family;
+        padding-top: 2px;
+        padding-bottom: 2px;
+    }
+
+    .popupDetails {
+        margin-left: 5px;
+        margin-right: 5px;
+    }
+}
+
+// #basemapToggle img {
+//     width: 27px;
+//     margin-top: 10px;
+// }
+
+#basemapToggle {
+    display: none;
+
+    &img {
+        width: 27px;
+        margin-top: 10px;
+    }
+}
+
+// css for home and zoom buttons
+.esri-widget--button {
+    background-color: $widget;
+    color: $widget_con;
+
+    &:hover {
+        background-color: lighten($widget, 20%);
+        color: $widget_con;
+        // border: 1px solid #001833;
+    }
+
+    &.esri-widget.esri-disabled {
+        background-color: $widget_con;
+    }
+}
+
+.esri-basemap-toggle__title {
+    background-color: rgba($widget, .8);
+    color: $widget_con;
+    font-weight: 900;
+}

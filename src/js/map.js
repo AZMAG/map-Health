@@ -12,7 +12,7 @@ define([
     });
 
     let map = new Map({
-        basemap: "gray"
+        basemap: "gray-vector",
     });
 
     let view = new MapView({
@@ -21,7 +21,7 @@ define([
         extent: config.initExtent,
         constraints: {
             rotationEnabled: false,
-            minZoom: 3
+            minZoom: 7
         },
         ui: {
             components: []

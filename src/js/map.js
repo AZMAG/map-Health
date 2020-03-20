@@ -21,7 +21,7 @@ define([
         center: [-111.956, 33.409],
         constraints: {
             rotationEnabled: false,
-            minZoom: 3
+            minZoom: 7
         },
         ui: {
             components: []

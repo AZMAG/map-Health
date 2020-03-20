@@ -181,7 +181,7 @@ define([
     async function addLayers() {
 
         let tractsLayer = new FeatureLayer({
-            url: "https://geo.azmag.gov/arcgis/rest/services/maps/HealthData/MapServer/1",
+            url: "https://geo.azmag.gov/arcgis/rest/services/maps/HealthData/MapServer/0",
             popupTemplate: {
                 title: '<div style="display: none;">{*}</div>',
                 content: GetTractsPopup
@@ -215,6 +215,7 @@ define([
 
         config.layers.forEach(async conf => {
             if (conf.type === "feature") {
+
                 var lyr = new FeatureLayer({
                     url: config.mainUrl + conf.index,
                     title: conf.title,
@@ -225,36 +226,14 @@ define([
                         title: conf.title + '<div style="display: none;">{*}</div>',
                         content: GetMedicalFacilitiesPopup
                     },
-                    definitionExpression: `SubType <> 'ABORTION CLINIC'`,
                     opacity: .9,
                     id: conf.id,
                     featureReduction: {
                         type: "selection"
                     },
-                    visible: conf.visible,
+                    visible: conf.visible
                     // renderer: GetRenderer(conf)
                 });
-
-
-
-
-
-
-                // lyr.labelingInfo = [{
-                //     labelExpressionInfo: {
-                //         expression: `$feature.Name`
-                //     },
-                //     symbol: {
-                //         size: "10px",
-                //         type: "text",
-                //         color: "white",
-                //         font: {
-                //             size: 5,
-                //             weight: "bold"
-                //         }
-                //     },
-                //     minScale: 800000
-                // }];
 
                 map.add(lyr);
 
@@ -386,7 +365,7 @@ define([
             }
 
             if (conf.showToc) {
-                $("#layersList").append(`
+                $("#layersList").prepend(`
                 <div class="form-check">
                     <div class="layerBox">
                         <input type="checkbox" ${conf.visible ? 'checked' : ''} class="form-check-input" data-id="${conf.id}" id="cBox${conf.id}">

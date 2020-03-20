@@ -1,5 +1,5 @@
 /***************
-*  SASS Main 
+*  SASS Main
 ****************/
 /****************
 * SASS Modules
@@ -10,8 +10,8 @@
 /****************
 * SASS Typography
 *****************/
-/* 
-SASS Partials 
+/*
+SASS Partials
 */
 /****************
 * SASS Widgets
@@ -110,6 +110,40 @@ SASS Partials
   font-weight: 900;
 }
 
+/****************
+* SASS Report-panel
+*****************/
+#reportPanel {
+  display: none;
+  background: #fff;
+  font: "Avenir Next W00";
+  line-height: 1.5em;
+  overflow: auto;
+  padding: 10px;
+  width: 580px;
+  height: 300px;
+}
+
+#helpInfo {
+  position: absolute;
+  z-index: 1;
+  margin: 20px;
+  background: white;
+  border-radius: 10px;
+  border: 1px solid rgba(128, 128, 128, 0.185);
+  width: 350px;
+  text-align: center;
+  padding: 10px;
+}
+
+.mag-logo {
+  width: 200px;
+}
+
+.card-title {
+  margin-top: .50rem;
+}
+
 html,
 body,
 #viewDiv {
@@ -126,18 +160,6 @@ body {
 
 .legal {
   font-size: x-small;
-}
-
-#helpInfo {
-  position: absolute;
-  z-index: 1;
-  margin: 20px;
-  background: white;
-  border-radius: 10px;
-  border: 1px solid rgba(128, 128, 128, 0.185);
-  width: 350px;
-  text-align: center;
-  padding: 10px;
 }
 
 .slider-selection {
@@ -177,17 +199,6 @@ body {
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
-}
-
-#reportPanel {
-  display: none;
-  background: #fff;
-  font: "Avenir Next W00";
-  line-height: 1.5em;
-  overflow: auto;
-  padding: 10px;
-  width: 580px;
-  height: 300px;
 }
 
 .marginLeft10 {

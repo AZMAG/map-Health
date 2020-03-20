@@ -3,12 +3,9 @@ define([
     "esri/widgets/Zoom",
     "esri/widgets/Home",
     "esri/widgets/Legend",
-    "esri/widgets/Search",
-    "esri/tasks/Locator",
-    "esri/geometry/Extent",
     "esri/widgets/BasemapToggle",
     "esri/widgets/Locate",
-], function({ map, view }, Zoom, Home, Legend, Search, Locator, Extent, BasemapToggle, Locate) {
+], function({ map, view }, Zoom, Home, Legend, BasemapToggle, Locate) {
 
     //Add legend widget
     var legend = new Legend({
@@ -20,9 +17,7 @@ define([
     //Add basemap toggle widget
     var basemapToggle = new BasemapToggle({
         view,
-        nextBasemap: "hybrid",
-        label: "Aerial",
-        titleVisible: true
+        nextBasemap: "hybrid"
     });
     view.ui.add(basemapToggle, "bottom-left");
 
@@ -40,7 +35,7 @@ define([
 
     //Add locate widget
     var locate = new Locate({
-        view: view
+        view
     });
     view.ui.add(locate, 'bottom-left');
 

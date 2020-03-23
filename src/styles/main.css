@@ -198,6 +198,24 @@ body {
   -webkit-font-smoothing: subpixel-antialiased;
 }
 
+div.hopscotch-bubble .hopscotch-nav-button.next,
+div.hopscotch-bubble .hopscotch-nav-button.prev,
+#skipTourBtn {
+  color: #fff;
+  background-color: #6c757d;
+  border-color: #6c757d;
+  background-image: none;
+}
+
+div.hopscotch-bubble .hopscotch-nav-button.next:hover,
+div.hopscotch-bubble .hopscotch-nav-button.prev:hover,
+#skipTourBtn:hover {
+  color: #fff;
+  background-color: #60686f;
+  border-color: #6c757d;
+  background-image: none;
+}
+
 .legal {
   font-size: x-small;
 }

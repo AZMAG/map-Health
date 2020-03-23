@@ -28,10 +28,16 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.2/css/bootstrap-select.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/10.6.1/css/bootstrap-slider.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/hopscotch/0.3.1/css/hopscotch.min.css" />
     <link rel="stylesheet" type="text/css" media="screen" href="./styles/main.css">
 </head>
 
 <body>
+    <!-- <div class="successMessage"> -->
+    <div class="successMessage alert alert-success" role="alert">
+        Thank you, MAG has received your feedback.
+    </div>
+    <!-- </div> -->
     <div id="helpInfo" class="card">
         <div class="card-body">
             <i class="fas fa-question-circle infoBtn"></i>
@@ -39,9 +45,7 @@
             <h6 class="card-title">Arizona Healthcare Assets Map</h6>
             <div class="borderArea">
                 <b>Population Metrics</b><br>
-                <div id="populationMetrics">
-
-                </div>
+                <div id="populationMetrics"></div>
                 <!-- <select class="selectpicker" name="rendererDropdown" id="rendererDropdown">
                     <option data-title="Vulnerability" value="Vulnerability">Vulnerability</option>
                     <option value="TOTAL_POP">Total Population</option>
@@ -171,6 +175,9 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.2/js/bootstrap-select.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/10.6.1/bootstrap-slider.min.js"></script>
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/focusable/1.0.0/focus-element-overlay.min.js"></script> -->
+    <script src="./js/focusable.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/hopscotch/0.3.1/js/hopscotch.min.js"></script>
     <script>
         var dojoConfig = {
             packages: [{

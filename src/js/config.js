@@ -40,7 +40,7 @@ define([], function() {
                     label: 'Laboratory',
                     symbol: {
                         type: 'picture-marker',
-                        url: "/icons/Laboratory.svg"
+                        url: "icons/Laboratory.svg"
                     }
                 }]
             },
@@ -55,11 +55,11 @@ define([], function() {
                 uvr: [{
                     value: 'AL Center',
                     label: 'Assisted Living Home',
-                    symbol: { type: 'picture-marker', url: "/icons/AL Center.svg" }
+                    symbol: { type: 'picture-marker', url: "icons/AL Center.svg" }
                 }, {
                     value: 'AL Home',
                     label: 'Assisted Living Home',
-                    symbol: { type: 'picture-marker', url: "/icons/AL Home.svg" }
+                    symbol: { type: 'picture-marker', url: "icons/AL Home.svg" }
                 }]
             },
             {
@@ -73,7 +73,7 @@ define([], function() {
                 uvr: [{
                     value: 'NH',
                     label: 'Nursing Home',
-                    symbol: { type: 'picture-marker', url: "/icons/NH_1.svg" }
+                    symbol: { type: 'picture-marker', url: "icons/NH_1.svg" }
                 }]
             },
             {
@@ -86,19 +86,19 @@ define([], function() {
                 uvr: [{
                     value: 'MED - Other',
                     label: 'Other Medical Facility',
-                    symbol: { type: 'picture-marker', url: "/icons/MED.svg" }
+                    symbol: { type: 'picture-marker', url: "icons/MED.svg" }
                 }, {
                     value: 'OSC',
                     label: 'Outpatient Surgery Center',
-                    symbol: { type: 'picture-marker', url: "/icons/OSC.svg" }
+                    symbol: { type: 'picture-marker', url: "icons/OSC.svg" }
                 }, {
                     value: 'OTC',
                     label: 'Outpatient Treatment Center',
-                    symbol: { type: 'picture-marker', url: "/icons/OTC.svg" }
+                    symbol: { type: 'picture-marker', url: "icons/OTC.svg" }
                 }, {
                     value: 'BH',
                     label: 'Behavioral Health Facility',
-                    symbol: { type: 'picture-marker', url: "/icons/BH.svg" }
+                    symbol: { type: 'picture-marker', url: "icons/BH.svg" }
                 }]
             },
             {
@@ -114,7 +114,7 @@ define([], function() {
                     label: 'Hospital',
                     symbol: {
                         type: 'picture-marker',
-                        url: "/icons/HOSPITAL.svg"
+                        url: "icons/HOSPITAL.svg"
                     }
                 }]
             }

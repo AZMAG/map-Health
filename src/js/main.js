@@ -4,7 +4,8 @@ define([
     "mag/widgets",
     "mag/layer",
     "mag/hover",
-    "mag/intro"
+    "mag/intro",
+    "mag/feedback"
     // "mag/report"
 ], function() {
 

@@ -5,7 +5,7 @@ define([
     "esri/layers/TileLayer",
     "esri/layers/MapImageLayer",
     "esri/layers/GraphicsLayer"
-], function (config, {
+], function(config, {
     map,
     view
 }, FeatureLayer, TileLayer, MapImageLayer, GraphicsLayer) {
@@ -68,7 +68,7 @@ define([
     })
 
 
-    $(".popMetricsInput").change(function (e) {
+    $(".popMetricsInput").change(function(e) {
         let lyr = map.findLayerById("tracts");
         lyr.visible = true;
         if (this.checked) {
@@ -216,6 +216,12 @@ define([
         //     // renderer: GetRenderer(conf)
         // })
 
+        var feedbackAction = {
+            title: "Feedback",
+            id: "feedback",
+            className: "esri-icon-notice-triangle"
+        };
+
         config.layers.forEach(async conf => {
             if (conf.type === "feature") {
 
@@ -227,7 +233,8 @@ define([
                     // definitionExpression: GetQueryStringWhere().include,
                     popupTemplate: {
                         title: conf.title + '<div style="display: none;">{*}</div>',
-                        content: GetMedicalFacilitiesPopup
+                        content: GetMedicalFacilitiesPopup,
+                        actions: [feedbackAction]
                     },
                     opacity: 1,
                     id: conf.id,
@@ -308,7 +315,6 @@ define([
             }
         });
 
-
         // map.add(medicalFacilitiesLayer);
 
         // let tractsLyrView = await view.whenLayerView(medicalFacilitiesLayer);
@@ -330,7 +336,7 @@ define([
         //     </div>
         // `);
 
-        $(".form-check-input").change(function (e) {
+        $(".form-check-input").change(function(e) {
             let layId = $(this).data("id");
             console.log(layId);
 
@@ -353,23 +359,8 @@ define([
 
     function GetTractsPopup(res) {
 
-        console.log(res);
-
-
-        let {
-            attributes
-        } = res.graphic;
-        let {
-            TOTAL_POP,
-            AGE_0_5,
-            AGE_5_10,
-            AGE_10_25,
-            AGE_25_55,
-            AGE_55_75,
-            AGE_75Plus,
-            Roundup_Scale,
-            Totoal_Pop_Under_Poverty
-        } = attributes;
+        let { attributes } = res.graphic;
+        let { TOTAL_POP, AGE_0_5, AGE_5_10, AGE_10_25, AGE_25_55, AGE_55_75, AGE_75Plus, Roundup_Scale, Totoal_Pop_Under_Poverty } = attributes;
 
         let vuln = 'High';
 
@@ -458,7 +449,7 @@ define([
                         ${OPERSTDESC === 'ACTIVE' ? 'Operating' : 'Closed'}
                     </div>
                 </div>
-            </div>
+                </div>
         </div>`;
         return html;
     }

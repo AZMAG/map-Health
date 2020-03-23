@@ -19,7 +19,6 @@ function startupIntro() {
                 target: $("#helpInfo")[0],
                 placement: "right",
                 onShow: function() {
-                    $(".hopscotch-actions").append('<button id="skipTourBtn" class="hopscotch-nav-button">Skip Tour</button>');
                     Focusable.setFocus($("#helpInfo"));
                 }
             }, {

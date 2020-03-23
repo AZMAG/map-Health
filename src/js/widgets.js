@@ -8,7 +8,10 @@ define([
     "esri/widgets/Search",
     "esri/tasks/Locator",
     "esri/geometry/Extent"
-], function({ map, view }, Zoom, Home, Legend, BasemapToggle, Locate, Search, Locator, Extent) {
+], function ({
+    map,
+    view
+}, Zoom, Home, Legend, BasemapToggle, Locate, Search, Locator, Extent) {
 
 
 

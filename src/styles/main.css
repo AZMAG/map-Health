@@ -144,6 +144,19 @@ SASS Partials
   margin-top: .50rem;
 }
 
+address.mag {
+  font-size: .85em;
+  margin: 0;
+}
+
+address.mag p {
+  margin: 0;
+}
+
+address.mag .mag-logo {
+  margin-bottom: 5px;
+}
+
 /****************
 * SASS Tooltip
 *****************/

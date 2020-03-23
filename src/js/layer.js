@@ -265,7 +265,7 @@ define([
                         ]
                     }];
                     lyr.renderer = renderer;
-                })
+                });
 
             } else if (conf.type === "tile") {
                 var tileLyr = new TileLayer({

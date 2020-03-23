@@ -39,4 +39,4 @@ define([
     });
     view.ui.add(locate, 'bottom-left');
 
-})
+});

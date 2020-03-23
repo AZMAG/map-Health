@@ -92,9 +92,12 @@ define([
     function updateTractsRenderer(val) {
         let lyr = map.findLayerById("tracts");
 
+        console.log(val);
+
+
         if (val === "Vulnerability") {
             lyr.renderer = {
-                field: "Roundup_Scale",
+                field: "Roundup_Scale_2Pop",
                 type: "class-breaks",
                 classBreakInfos: GetVulnerabilityCB()
             }

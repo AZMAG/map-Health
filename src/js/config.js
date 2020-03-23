@@ -27,7 +27,23 @@ define([], function() {
                 visible: true,
                 showToc: false
             },
-
+            {
+                type: 'feature',
+                title: 'Laboratory',
+                id: 'Laboratory',
+                visible: false,
+                scalable: true,
+                showToc: true,
+                index: 5,
+                uvr: [{
+                    value: 'Laboratory',
+                    label: 'Laboratory',
+                    symbol: {
+                        type: 'picture-marker',
+                        url: "/icons/Laboratory.svg"
+                    }
+                }]
+            },
             {
                 type: 'feature',
                 title: 'Residential Facility',
@@ -35,7 +51,16 @@ define([], function() {
                 visible: false,
                 scalable: true,
                 showToc: true,
-                index: 4
+                index: 4,
+                uvr: [{
+                    value: 'AL Center',
+                    label: 'Assisted Living Home',
+                    symbol: { type: 'picture-marker', url: "/icons/AL Center.svg" }
+                }, {
+                    value: 'AL Home',
+                    label: 'Assisted Living Home',
+                    symbol: { type: 'picture-marker', url: "/icons/AL Home.svg" }
+                }]
             },
             {
                 type: 'feature',
@@ -44,7 +69,12 @@ define([], function() {
                 visible: false,
                 scalable: true,
                 showToc: true,
-                index: 2
+                index: 2,
+                uvr: [{
+                    value: 'NH',
+                    label: 'Nursing Home',
+                    symbol: { type: 'picture-marker', url: "/icons/NH_1.svg" }
+                }]
             },
             {
                 type: 'feature',
@@ -52,17 +82,42 @@ define([], function() {
                 id: 'Medical_Facility',
                 visible: true,
                 showToc: true,
-                index: 3
-            }, {
+                index: 3,
+                uvr: [{
+                    value: 'MED - Other',
+                    label: 'Other Medical Facility',
+                    symbol: { type: 'picture-marker', url: "/icons/MED.svg" }
+                }, {
+                    value: 'OSC',
+                    label: 'Outpatient Surgery Center',
+                    symbol: { type: 'picture-marker', url: "/icons/OSC.svg" }
+                }, {
+                    value: 'OTC',
+                    label: 'Outpatient Treatment Center',
+                    symbol: { type: 'picture-marker', url: "/icons/OTC.svg" }
+                }, {
+                    value: 'BH',
+                    label: 'Behavioral Health Facility',
+                    symbol: { type: 'picture-marker', url: "/icons/BH.svg" }
+                }]
+            },
+            {
                 type: 'feature',
                 title: 'Hospital',
                 id: 'Hospital',
                 visible: true,
                 scalable: true,
                 showToc: true,
-                index: 1
+                index: 1,
+                uvr: [{
+                    value: 'HOSPITAL',
+                    label: 'Hospital',
+                    symbol: {
+                        type: 'picture-marker',
+                        url: "/icons/HOSPITAL.svg"
+                    }
+                }]
             }
-
         ]
     }
 });

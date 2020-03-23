@@ -181,6 +181,14 @@ define([
         return cbrInfos;
     }
 
+    function GetUVRRenderer(conf) {
+        return {
+            type: "unique-value",
+            field: "Icon_Category",
+            uniqueValueInfos: conf.uvr
+        }
+    }
+
     async function addLayers() {
 
         let tractsLayer = new FeatureLayer({
@@ -241,9 +249,12 @@ define([
                     featureReduction: {
                         type: "selection"
                     },
-                    visible: conf.visible
-                    // renderer: GetRenderer(conf)
+                    visible: conf.visible,
+                    renderer: GetUVRRenderer(conf)
                 });
+
+                console.log(GetUVRRenderer(conf));
+
 
 
                 map.add(lyr);
@@ -338,7 +349,6 @@ define([
 
         $(".form-check-input").change(function(e) {
             let layId = $(this).data("id");
-            console.log(layId);
 
             let lay = map.findLayerById(layId);
             if (lay) {

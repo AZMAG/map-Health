@@ -49,13 +49,10 @@ function startupIntro() {
                 }
             },
             {
-                title: "Toggle Healthcare Facilities Layers",
-                content: 'The facilities that can be displayed on the map are shown here.  Click a checkbox to toggle the facilities layer on the map.',
-                target: $("#layersList").parent()[0],
-                placement: "right",
-                onShow: function() {
-                    Focusable.setFocus($($("#layersList").parent()));
-                }
+                title: "Click to identify features.",
+                content: 'Click on the map anywhere to get more information about the healthcare facilities or demographics information.',
+                target: $("#helpInfo")[0],
+                placement: "right"
             }
         ],
         showPrevButton: true,

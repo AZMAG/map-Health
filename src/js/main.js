@@ -37,13 +37,8 @@ define([
             };
 
             //*** feeback binding
-<<<<<<< HEAD
             $("#feedbackModal").load("views/modal-feedback.html", function() {
                 require(["mag/feedback"])
-=======
-            $("#feedbackModal").load("views/modal-feedback.html", function () {
-                require(["mag/feedback"]);
->>>>>>> 5866d0f5e9f83ba2ae5ee4793c52f4eaada1570d
             });
             //*** terms binding
             $("#termsModal").load("views/modal-terms.html", function() {

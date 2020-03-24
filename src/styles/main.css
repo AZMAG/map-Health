@@ -209,6 +209,54 @@ address.mag .mag-logo {
   color: #ccd1d6;
 }
 
+.modal-body {
+  color: #35373d;
+  font-size: .85em;
+}
+
+.modal-body h4 {
+  color: #1c314a;
+  font-size: 22px;
+}
+
+.modalClose {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  font-size: 12px;
+  padding: 1px 3px;
+  background-color: transparent;
+  cursor: pointer;
+}
+
+.modalClose:active, .modalClose:hover {
+  color: #777777;
+}
+
+.modal {
+  overflow-y: scroll;
+}
+
+a.modal-anchor.link {
+  cursor: pointer;
+  color: #007bff;
+  text-decoration: none;
+  background-color: transparent;
+}
+
+a.modal-anchor.link:hover {
+  color: #0056b3;
+  text-decoration: none;
+}
+
+.panelTitle {
+  display: inline;
+}
+
+.panel-icon {
+  float: left;
+}
+
 /*******************
  Footer
 ********************/

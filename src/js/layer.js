@@ -5,7 +5,7 @@ define([
     "esri/layers/TileLayer",
     "esri/layers/MapImageLayer",
     "esri/layers/GraphicsLayer"
-], function(config, {
+], function (config, {
     map,
     view
 }, FeatureLayer, TileLayer, MapImageLayer, GraphicsLayer) {
@@ -38,7 +38,7 @@ define([
                 [129, 15, 124]
             ]
         }
-    }
+    };
 
     Object.keys(popMetricsConf).forEach((key) => {
         let conf = popMetricsConf[key];
@@ -62,13 +62,13 @@ define([
             </div>
         `);
         }
-    })
+    });
     $('[data-toggle="popover"]').popover({
         trigger: "hover"
-    })
+    });
 
 
-    $(".popMetricsInput").change(function(e) {
+    $(".popMetricsInput").change(function (e) {
         let lyr = map.findLayerById("tracts");
         lyr.visible = true;
         if (this.checked) {
@@ -83,7 +83,7 @@ define([
             }
 
         }
-    })
+    });
 
 
 
@@ -350,7 +350,7 @@ define([
         //     </div>
         // `);
 
-        $(".form-check-input").change(function(e) {
+        $(".form-check-input").change(function (e) {
             let layId = $(this).data("id");
 
             let lay = map.findLayerById(layId);
@@ -372,8 +372,20 @@ define([
 
     function GetTractsPopup(res) {
 
-        let { attributes } = res.graphic;
-        let { TOTAL_POP, AGE_0_5, AGE_5_10, AGE_10_25, AGE_25_55, AGE_55_75, AGE_75Plus, Roundup_Scale, Totoal_Pop_Under_Poverty } = attributes;
+        let {
+            attributes
+        } = res.graphic;
+        let {
+            TOTAL_POP,
+            AGE_0_5,
+            AGE_5_10,
+            AGE_10_25,
+            AGE_25_55,
+            AGE_55_75,
+            AGE_75Plus,
+            Roundup_Scale,
+            Totoal_Pop_Under_Poverty
+        } = attributes;
 
         let vuln = 'High';
 

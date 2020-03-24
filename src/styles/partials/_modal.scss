@@ -1,0 +1,12 @@
+/****************
+* SASS modal
+*****************/
+
+.modal-header {
+    background-color: $modal-head;
+    color: $text-alt;
+
+    .close {
+        color: $text-alt;
+    }
+}

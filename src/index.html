@@ -23,11 +23,14 @@
     <link rel="shortcut icon" type="image-favorites-icon" href="./img/icon_57.png">
 
     <link href='https://fonts.googleapis.com/css?family=Poppins' rel='stylesheet'>
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
+        integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
     <link rel="stylesheet" href="https://js.arcgis.com/4.15/esri/css/main.css">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.2/css/bootstrap-select.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/10.6.1/css/bootstrap-slider.min.css" />
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.2/css/bootstrap-select.min.css">
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/10.6.1/css/bootstrap-slider.min.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/hopscotch/0.3.1/css/hopscotch.min.css" />
     <link rel="stylesheet" type="text/css" media="screen" href="./styles/main.css">
 </head>
@@ -41,7 +44,8 @@
     <div id="helpInfo" class="card">
         <div class="card-body">
             <i class="fas fa-question-circle infoBtn"></i>
-            <img class="mag-logo" src="./img/MAG-logo800.jpg" alt="MAG Logo">
+            <a href="https://azmag.gov/" target="_blank" title="AZMAG"><img class="mag-logo" src="./img/MAG-logo800.jpg"
+                    alt="AZMAG Logo"></a>
             <h6 class="card-title">Arizona Healthcare Assets Map</h6>
             <div class="borderArea">
                 <b>Population Metrics</b><br>
@@ -56,11 +60,14 @@
                 <b>Healthcare Facilities</b>
                 <div id="layersList"></div>
             </div>
-            <span class="legal">Source: American Community Survey 2014-2018 5 year estimates, Maricopa Association of
-                Governments and Arizona Department of Health Services</span>
+            <p class="legal">Source: American Community Survey 2014-2018 5 year estimates, Maricopa Association of
+                Governments and Arizona Department of Health Services</p>
         </div>
+        <!--Footer section-->
+        <footer class="footer-section"></footer>
     </div>
-    <div id="basemapToggle" class="customWidget esri-component esri-widget--button esri-widget" role="button" tabindex="0" aria-label="Satellite" title="Satellite">
+    <div id="basemapToggle" class="customWidget esri-component esri-widget--button esri-widget" role="button"
+        tabindex="0" aria-label="Satellite" title="Satellite">
 
         <span class="glyphicon glyphicon-picture"> </span>
         <span class="esri-icon-font-fallback-text">Toggle Basemap</span>
@@ -81,14 +88,22 @@
                 </div>
                 <div class="modal-body">
                     <div>
-                        <a class="link" href="http://www.azmag.gov/" target="_blank"><strong>Maricopa Association of
-                                Goverments</strong></a>
-                        <br>302 N 1st Avenue, Suite 300<br>Phoenix, Arizona
-                        85219<br><em class="fas fa-phone"></em>&nbsp;Phone: (602) 254-6300<br>
+                        <address class="mag">
+                            <a class="mlogo" href="https://azmag.gov/" target="_blank" title="AZMAG"><img
+                                    class="mag-logo" src="./img/MagIcon.png" alt="AZMAG Logo"></a><br>
+                            <em class="fas fa-map-marked-alt"></em>&nbsp;
+                            302 N 1st Avenue, Suite 300 Phoenix, Arizona 85219
+                            <br>
+                            <em class="fas fa-phone"></em>&nbsp;Phone: (602) 254-6300
+                            <br>
+                            <em class="fas fa-link"></em>&nbsp;Website: <a href="https://azmag.gov/" target="_blank"
+                                title="AZMAG">www.azmag.gov</a>
+                        </address>
+
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Close</button>
                 </div>
             </div>
         </div>
@@ -121,7 +136,8 @@
                         </div>
                         <div class="form-group required">
                             <label class="control-label" for="emailAddress">Email address</label>
-                            <input required type="email" class="form-control" id="emailAddress" placeholder="name@example.com">
+                            <input required type="email" class="form-control" id="emailAddress"
+                                placeholder="name@example.com">
                         </div>
                         <div class="form-group">
                             <label for="phoneNumber">Phone</label>
@@ -150,7 +166,8 @@
                     <ol>
                         <li>Select your planning area level (TAZ, RAZ, MPA)</li>
                         <li>Click anywhere on the map to select the area to review</li>
-                        <li>In the popup that has appeared, review the data shown and click the <button class="btn btn-primary btn-sm">Provide Feedback</button> button to provide feeback.</li>
+                        <li>In the popup that has appeared, review the data shown and click the <button
+                                class="btn btn-primary btn-sm">Provide Feedback</button> button to provide feeback.</li>
                         <li>Submit the feedback form.</li>
                     </ol>
                     <hr>
@@ -160,6 +177,13 @@
         </div>
     </div>
     <div id="reportPanel"><canvas id="chart" class="chart"></canvas></div>
+
+    <!--privacy modal-->
+    <div class="modal fade" id="privacyModal" role="dialog"></div>
+    <!--terms modal-->
+    <div class="modal fade" id="termsModal" role="dialog"></div>
+    <!--legal modal-->
+    <div class="modal fade" id="legalModal" role="dialog"></div>
 
 
     <!-- Polyfills -->
@@ -181,13 +205,15 @@
                 location: location.pathname.replace(/\/[^/]+$/, '') + './js'
             }]
         };
+
     </script>
 
     <script src="https://js.arcgis.com/4.15/"></script>
 
 
     <script>
-        require(["mag/main"], function(mag) {});
+        require(["mag/main"], function (mag) {});
+
     </script>
 
 

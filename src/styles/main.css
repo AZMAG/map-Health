@@ -144,6 +144,19 @@ SASS Partials
   margin-top: .50rem;
 }
 
+address.mag {
+  font-size: .85em;
+  margin: 0;
+}
+
+address.mag p {
+  margin: 0;
+}
+
+address.mag .mag-logo {
+  margin-bottom: 5px;
+}
+
 /****************
 * SASS Tooltip
 *****************/
@@ -182,6 +195,30 @@ SASS Partials
   border-width: 9px;
   border-style: solid;
   border-color: transparent #1c314a transparent transparent;
+}
+
+/****************
+* SASS modal
+*****************/
+.modal-header {
+  background-color: #1c314a;
+  color: #ccd1d6;
+}
+
+.modal-header .close {
+  color: #ccd1d6;
+}
+
+/*******************
+ Footer
+********************/
+.footerLinks {
+  text-align: center;
+  font-size: 10px;
+}
+
+.footerLinks p {
+  margin-bottom: .5rem;
 }
 
 html,

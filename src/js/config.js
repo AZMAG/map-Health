@@ -1,4 +1,4 @@
-define([], function() {
+define([], function () {
     return {
         // mainUrl: "https://services1.arcgis.com/mpVYz37anSdrK4d8/arcgis/rest/services/AZLicensedFacilities/FeatureServer/",
         mainUrl: "https://geo.azmag.gov/arcgis/rest/services/maps/HealthData/MapServer/",
@@ -12,6 +12,9 @@ define([], function() {
                 wkid: 102100
             }
         },
+
+        version: 'v0.0.3 | 2020-03-23',
+        copyright: '2020',
 
         breaks: {
             "TOTAL_POP": [0, 2879, 4487, 6170, 8907, 17951],
@@ -55,11 +58,17 @@ define([], function() {
                 uvr: [{
                     value: 'AL Center',
                     label: 'Assisted Living Home',
-                    symbol: { type: 'picture-marker', url: "icons/AL Center.svg" }
+                    symbol: {
+                        type: 'picture-marker',
+                        url: "icons/AL Center.svg"
+                    }
                 }, {
                     value: 'AL Home',
                     label: 'Assisted Living Home',
-                    symbol: { type: 'picture-marker', url: "icons/AL Home.svg" }
+                    symbol: {
+                        type: 'picture-marker',
+                        url: "icons/AL Home.svg"
+                    }
                 }]
             },
             {
@@ -73,7 +82,10 @@ define([], function() {
                 uvr: [{
                     value: 'NH',
                     label: 'Nursing Home',
-                    symbol: { type: 'picture-marker', url: "icons/NH_1.svg" }
+                    symbol: {
+                        type: 'picture-marker',
+                        url: "icons/NH_1.svg"
+                    }
                 }]
             },
             {
@@ -86,19 +98,31 @@ define([], function() {
                 uvr: [{
                     value: 'MED - Other',
                     label: 'Other Medical Facility',
-                    symbol: { type: 'picture-marker', url: "icons/MED.svg" }
+                    symbol: {
+                        type: 'picture-marker',
+                        url: "icons/MED.svg"
+                    }
                 }, {
                     value: 'OSC',
                     label: 'Outpatient Surgery Center',
-                    symbol: { type: 'picture-marker', url: "icons/OSC.svg" }
+                    symbol: {
+                        type: 'picture-marker',
+                        url: "icons/OSC.svg"
+                    }
                 }, {
                     value: 'OTC',
                     label: 'Outpatient Treatment Center',
-                    symbol: { type: 'picture-marker', url: "icons/OTC.svg" }
+                    symbol: {
+                        type: 'picture-marker',
+                        url: "icons/OTC.svg"
+                    }
                 }, {
                     value: 'BH',
                     label: 'Behavioral Health Facility',
-                    symbol: { type: 'picture-marker', url: "icons/BH.svg" }
+                    symbol: {
+                        type: 'picture-marker',
+                        url: "icons/BH.svg"
+                    }
                 }]
             },
             {

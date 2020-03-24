@@ -2,12 +2,10 @@
  * JavaScript File
  * @Desc: Main
  */
-
 define([
         "mag/config",
         "mag/map",
         "mag/widgets",
-        "mag/layer",
         "mag/hover",
         "mag/intro",
         "mag/feedback"
@@ -18,14 +16,15 @@ define([
 
             //*** infohelp binding
             $("#helpInfo").load("views/info-card.html", function () {
-
                 //*** contact binding
                 $("#contactModal").load("views/modal-contact.html");
                 insertFooter();
-
+                
                 $(".infoBtn").click(function () {
                     $("#contactModal").modal("show");
                 });
+
+                require(["mag/layer"]);
             });
 
             function insertFooter() {

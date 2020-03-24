@@ -29,6 +29,7 @@ define([
 
     $feedbackForm.submit(function(e) {
         e.preventDefault();
+        alert("sdaf")
 
         let data = GetFormData();
         fetch(config.feedbackUrl, {
@@ -52,11 +53,14 @@ define([
     });
 
     function SetupForm() {
-        let selectedFeature = view.popup.selectedFeature;
-        let attr = selectedFeature.attributes;
-        let lyr = selectedFeature.layer;
-        $feedbackFeature.html(`${lyr.title}:  <strong>${attr["Name"]}</strong>`)
         $feedbackForm[0].reset();
+        if (view.popup.selectedFeature) {
+            let selectedFeature = view.popup.selectedFeature;
+            let attr = selectedFeature.attributes;
+            let lyr = selectedFeature.layer;
+            $feedbackFeature.html(`${lyr.title}:  <strong>${attr["Name"]}</strong>`)
+        }
+
         PrePopulateContactInfo();
     }
 
@@ -87,9 +91,13 @@ define([
 
 
     function GetFormData() {
-        let selectedFeature = view.popup.selectedFeature;
-        let attr = selectedFeature.attributes;
-        let lyr = selectedFeature.layer;
+        let layerId =
+            if (view.popup.selectedFeature) {
+                let selectedFeature = view.popup.selectedFeature;
+                let attr = selectedFeature.attributes;
+                let lyr = selectedFeature.layer;
+
+            }
 
         return {
             dataId: attr["Name"],
@@ -110,11 +118,26 @@ define([
 
     view.on("click", clickHandler);
 
-    function clickHandler(event) {
-        if (event.button === 2) {
-            console.log(event);
+    function clickHandler(e) {
+        if (e.button === 2) {
 
+            var top = e.y - 10;
+            var left = e.x;
+
+            $("#context-menu").css({
+                display: "block",
+                top,
+                left
+            })
+        } else {
+            $("#context-menu").hide();
         }
     }
+
+    $("#addFeedback").click(() => {
+        $("#context-menu").hide();
+        SetupForm();
+        $feedbackModal.modal("show");
+    })
 
 });

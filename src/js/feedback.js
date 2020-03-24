@@ -1,7 +1,9 @@
 define([
     'mag/map',
     'mag/config'
-], function({ view }, config) {
+], function ({
+    view
+}, config) {
 
     //Main Modal
     const $feedbackModal = $("#feedbackModal");
@@ -19,13 +21,13 @@ define([
     const $emailAddress = $("#emailAddress");
     const $phoneNumber = $("#phoneNumber");
 
-    $("body").on("click", ".btnProvideFeedback", function() {
+    $("body").on("click", ".btnProvideFeedback", function () {
         $(".iconTooltip").hide();
         SetupForm();
         $feedbackModal.modal("show");
-    })
+    });
 
-    $feedbackForm.submit(function(e) {
+    $feedbackForm.submit(function (e) {
         e.preventDefault();
 
         let data = GetFormData();
@@ -41,13 +43,13 @@ define([
         UpdateStoredContact(data);
 
         $feedbackModal.modal("hide");
-        $successMessage.fadeIn(300, function() {
+        $successMessage.fadeIn(300, function () {
             var message = this;
-            setTimeout(function() {
+            setTimeout(function () {
                 $(message).fadeOut(500);
             }, 3000);
         });
-    })
+    });
 
     function SetupForm() {
         let selectedFeature = view.popup.selectedFeature;
@@ -99,7 +101,7 @@ define([
         }
     }
 
-    view.popup.viewModel.on("trigger-action", function(event) {
+    view.popup.viewModel.on("trigger-action", function (event) {
         if (event.action.id === "feedback") {
             SetupForm();
             $feedbackModal.modal("show");

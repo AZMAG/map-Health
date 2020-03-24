@@ -37,7 +37,8 @@ define([
                 });
             };
 
-
+            //*** feeback binding
+            $("#feedbackModal").load("views/modal-feedback.html", function () {});
             //*** terms binding
             $("#termsModal").load("views/modal-terms.html", function () {
                 insertFooter();

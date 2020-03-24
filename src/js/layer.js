@@ -5,7 +5,7 @@ define([
     "esri/layers/TileLayer",
     "esri/layers/MapImageLayer",
     "esri/layers/GraphicsLayer"
-], function (config, {
+], function(config, {
     map,
     view
 }, FeatureLayer, TileLayer, MapImageLayer, GraphicsLayer) {
@@ -37,6 +37,10 @@ define([
                 [136, 86, 167],
                 [129, 15, 124]
             ]
+        },
+        Covid: {
+            title: "COVID-19 Cases (By County)",
+            definition: "This feature layer contains the most up-to-date COVID-19 cases and latest trend plot. It covers China, the US, Canada, Australia (at province/state level), and the rest of the world (at country level, represented by either the country centroids or their capitals). Data sources are WHO, US CDC, China NHC, ECDC, and DXY. The China data is automatically updating at least once per hour, and non China data is updating manually. This layer is created and maintained by the Center for Systems Science and Engineering (CSSE) at the Johns Hopkins University."
         }
     };
 
@@ -52,41 +56,114 @@ define([
                 </div>
             </div>
         `);
+        } else if (key === "Covid") {
+            $("#populationMetrics").append(`
+                <div class="form-check">
+                    <div class="layerBox">
+                        <input type="checkbox" class="popMetricsInput form-check-input" data-field="${key}" id="cBox${key}">
+                        <label class="form-check-label" for="cBox${key}">${conf.title}</label> <i data-toggle="popover" data-content="${conf.definition}" class=" vulnerabilityPopover fas fa-question-circle"></i>
+                    </div>
+                </div>
+            `);
         } else {
             $("#populationMetrics").append(`
-            <div class="form-check">
-                <div class="layerBox">
-                    <input type="checkbox" class="popMetricsInput form-check-input" data-field="${key}" id="cBox${key}">
-                    <label class="form-check-label" for="cBox${key}">${conf.title}</label>
+                <div class="form-check">
+                    <div class="layerBox">
+                        <input type="checkbox" class="popMetricsInput form-check-input" data-field="${key}" id="cBox${key}">
+                        <label class="form-check-label" for="cBox${key}">${conf.title}</label>
+                    </div>
                 </div>
-            </div>
-        `);
+            `);
         }
     });
+
+
     $('[data-toggle="popover"]').popover({
         trigger: "hover"
     });
 
 
-    $(".popMetricsInput").change(function (e) {
-        let lyr = map.findLayerById("tracts");
-        lyr.visible = true;
+    $(".popMetricsInput").change(function(e) {
+        let tractsLyr = map.findLayerById("tracts");
+        let covidLyr = map.findLayerById("covidCases");
+        covidLyr.visible = false;
+        tractsLyr.visible = true;
         if (this.checked) {
             $(".popMetricsInput").prop('checked', false);
             $(this).prop('checked', true);
             let val = $(this).data("field");
-            updateTractsRenderer(val);
+            if (val === 'Covid') {
+                tractsLyr.visible = false;
+                map.findLayerById("covidCases").visible = true;
+            } else {
+                updateTractsRenderer(val);
+            }
         } else {
             let checked = $(".popMetricsInput:checked").length;
             if (checked === 0) {
-                lyr.visible = false;
+                tractsLyr.visible = false;
             }
-
         }
     });
 
 
-
+    var cases = new FeatureLayer({
+        title: 'COVID-19 Cases (By County)',
+        id: 'covidCases',
+        url: 'https://services1.arcgis.com/0MSEUqKaxRlEPj5g/ArcGIS/rest/services/ncov_cases_US/FeatureServer/0',
+        definitionExpression: `Province_State = 'Arizona'`,
+        outFields: ["*"],
+        popupTemplate: {
+            title: '{Admin2} County',
+            content: `
+            <b>Confirmed Cases:</b> {Confirmed} <br>
+            <b>Deaths:</b>  {Deaths} <br>
+            <b>Active Cases:</b> {Active}
+            `
+        },
+        renderer: {
+            type: 'simple',
+            field: 'Confirmed',
+            symbol: {
+                type: "simple-marker",
+                style: "circle",
+                color: "blue",
+                size: "8px",
+                outline: {
+                    color: [0, 0, 255],
+                    width: 1
+                }
+            },
+            visualVariables: [{
+                type: "size",
+                field: "Confirmed",
+                stops: [
+                    { value: 0, size: 4, label: "<15" },
+                    { value: 15, size: 8, label: "<30" },
+                    { value: 30, size: 12, label: ">60" },
+                    { value: 60, size: 15, label: ">100" },
+                    { value: 100, size: 24, label: "100+" }
+                ]
+            }]
+        },
+        labelingInfo: [{
+            labelPlacement: "above-right",
+            labelExpressionInfo: {
+                expression: "$feature.Admin2 + ' (' + $feature.Confirmed + ' Cases)'"
+            },
+            symbol: {
+                type: "text",
+                color: "black",
+                haloSize: 1,
+                haloColor: "white"
+            },
+            maxScale: 0,
+            minScale: 0,
+        }],
+        visible: false,
+        labelsVisible: true
+    })
+    map.add(cases);
 
 
     function updateTractsRenderer(val) {
@@ -343,7 +420,7 @@ define([
         //     </div>
         // `);
 
-        $(".form-check-input").change(function (e) {
+        $(".form-check-input").change(function(e) {
             let layId = $(this).data("id");
 
             let lay = map.findLayerById(layId);

@@ -15,7 +15,7 @@ define([
             // check if a feature is returned from the Layer
             // do something with the result graphic
             const filteredGfx = response.results.filter(function (result) {
-                return !['gray-base-layer', 'tracts'].includes(result.graphic.layer.id);
+                return !['gray-base-layer', 'tracts', 'covidCases'].includes(result.graphic.layer.id);
             });
 
             var tt = $(".iconTooltip");

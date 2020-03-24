@@ -3,11 +3,11 @@ define([
     "esri/Map",
     "esri/views/MapView",
     "esri/geometry/Extent"
-], function(config, Map, MapView, Extent) {
+], function (config, Map, MapView, Extent) {
 
     let $splashModal = $('#splashModal');
 
-    $(window).on('load', function() {
+    $(window).on('load', function () {
         // $splashModal.modal('show');
     });
 
@@ -53,19 +53,20 @@ define([
     // }).data('slider');
 
 
-    $(".infoBtn").click(function() {
-        $("#contactModal").modal("show");
-    })
 
-    $(".btnInstructions").click(function() {
+
+    $(".btnInstructions").click(function () {
         $("#contactModal").modal("hide");
         $("#splashModal").modal("show");
-    })
+    });
 
     function TurnOffAllLayers() {
-        map.layers.forEach(function(layer) {
+        map.layers.forEach(function (layer) {
             layer.visible = false;
         });
     }
-    return { map, view }
+    return {
+        map,
+        view
+    }
 });

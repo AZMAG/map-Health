@@ -16,6 +16,18 @@ define([
         $(document).ready(function () {
             "use strict";
 
+            //*** infohelp binding
+            $("#helpInfo").load("views/info-card.html", function () {
+
+                //*** contact binding
+                $("#contactModal").load("views/modal-contact.html");
+                insertFooter();
+
+                $(".infoBtn").click(function () {
+                    $("#contactModal").modal("show");
+                });
+            });
+
             function insertFooter() {
 
                 $(".footer-section").load("views/footer.html", function () {
@@ -26,6 +38,20 @@ define([
                 });
             }
             insertFooter();
+
+
+            //*** terms binding
+            $("#termsModal").load("views/modal-terms.html", function () {
+                insertFooter();
+            });
+            //*** privacy binding
+            $("#privacyModal").load("views/modal-privacy.html", function () {
+                insertFooter();
+            });
+            //*** legal binding
+            $("#legalModal").load("views/modal-legal.html", function () {
+                insertFooter();
+            });
 
         });
 

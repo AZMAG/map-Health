@@ -41,6 +41,7 @@
         Thank you, MAG has received your feedback.
     </div>
     <!-- </div> -->
+<<<<<<< HEAD
     <div id="helpInfo" class="card">
         <div class="card-body help-card">
             <i title="About" class="fas fa-info-circle infoBtn"></i>
@@ -67,6 +68,11 @@
         <!--Footer section-->
         <footer class="footer-section"></footer>
     </div>
+=======
+    <!--info card-->
+    <div id="helpInfo" class="card" role="dialog"></div>
+
+>>>>>>> 01e9a0a9664aee0e0f34b1c5d6da49fc458d3f07
     <div id="basemapToggle" class="customWidget esri-component esri-widget--button esri-widget" role="button"
         tabindex="0" aria-label="Satellite" title="Satellite">
 
@@ -78,37 +84,7 @@
         <span class="iconTooltip"><span class="iconTooltiptext"></span></span>
     </div>
 
-    <div id="contactModal" class="modal" tabindex="-1" role="dialog">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h6 class="modal-title">Contact Information</h6>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <div>
-                        <address class="mag">
-                            <a class="mlogo" href="https://azmag.gov/" target="_blank" title="AZMAG"><img
-                                    class="mag-logo" src="./img/MagIcon.png" alt="AZMAG Logo"></a><br>
-                            <em class="fas fa-map-marked-alt"></em>&nbsp;
-                            302 N 1st Avenue, Suite 300 Phoenix, Arizona 85219
-                            <br>
-                            <em class="fas fa-phone"></em>&nbsp;Phone: (602) 254-6300
-                            <br>
-                            <em class="fas fa-link"></em>&nbsp;Website: <a href="https://azmag.gov/" target="_blank"
-                                title="AZMAG">www.azmag.gov</a>
-                        </address>
 
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Close</button>
-                </div>
-            </div>
-        </div>
-    </div>
 
     <div id="feedbackModal" class="modal" tabindex="-1" role="dialog">
         <div class="modal-dialog" role="document">
@@ -179,6 +155,9 @@
     </div>
     <div id="reportPanel"><canvas id="chart" class="chart"></canvas></div>
 
+
+    <!--contact modal-->
+    <div class="modal fade" id="contactModal" role="dialog"></div>
     <!--privacy modal-->
     <div class="modal fade" id="privacyModal" role="dialog"></div>
     <!--terms modal-->

@@ -19,7 +19,7 @@ define([
                 //*** contact binding
                 $("#contactModal").load("views/modal-contact.html");
                 insertFooter();
-                
+
                 $(".infoBtn").click(function () {
                     $("#contactModal").modal("show");
                 });
@@ -35,8 +35,7 @@ define([
                     //*** copy write binding
                     $(".copyright").html(config.copyright);
                 });
-            }
-            insertFooter();
+            };
 
 
             //*** terms binding

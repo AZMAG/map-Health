@@ -280,6 +280,25 @@ a.modal-anchor.link:hover {
   margin-bottom: .5rem;
 }
 
+/*******************
+ Legend
+********************/
+.esri-ui-corner .esri-component.esri-widget--panel {
+  width: 260px;
+}
+
+.esri-legend__service {
+  padding: 12px 15px 0 15px;
+}
+
+.esri-legend__layer-table {
+  margin-bottom: 6px;
+}
+
+.esri-legend__layer-cell {
+  padding: 2px 7px;
+}
+
 html,
 body,
 #viewDiv {

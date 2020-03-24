@@ -84,6 +84,7 @@ define([
 
 
     $(".popMetricsInput").change(function(e) {
+        $("#context-menu").hide();
         let tractsLyr = map.findLayerById("tracts");
         let covidLyr = map.findLayerById("covidCases");
         covidLyr.visible = false;

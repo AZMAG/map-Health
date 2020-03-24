@@ -29,7 +29,6 @@ define([
 
     $feedbackForm.submit(function(e) {
         e.preventDefault();
-        alert("sdaf")
 
         let data = GetFormData();
         fetch(config.feedbackUrl, {
@@ -52,13 +51,18 @@ define([
         });
     });
 
-    function SetupForm() {
+    function SetupForm(isNew) {
         $feedbackForm[0].reset();
         if (view.popup.selectedFeature) {
             let selectedFeature = view.popup.selectedFeature;
             let attr = selectedFeature.attributes;
             let lyr = selectedFeature.layer;
             $feedbackFeature.html(`${lyr.title}:  <strong>${attr["Name"]}</strong>`)
+        }
+        if (isNew) {
+            $feedbackForm.find("#addressContainer").show();
+        } else {
+            $feedbackForm.find("#addressContainer").hide();
         }
 
         PrePopulateContactInfo();
@@ -91,17 +95,20 @@ define([
 
 
     function GetFormData() {
-        let layerId =
-            if (view.popup.selectedFeature) {
-                let selectedFeature = view.popup.selectedFeature;
-                let attr = selectedFeature.attributes;
-                let lyr = selectedFeature.layer;
+        let layerId = $("#address").val();
+        let dataId = "new";
 
-            }
+        if (view.popup.selectedFeature) {
+            let selectedFeature = view.popup.selectedFeature;
+            let attr = selectedFeature.attributes;
+            let lyr = selectedFeature.layer;
+            layerId = lyr.id;
+            dataId = attr["Name"];
+        }
 
         return {
-            dataId: attr["Name"],
-            layerId: lyr.id,
+            dataId,
+            layerId,
             comment: $feedbackText.val(),
             name: $contactName.val(),
             email: $emailAddress.val(),
@@ -111,7 +118,7 @@ define([
 
     view.popup.viewModel.on("trigger-action", function(event) {
         if (event.action.id === "feedback") {
-            SetupForm();
+            SetupForm(false);
             $feedbackModal.modal("show");
         }
     });
@@ -136,7 +143,7 @@ define([
 
     $("#addFeedback").click(() => {
         $("#context-menu").hide();
-        SetupForm();
+        SetupForm(true);
         $feedbackModal.modal("show");
     })
 

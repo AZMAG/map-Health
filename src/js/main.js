@@ -8,7 +8,6 @@ define([
         "mag/widgets",
         "mag/hover",
         "mag/intro",
-        "mag/feedback"
         // "mag/report"
     ], function (config) {
         $(document).ready(function () {
@@ -38,7 +37,9 @@ define([
             };
 
             //*** feeback binding
-            $("#feedbackModal").load("views/modal-feedback.html", function () {});
+            $("#feedbackModal").load("views/modal-feedback.html", function () {
+                require(["mag/feedback"]);
+            });
             //*** terms binding
             $("#termsModal").load("views/modal-terms.html", function () {
                 insertFooter();

@@ -63,6 +63,8 @@
             <p class="legal">Source: American Community Survey 2014-2018 5 year estimates, Maricopa Association of
                 Governments and Arizona Department of Health Services</p>
         </div>
+        <!--Footer section-->
+        <footer class="footer-section"></footer>
     </div>
     <div id="basemapToggle" class="customWidget esri-component esri-widget--button esri-widget" role="button"
         tabindex="0" aria-label="Satellite" title="Satellite">
@@ -101,7 +103,7 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Close</button>
                 </div>
             </div>
         </div>
@@ -175,6 +177,13 @@
         </div>
     </div>
     <div id="reportPanel"><canvas id="chart" class="chart"></canvas></div>
+
+    <!--privacy modal-->
+    <div class="modal fade" id="privacyModal" role="dialog"></div>
+    <!--terms modal-->
+    <div class="modal fade" id="termsModal" role="dialog"></div>
+    <!--legal modal-->
+    <div class="modal fade" id="legalModal" role="dialog"></div>
 
 
     <!-- Polyfills -->

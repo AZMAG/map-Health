@@ -5,7 +5,7 @@ define([
     "esri/layers/TileLayer",
     "esri/layers/MapImageLayer",
     "esri/layers/GraphicsLayer"
-], function (config, {
+], function(config, {
     map,
     view
 }, FeatureLayer, TileLayer, MapImageLayer, GraphicsLayer) {
@@ -31,11 +31,11 @@ define([
         Totoal_Pop_Under_Poverty: {
             title: "Population in Poverty",
             cRamp: [
-                [254, 240, 217],
-                [253, 204, 138],
-                [252, 141, 89],
-                [227, 74, 51],
-                [179, 0, 0]
+                [237, 248, 251],
+                [179, 205, 227],
+                [140, 150, 198],
+                [136, 86, 167],
+                [129, 15, 124]
             ]
         }
     }
@@ -68,7 +68,7 @@ define([
     })
 
 
-    $(".popMetricsInput").change(function (e) {
+    $(".popMetricsInput").change(function(e) {
         let lyr = map.findLayerById("tracts");
         lyr.visible = true;
         if (this.checked) {
@@ -92,9 +92,12 @@ define([
     function updateTractsRenderer(val) {
         let lyr = map.findLayerById("tracts");
 
+        console.log(val);
+
+
         if (val === "Vulnerability") {
             lyr.renderer = {
-                field: "Roundup_Scale",
+                field: "Roundup_Scale_2Pop",
                 type: "class-breaks",
                 classBreakInfos: GetVulnerabilityCB()
             }
@@ -181,6 +184,14 @@ define([
         return cbrInfos;
     }
 
+    function GetUVRRenderer(conf) {
+        return {
+            type: "unique-value",
+            field: "Icon_Category",
+            uniqueValueInfos: conf.uvr
+        }
+    }
+
     async function addLayers() {
 
         let tractsLayer = new FeatureLayer({
@@ -216,6 +227,12 @@ define([
         //     // renderer: GetRenderer(conf)
         // })
 
+        var feedbackAction = {
+            title: "Feedback",
+            id: "feedback",
+            className: "esri-icon-notice-triangle"
+        };
+
         config.layers.forEach(async conf => {
             if (conf.type === "feature") {
 
@@ -227,16 +244,20 @@ define([
                     // definitionExpression: GetQueryStringWhere().include,
                     popupTemplate: {
                         title: conf.title + '<div style="display: none;">{*}</div>',
-                        content: GetMedicalFacilitiesPopup
+                        content: GetMedicalFacilitiesPopup,
+                        actions: [feedbackAction]
                     },
                     opacity: 1,
                     id: conf.id,
                     featureReduction: {
                         type: "selection"
                     },
-                    visible: conf.visible
-                    // renderer: GetRenderer(conf)
+                    visible: conf.visible,
+                    renderer: GetUVRRenderer(conf)
                 });
+
+                console.log(GetUVRRenderer(conf));
+
 
 
                 map.add(lyr);
@@ -308,7 +329,6 @@ define([
             }
         });
 
-
         // map.add(medicalFacilitiesLayer);
 
         // let tractsLyrView = await view.whenLayerView(medicalFacilitiesLayer);
@@ -330,9 +350,8 @@ define([
         //     </div>
         // `);
 
-        $(".form-check-input").change(function (e) {
+        $(".form-check-input").change(function(e) {
             let layId = $(this).data("id");
-            console.log(layId);
 
             let lay = map.findLayerById(layId);
             if (lay) {
@@ -353,23 +372,8 @@ define([
 
     function GetTractsPopup(res) {
 
-        console.log(res);
-
-
-        let {
-            attributes
-        } = res.graphic;
-        let {
-            TOTAL_POP,
-            AGE_0_5,
-            AGE_5_10,
-            AGE_10_25,
-            AGE_25_55,
-            AGE_55_75,
-            AGE_75Plus,
-            Roundup_Scale,
-            Totoal_Pop_Under_Poverty
-        } = attributes;
+        let { attributes } = res.graphic;
+        let { TOTAL_POP, AGE_0_5, AGE_5_10, AGE_10_25, AGE_25_55, AGE_55_75, AGE_75Plus, Roundup_Scale, Totoal_Pop_Under_Poverty } = attributes;
 
         let vuln = 'High';
 
@@ -458,7 +462,7 @@ define([
                         ${OPERSTDESC === 'ACTIVE' ? 'Operating' : 'Closed'}
                     </div>
                 </div>
-            </div>
+                </div>
         </div>`;
         return html;
     }

@@ -19,9 +19,10 @@ define([
         container: "viewDiv",
         map,
         center: [-111.956, 33.409],
+        zoom: 7,
         constraints: {
             rotationEnabled: false,
-            minZoom: 7
+            minZoom: 3
         },
         ui: {
             components: []

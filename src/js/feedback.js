@@ -1,4 +1,8 @@
-$(() => {
+define([
+    'mag/map',
+    'mag/config'
+], function({ view }, config) {
+
     //Main Modal
     const $feedbackModal = $("#feedbackModal");
 
@@ -11,12 +15,12 @@ $(() => {
     //Form controls
     const $feedbackFeature = $("#feedbackFeature");
     const $feedbackText = $("#feedbackText");
-    const $fileControl = $("#fileControl");
     const $contactName = $("#contactName");
     const $emailAddress = $("#emailAddress");
     const $phoneNumber = $("#phoneNumber");
 
     $("body").on("click", ".btnProvideFeedback", function() {
+        $(".iconTooltip").hide();
         SetupForm();
         $feedbackModal.modal("show");
     })
@@ -24,17 +28,15 @@ $(() => {
     $feedbackForm.submit(function(e) {
         e.preventDefault();
 
-        var form = document.getElementById('feedbackForm');
-        var formData = new FormData(form);
         let data = GetFormData();
-
-        Object.keys(data).forEach(function(key) {
-            formData.append(key, data[key]);
-        });
-
-        var xhr = new XMLHttpRequest();
-        xhr.open('POST', config.feedbackUrl, true);
-        xhr.send(formData);
+        fetch(config.feedbackUrl, {
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            method: "POST",
+            body: JSON.stringify(data)
+        })
 
         UpdateStoredContact(data);
 
@@ -48,10 +50,10 @@ $(() => {
     })
 
     function SetupForm() {
-        let selectedFeature = app.view.popup.selectedFeature;
+        let selectedFeature = view.popup.selectedFeature;
         let attr = selectedFeature.attributes;
         let lyr = selectedFeature.layer;
-        $feedbackFeature.html(`${lyr.title}:  <strong>${attr[lyr.displayField]}</strong>`)
+        $feedbackFeature.html(`${lyr.title}:  <strong>${attr["Name"]}</strong>`)
         $feedbackForm[0].reset();
         PrePopulateContactInfo();
     }
@@ -83,23 +85,24 @@ $(() => {
 
 
     function GetFormData() {
-        let selectedFeature = app.view.popup.selectedFeature;
+        let selectedFeature = view.popup.selectedFeature;
         let attr = selectedFeature.attributes;
         let lyr = selectedFeature.layer;
-        let extent = selectedFeature.geometry.extent;
 
         return {
-            xmax: extent.xmax,
-            xmin: extent.xmin,
-            ymax: extent.ymax,
-            ymin: extent.ymin,
-            dataId: attr[lyr.displayField],
+            dataId: attr["Name"],
             layerId: lyr.id,
             comment: $feedbackText.val(),
-            file: $fileControl.val(),
             name: $contactName.val(),
             email: $emailAddress.val(),
             phone: $phoneNumber.val()
         }
     }
-})
+
+    view.popup.viewModel.on("trigger-action", function(event) {
+        if (event.action.id === "feedback") {
+            SetupForm();
+            $feedbackModal.modal("show");
+        }
+    });
+});

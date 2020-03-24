@@ -4,11 +4,12 @@ define([
     "esri/layers/FeatureLayer",
     "esri/layers/TileLayer",
     "esri/layers/MapImageLayer",
-    "esri/layers/GraphicsLayer"
+    "esri/layers/GraphicsLayer",
+    "esri/Graphic"
 ], function(config, {
     map,
     view
-}, FeatureLayer, TileLayer, MapImageLayer, GraphicsLayer) {
+}, FeatureLayer, TileLayer, MapImageLayer, GraphicsLayer, Graphic) {
     addLayers();
 
     let $rendererDropdown = $("#rendererDropdown");
@@ -106,66 +107,6 @@ define([
             }
         }
     });
-
-
-    var cases = new FeatureLayer({
-        title: 'COVID-19 Cases (By County)',
-        id: 'covidCases',
-        url: 'https://services1.arcgis.com/0MSEUqKaxRlEPj5g/ArcGIS/rest/services/ncov_cases_US/FeatureServer/0',
-        definitionExpression: `Province_State = 'Arizona'`,
-        outFields: ["*"],
-        popupTemplate: {
-            title: '{Admin2} County',
-            content: `
-            <b>Confirmed Cases:</b> {Confirmed} <br>
-            <b>Deaths:</b>  {Deaths} <br>
-            <b>Active Cases:</b> {Active}
-            `
-        },
-        renderer: {
-            type: 'simple',
-            field: 'Confirmed',
-            symbol: {
-                type: "simple-marker",
-                style: "circle",
-                color: "blue",
-                size: "8px",
-                outline: {
-                    color: [0, 0, 255],
-                    width: 1
-                }
-            },
-            visualVariables: [{
-                type: "size",
-                field: "Confirmed",
-                stops: [
-                    { value: 0, size: 4, label: "<15" },
-                    { value: 15, size: 8, label: "<30" },
-                    { value: 30, size: 12, label: ">60" },
-                    { value: 60, size: 15, label: ">100" },
-                    { value: 100, size: 24, label: "100+" }
-                ]
-            }]
-        },
-        labelingInfo: [{
-            labelPlacement: "above-right",
-            labelExpressionInfo: {
-                expression: "$feature.Admin2 + ' (' + $feature.Confirmed + ' Cases)'"
-            },
-            symbol: {
-                type: "text",
-                color: "black",
-                haloSize: 1,
-                haloColor: "white"
-            },
-            maxScale: 0,
-            minScale: 0,
-        }],
-        visible: false,
-        labelsVisible: true
-    })
-    map.add(cases);
-
 
     function updateTractsRenderer(val) {
         let lyr = map.findLayerById("tracts");
@@ -267,7 +208,113 @@ define([
         }
     }
 
+    async function addCovidLayer() {
+        let queryAllUrl = "https://services1.arcgis.com/0MSEUqKaxRlEPj5g/ArcGIS/rest/services/ncov_cases_US/FeatureServer/0/query?where=Province_State+%3D+%27Arizona%27&outFields=*&f=json";
+
+        let res = await fetch(queryAllUrl);
+        let { features } = await res.json();
+
+        let source = features.map(({ attributes, geometry }) => {
+
+            if (attributes["Admin2"] === "Maricopa") {
+                geometry.y = 33.45;
+                geometry.x = -112.07;
+            }
+            let graphic = new Graphic({
+                geometry: {
+                    type: "point",
+                    latitude: geometry.y,
+                    longitude: geometry.x,
+                    spatialReference: 4326
+                },
+
+                attributes
+            })
+            return graphic;
+        })
+
+        var cases = new FeatureLayer({
+            title: 'COVID-19 Cases (By County)',
+            id: 'covidCases',
+            // definitionExpression: `Province_State = 'Arizona'`,
+            popupTemplate: {
+                title: '{Admin2} County',
+                content: `
+            <b>Confirmed Cases:</b> {Confirmed} <br>
+            <b>Deaths:</b>  {Deaths} <br>
+            <b>Active Cases:</b> {Active}
+            `
+            },
+            source,
+            spatialReference: {
+                wkid: 4326
+            },
+            fields: [{
+                name: 'id',
+                type: 'single'
+            }, {
+                name: 'Admin2',
+                type: 'string'
+            }, {
+                name: 'Confirmed',
+                type: 'single'
+            }, {
+                name: 'Deaths',
+                type: 'single'
+            }, {
+                name: 'Active',
+                type: 'single'
+            }],
+
+            objectIdField: "ID",
+            renderer: {
+                type: 'simple',
+                field: 'Confirmed',
+                symbol: {
+                    type: "simple-marker",
+                    style: "circle",
+                    color: "blue",
+                    size: "8px",
+                    outline: {
+                        color: [0, 0, 255],
+                        width: 1
+                    }
+                },
+                visualVariables: [{
+                    type: "size",
+                    field: "Confirmed",
+                    stops: [
+                        { value: 0, size: 8, label: "<15" },
+                        { value: 15, size: 12, label: "<30" },
+                        { value: 30, size: 15, label: ">60" },
+                        { value: 60, size: 20, label: ">100" },
+                        { value: 100, size: 28, label: "100+" }
+                    ]
+                }]
+            },
+            labelingInfo: [{
+                labelPlacement: "above-right",
+                labelExpressionInfo: {
+                    expression: "$feature.Admin2 + ' (' + $feature.Confirmed + ' Cases)'"
+                },
+                symbol: {
+                    type: "text",
+                    color: "black",
+                    haloSize: 1,
+                    haloColor: "white"
+                },
+                maxScale: 0,
+                minScale: 0,
+            }],
+            visible: false,
+            labelsVisible: true
+        })
+        map.add(cases);
+    }
+
     async function addLayers() {
+
+        await addCovidLayer();
 
         let tractsLayer = new FeatureLayer({
             url: "https://geo.azmag.gov/arcgis/rest/services/maps/HealthData/MapServer/0",
@@ -285,22 +332,6 @@ define([
             opacity: .95
         })
         map.add(tractsLayer);
-
-        // let medicalFacilitiesLayer = new FeatureLayer({
-        //     url: config.mainUrl + 0,
-        //     // definitionExpression: GetQueryStringWhere().include,
-        //     popupTemplate: {
-        //         title: '<div style="display: none;">{*}</div>',
-        //         content: GetMedicalFacilitiesPopup
-        //     },
-        //     opacity: .9,
-        //     id: 'medicalFacilities',
-        //     featureReduction: {
-        //         type: "selection"
-        //     },
-        //     visible: true,
-        //     // renderer: GetRenderer(conf)
-        // })
 
         var feedbackAction = {
             title: "Feedback",
@@ -400,27 +431,6 @@ define([
             }
         });
 
-        // map.add(medicalFacilitiesLayer);
-
-        // let tractsLyrView = await view.whenLayerView(medicalFacilitiesLayer);
-        // let medicalFacilitiesLyrView = await view.whenLayerView(medicalFacilitiesLayer);
-
-        // tractsLyrView
-
-        // let medicalFacilityCategories = await medicalFacilitiesLyrView.queryFeatures({  })
-
-
-
-
-        // $("#layersList").append(`
-        //     <div class="form-check">
-        //         <div class="layerBox">
-        //             <input type="checkbox" ${conf.visible ? 'checked' : ''} class="form-check-input" data-id="${conf.id}" id="cBox${conf.id}">
-        //             <label class="form-check-label" for="cBox${conf.id}">${conf.tocTitle ? conf.tocTitle : conf.title}</label>
-        //         </div>
-        //     </div>
-        // `);
-
         $(".form-check-input").change(function(e) {
             let layId = $(this).data("id");
 
@@ -429,23 +439,11 @@ define([
                 lay.visible = !lay.visible;
             }
         })
-
-        // const graphicsLayer = new GraphicsLayer({
-        //     id: 'graphicsLayer'
-        // });
-        // const graphicsLayer2 = new GraphicsLayer({
-        //     id: 'graphicsLayer2'
-        // });
-
-        // map.add(graphicsLayer2);
-        // map.add(graphicsLayer);
     }
 
     function GetTractsPopup(res) {
 
-        let {
-            attributes
-        } = res.graphic;
+        let { attributes } = res.graphic;
         let {
             TOTAL_POP,
             AGE_0_5,

@@ -30,34 +30,19 @@ define([], function () {
                 visible: true,
                 showToc: false
             },
-            {
-                type: 'feature',
-                title: 'Laboratory',
-                id: 'Laboratory',
-                visible: false,
-                scalable: true,
-                showToc: true,
-                index: 5,
-                uvr: [{
-                    value: 'Laboratory',
-                    label: 'Laboratory',
-                    symbol: {
-                        type: 'picture-marker',
-                        url: "icons/Laboratory.svg"
-                    }
-                }]
-            },
+            
             {
                 type: 'feature',
                 title: 'Residential Facility',
                 id: 'Residential_Facility',
+                definition: 'Facilities intended for long term assistance.',
                 visible: false,
                 scalable: true,
                 showToc: true,
                 index: 4,
                 uvr: [{
                     value: 'AL Center',
-                    label: 'Assisted Living Home',
+                    label: 'Assisted Living Center',
                     symbol: {
                         type: 'picture-marker',
                         url: "icons/AL Center.svg"
@@ -75,6 +60,7 @@ define([], function () {
                 type: 'feature',
                 title: 'Long-Term Care Facility',
                 id: 'Long_Term_Care_Facility',
+                definition: 'Nursing Homes',
                 visible: false,
                 scalable: true,
                 showToc: true,
@@ -90,10 +76,29 @@ define([], function () {
             },
             {
                 type: 'feature',
+                title: 'Testing Facility',
+                id: 'Laboratory',
+                definition: 'Labratories and other medical testing facilities.',
+                visible: false,
+                scalable: true,
+                showToc: true,
+                index: 5,
+                uvr: [{
+                    value: 'Laboratory',
+                    label: 'Testing Facility',
+                    symbol: {
+                        type: 'picture-marker',
+                        url: "icons/Laboratory.svg"
+                    }
+                }]
+            },
+            {
+                type: 'feature',
                 title: 'Medical Facility',
                 id: 'Medical_Facility',
                 visible: true,
                 showToc: true,
+                definition: 'A variety of outpatient treatment facilities',
                 index: 3,
                 uvr: [{
                     value: 'MED - Other',

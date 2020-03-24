@@ -29,7 +29,7 @@ define([
             ]
         },
         Totoal_Pop_Under_Poverty: {
-            title: "Population in Poverty",
+            title: "Population in Poverty (Percentage)",
             cRamp: [
                 [237, 248, 251],
                 [179, 205, 227],
@@ -48,7 +48,7 @@ define([
             <div class="form-check">
                 <div class="layerBox">
                     <input checked type="checkbox" class="popMetricsInput form-check-input" data-field="${key}" id="cBox${key}">
-                    <label class="form-check-label" for="cBox${key}">${conf.title} <i data-toggle="popover" data-content="${conf.definition}" class=" vulnerabilityPopover fas fa-question-circle"></i></label>
+                    <label class="form-check-label" for="cBox${key}">${conf.title}</label> <i data-toggle="popover" data-content="${conf.definition}" class=" vulnerabilityPopover fas fa-question-circle"></i>
                 </div>
             </div>
         `);
@@ -256,10 +256,6 @@ define([
                     renderer: GetUVRRenderer(conf)
                 });
 
-                console.log(GetUVRRenderer(conf));
-
-
-
                 map.add(lyr);
 
                 view.whenLayerView(lyr).then(() => {
@@ -322,7 +318,7 @@ define([
                 <div class="form-check">
                     <div class="layerBox">
                         <input type="checkbox" ${conf.visible ? 'checked' : ''} class="form-check-input" data-id="${conf.id}" id="cBox${conf.id}">
-                        <label class="form-check-label" for="cBox${conf.id}">${conf.title}</label>
+                        <label class="form-check-label" for="cBox${conf.id}">${conf.title}</label> ${conf.definition ? `<i data-toggle="popover" data-content="${conf.definition}" class=" vulnerabilityPopover fas fa-question-circle"></i>` : ''}
                     </div>
                 </div>
                 `);

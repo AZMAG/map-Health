@@ -69,6 +69,14 @@ function startupIntro() {
             Focusable.hide();
         }
     };
-    // Start the tour!
-    hopscotch.startTour(tour);
+
+    if(!localStorage.getItem('toured')){
+        // Start the tour!
+        hopscotch.startTour(tour);
+        localStorage.setItem('toured', true);
+    }
+
+    $(".tutorial-btn").click(() => {
+        hopscotch.startTour(tour);
+    })
 }

@@ -20,7 +20,6 @@ define([
 
             var tt = $(".iconTooltip");
             tt.hide();
-            console.log(filteredGfx);
             if (filteredGfx.length > 0) {
                 let resultGraphic = filteredGfx[0].graphic;
 

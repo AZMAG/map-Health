@@ -8,7 +8,7 @@ define([
     "esri/widgets/Search",
     "esri/tasks/Locator",
     "esri/geometry/Extent"
-], function ({
+], function({
     map,
     view
 }, Zoom, Home, Legend, BasemapToggle, Locate, Search, Locator, Extent) {
@@ -28,6 +28,18 @@ define([
         view,
         nextBasemap: "hybrid"
     });
+
+    
+    basemapToggle.on('toggle', function(event) {
+        const tractsLayer = map.findLayerById("tracts");
+        
+        if (event.current.title === "Imagery with Labels") {
+            tractsLayer.opacity = .5;
+        } else{
+            tractsLayer.opacity = .9;
+        }
+    });
+
     view.ui.add(basemapToggle, "bottom-left");
 
     //Add zoom widget
@@ -68,8 +80,6 @@ define([
             placeholder: '302 N 1st Ave, Phoenix, AZ'
         }]
     });
-
-
 
     //https://community.esri.com/thread/216034-search-widgetin-onfocusout-in-47-causes-error-when-used-with-jquery
     //This is a temporary workaround that prevents an error caused by ESRI's JS Api when used with Jquery.

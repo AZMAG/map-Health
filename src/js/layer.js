@@ -91,6 +91,7 @@ define([
             if (val === 'Covid') {
                 tractsLyr.visible = false;
                 map.findLayerById("covidCases").visible = true;
+                $("#dashboard").show();
             } else {
                 updateTractsRenderer(val);
             }
@@ -98,6 +99,7 @@ define([
             let checked = $(".popMetricsInput:checked").length;
             if (checked === 0) {
                 tractsLyr.visible = false;
+                $("#dashboard").hide();
             }
         }
     });
@@ -332,8 +334,6 @@ define([
     }
 
     async function addLayers() {
-
-
 
         let tractsLayer = new FeatureLayer({
             url: "https://geo.azmag.gov/arcgis/rest/services/maps/HealthData/MapServer/0",

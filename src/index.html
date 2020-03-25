@@ -46,54 +46,22 @@
 
     <div id="dashboard" class="card" role="dialog"></div>
 
-    <div id="basemapToggle" class="customWidget esri-component esri-widget--button esri-widget" role="button"
-        tabindex="0" aria-label="Satellite" title="Satellite">
-
-        <span class="glyphicon glyphicon-picture"> </span>
-        <span class="esri-icon-font-fallback-text">Toggle Basemap</span>
-    </div>
+    <!-- Map -->
     <div id="viewDiv">
         <!-- icon Tooltip -->
         <span class="iconTooltip"><span class="iconTooltiptext"></span></span>
-
     </div>
 
     <div id="feedbackModal" class="modal" tabindex="-1" role="dialog"></div>
 
-
-
-    <div id="splashModal" class="modal" tabindex="-1" role="dialog">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h6 style="font-weight: bold;" class="modal-title">Welcome to the Arizona Heathcare Assets Map</h6>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <ol>
-                        <li>Select your planning area level (TAZ, RAZ, MPA)</li>
-                        <li>Click anywhere on the map to select the area to review</li>
-                        <li>In the popup that has appeared, review the data shown and click the <button
-                                class="btn btn-primary btn-sm">Provide Feedback</button> button to provide feeback.</li>
-                        <li>Submit the feedback form.</li>
-                    </ol>
-                    <hr>
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                </div>
-            </div>
-        </div>
-    </div>
     <div id="reportPanel"><canvas id="chart" class="chart"></canvas></div>
-
-
-    <!--source modal-->
-    <div class="modal fade" id="sourceModal" role="dialog"></div>
 
     <div class="dropdown-menu dropdown-menu-sm" id="context-menu">
         <a class="dropdown-item btn-sm" id="addFeedback" href="#">Add Feedback</a>
     </div>
+
+    <!--source modal-->
+    <div class="modal fade" id="sourceModal" role="dialog"></div>
     <!--contact modal-->
     <div class="modal fade" id="contactModal" role="dialog"></div>
     <!--privacy modal-->

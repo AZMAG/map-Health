@@ -424,27 +424,26 @@ a.modal-anchor.link:hover {
   border-radius: 0;
   border: 1px solid rgba(128, 128, 128, 0.185);
   width: 650px;
-  height: 250px;
+  height: 150px;
   text-align: center;
   padding: 7px;
 }
 
-html {
-  font-size: 14px;
-}
-
 .container {
   display: inline;
-  max-width: 350px;
-  height: 100px;
 }
 
-.pricing-header {
-  max-width: 500px;
+.card-header h6 {
+  font-size: .9rem;
 }
 
-.card-deck .card {
-  max-width: 220px;
+.card-body {
+  -webkit-box-flex: 0;
+      -ms-flex: none;
+          flex: none;
+  padding: .9rem;
+  margin-top: auto;
+  margin-bottom: auto;
 }
 
 html,

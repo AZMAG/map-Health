@@ -53,7 +53,7 @@ define([
             <div class="form-check">
                 <div class="layerBox">
                     <input checked type="checkbox" class="popMetricsInput form-check-input" data-field="${key}" id="cBox${key}">
-                    <label class="form-check-label" for="cBox${key}">${conf.title}</label> <i data-toggle="popover" data-content="${conf.definition}" class=" vulnerabilityPopover fas fa-question-circle"></i>
+                    <label class="form-check-label" for="cBox${key}">${conf.title}</label> <i title=${conf.title} data-toggle="popover" data-content="${conf.definition}" class=" vulnerabilityPopover fas fa-question-circle"></i>
                 </div>
             </div>
         `);
@@ -62,7 +62,7 @@ define([
                 <div class="form-check">
                     <div class="layerBox">
                         <input type="checkbox" class="popMetricsInput form-check-input" data-field="${key}" id="cBox${key}">
-                        <label class="form-check-label" for="cBox${key}">${conf.title}</label> <i data-toggle="popover" data-content="${conf.definition}" class=" vulnerabilityPopover fas fa-question-circle"></i>
+                        <label class="form-check-label" for="cBox${key}">${conf.title}</label> <i title=${conf.title} data-toggle="popover" data-content="${conf.definition}" class=" vulnerabilityPopover fas fa-question-circle"></i>
                     </div>
                 </div>
             `);
@@ -76,12 +76,6 @@ define([
                 </div>
             `);
         }
-    });
-
-
-    $('[data-toggle="popover"]').popover({
-        trigger: "hover",
-        placement: "auto"
     });
 
     $(".popMetricsInput").change(function (e) {
@@ -470,8 +464,9 @@ define([
             }
         })
         $('[data-toggle="popover"]').popover({
-            // trigger: "click",
-            // placement: "auto"
+            trigger: "hover",
+            placement: "right",
+            container: "body"
         });
     }
 

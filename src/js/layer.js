@@ -448,6 +448,8 @@ define([
     function GetTractsPopup(res) {
 
         let { attributes } = res.graphic;
+        console.log(attributes);
+
         let {
             TOTAL_POP,
             AGE_0_5,
@@ -457,7 +459,8 @@ define([
             AGE_55_75,
             AGE_75Plus,
             Roundup_Scale,
-            Totoal_Pop_Under_Poverty
+            Totoal_Pop_Under_Poverty,
+            POP_FOR_POVERTY
         } = attributes;
 
         let vuln = 'High';
@@ -475,6 +478,8 @@ define([
             <b>Vulnerability: </b><span>${vuln}</span>
             <br>
             <b> Population Below Poverty: </b><span>${Totoal_Pop_Under_Poverty}</span>
+            <br>
+            <b> Poverty Percentage: </b><span>${Math.round((Totoal_Pop_Under_Poverty / POP_FOR_POVERTY) * 1000) / 10}%</span>
             <br>
             <div class="popupDetails">
                 <table class="table table-sm">

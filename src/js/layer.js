@@ -53,7 +53,7 @@ define([
             <div class="form-check">
                 <div class="layerBox">
                     <input checked type="checkbox" class="popMetricsInput form-check-input" data-field="${key}" id="cBox${key}">
-                    <label class="form-check-label" for="cBox${key}">${conf.title}</label> <i data-toggle="popover" data-content="${conf.definition}" class=" vulnerabilityPopover fas fa-question-circle"></i>
+                    <label class="form-check-label" for="cBox${key}">${conf.title}</label> <i title=${conf.title} data-toggle="popover" data-content="${conf.definition}" class=" vulnerabilityPopover fas fa-question-circle"></i>
                 </div>
             </div>
         `);
@@ -62,7 +62,7 @@ define([
                 <div class="form-check">
                     <div class="layerBox">
                         <input type="checkbox" class="popMetricsInput form-check-input" data-field="${key}" id="cBox${key}">
-                        <label class="form-check-label" for="cBox${key}">${conf.title}</label> <i data-toggle="popover" data-content="${conf.definition}" class=" vulnerabilityPopover fas fa-question-circle"></i>
+                        <label class="form-check-label" for="cBox${key}">${conf.title}</label> <i title=${conf.title} data-toggle="popover" data-content="${conf.definition}" class=" vulnerabilityPopover fas fa-question-circle"></i>
                     </div>
                 </div>
             `);
@@ -424,9 +424,6 @@ define([
                             </i>` : ''}
                     </div>
                 </div>
-                <button type="button" class="btn btn-secondary" data-toggle="popover" data-placement="right" title="Tooltip on right">
-                Tooltip on right
-                </button>
                 `);
             }
         });
@@ -440,8 +437,9 @@ define([
             }
         })
         $('[data-toggle="popover"]').popover({
-            // trigger: "click",
-            // placement: "auto"
+            trigger: "hover",
+            placement: "right",
+            container: "body"
         });
     }
 

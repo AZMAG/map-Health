@@ -131,10 +131,10 @@ SASS Partials
   background: white;
   border-radius: 0;
   border: 1px solid rgba(128, 128, 128, 0.185);
-  width: 350px;
   text-align: center;
   padding: 7px;
   overflow-y: auto;
+  overflow: visible;
 }
 
 .help-card {

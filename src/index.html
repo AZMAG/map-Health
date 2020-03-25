@@ -46,7 +46,6 @@
 
     <div id="dashboard" class="card" role="dialog"></div>
 
-
     <div id="basemapToggle" class="customWidget esri-component esri-widget--button esri-widget" role="button"
         tabindex="0" aria-label="Satellite" title="Satellite">
 
@@ -88,8 +87,13 @@
     </div>
     <div id="reportPanel"><canvas id="chart" class="chart"></canvas></div>
 
+
     <!--source modal-->
     <div class="modal fade" id="sourceModal" role="dialog"></div>
+
+    <div class="dropdown-menu dropdown-menu-sm" id="context-menu">
+        <a class="dropdown-item btn-sm" id="addFeedback" href="#">Add Feedback</a>
+    </div>
     <!--contact modal-->
     <div class="modal fade" id="contactModal" role="dialog"></div>
     <!--privacy modal-->

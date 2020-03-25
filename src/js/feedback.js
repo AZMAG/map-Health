@@ -51,12 +51,20 @@ define([
         });
     });
 
-    function SetupForm() {
-        let selectedFeature = view.popup.selectedFeature;
-        let attr = selectedFeature.attributes;
-        let lyr = selectedFeature.layer;
-        $feedbackFeature.html(`${lyr.title}:  <strong>${attr["Name"]}</strong>`)
+    function SetupForm(isNew) {
         $feedbackForm[0].reset();
+        if (view.popup.selectedFeature) {
+            let selectedFeature = view.popup.selectedFeature;
+            let attr = selectedFeature.attributes;
+            let lyr = selectedFeature.layer;
+            $feedbackFeature.html(`${lyr.title}:  <strong>${attr["Name"]}</strong>`)
+        }
+        if (isNew) {
+            $feedbackForm.find("#addressContainer").show();
+        } else {
+            $feedbackForm.find("#addressContainer").hide();
+        }
+
         PrePopulateContactInfo();
     }
 
@@ -87,13 +95,20 @@ define([
 
 
     function GetFormData() {
-        let selectedFeature = view.popup.selectedFeature;
-        let attr = selectedFeature.attributes;
-        let lyr = selectedFeature.layer;
+        let layerId = $("#address").val();
+        let dataId = "new";
+
+        if (view.popup.selectedFeature) {
+            let selectedFeature = view.popup.selectedFeature;
+            let attr = selectedFeature.attributes;
+            let lyr = selectedFeature.layer;
+            layerId = lyr.id;
+            dataId = attr["Name"];
+        }
 
         return {
-            dataId: attr["Name"],
-            layerId: lyr.id,
+            dataId,
+            layerId,
             comment: $feedbackText.val(),
             name: $contactName.val(),
             email: $emailAddress.val(),
@@ -103,18 +118,33 @@ define([
 
     view.popup.viewModel.on("trigger-action", function(event) {
         if (event.action.id === "feedback") {
-            SetupForm();
+            SetupForm(false);
             $feedbackModal.modal("show");
         }
     });
 
     view.on("click", clickHandler);
 
-    function clickHandler(event) {
-        if (event.button === 2) {
-            console.log(event);
+    function clickHandler(e) {
+        if (e.button === 2) {
 
+            var top = e.y - 10;
+            var left = e.x;
+
+            $("#context-menu").css({
+                display: "block",
+                top,
+                left
+            })
+        } else {
+            $("#context-menu").hide();
         }
     }
+
+    $("#addFeedback").click(() => {
+        $("#context-menu").hide();
+        SetupForm(true);
+        $feedbackModal.modal("show");
+    })
 
 });

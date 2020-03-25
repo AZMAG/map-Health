@@ -1,0 +1,34 @@
+/****************
+* SASS Dashboard
+*****************/
+
+#dashboard {
+    position: absolute;
+    z-index: 1;
+    margin: 15px;
+    background: white;
+    border-radius: 0;
+    border: 1px solid rgba(128, 128, 128, 0.185);
+    width: 650px;
+    height: 250px;
+    text-align: center;
+    padding: 7px;
+}
+
+html {
+    font-size: 14px;
+}
+
+.container {
+    display: inline;
+    max-width: 350px;
+    height: 100px;
+}
+
+.pricing-header {
+    max-width: 500px;
+}
+
+.card-deck .card {
+    max-width: 220px;
+}

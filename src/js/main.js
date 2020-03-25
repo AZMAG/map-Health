@@ -38,6 +38,11 @@ define([
                 });
             };
 
+            //*** dashboard binding
+            $("#dashboard").load("views/dashboard.html", function () {
+                $("#dashboard").hide();
+            });
+
             //*** feeback binding
             $("#feedbackModal").load("views/modal-feedback.html", function () {
                 require(["mag/feedback"]);

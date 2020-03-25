@@ -1,0 +1,13 @@
+/*******************
+ SASS Popup
+********************/
+
+.esri-popup__header-title {
+    background-color: $modal-head;
+    color: $text-alt;
+
+    &:hover {
+        background-color: $text-alt;
+        color: $modal-head;
+    }
+}

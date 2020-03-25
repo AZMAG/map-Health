@@ -30,7 +30,7 @@ define([], function () {
                 visible: true,
                 showToc: false
             },
-            
+
             {
                 type: 'feature',
                 title: 'Residential Facility',
@@ -78,7 +78,7 @@ define([], function () {
                 type: 'feature',
                 title: 'Testing Facility',
                 id: 'Laboratory',
-                definition: 'Labratories and other medical testing facilities.',
+                definition: 'Laboratories and other medical testing facilities.',
                 visible: false,
                 scalable: true,
                 showToc: true,

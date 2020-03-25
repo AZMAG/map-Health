@@ -17,6 +17,8 @@ define([
             $("#helpInfo").load("views/info-card.html", function () {
                 //*** contact binding
                 $("#contactModal").load("views/modal-contact.html");
+                //*** source binding
+                $("#sourceModal").load("views/modal-source.html");
                 insertFooter();
 
                 $(".infoBtn").click(function () {

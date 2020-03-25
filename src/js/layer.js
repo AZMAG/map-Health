@@ -5,7 +5,7 @@ define([
     "esri/layers/TileLayer",
     "esri/layers/MapImageLayer",
     "esri/layers/GraphicsLayer"
-], function(config, {
+], function (config, {
     map,
     view
 }, FeatureLayer, TileLayer, MapImageLayer, GraphicsLayer) {
@@ -83,7 +83,7 @@ define([
     });
 
 
-    $(".popMetricsInput").change(function(e) {
+    $(".popMetricsInput").change(function (e) {
         let tractsLyr = map.findLayerById("tracts");
         let covidLyr = map.findLayerById("covidCases");
         covidLyr.visible = false;
@@ -114,8 +114,9 @@ define([
         definitionExpression: `Province_State = 'Arizona'`,
         outFields: ["*"],
         popupTemplate: {
-            title: '{Admin2} County',
+            title: 'COVID-19 Cases',
             content: `
+            <h2>{Admin2}County</h2>
             <b>Confirmed Cases:</b> {Confirmed} <br>
             <b>Deaths:</b>  {Deaths} <br>
             <b>Active Cases:</b> {Active}
@@ -137,12 +138,31 @@ define([
             visualVariables: [{
                 type: "size",
                 field: "Confirmed",
-                stops: [
-                    { value: 0, size: 4, label: "<15" },
-                    { value: 15, size: 8, label: "<30" },
-                    { value: 30, size: 12, label: ">60" },
-                    { value: 60, size: 15, label: ">100" },
-                    { value: 100, size: 24, label: "100+" }
+                stops: [{
+                        value: 0,
+                        size: 4,
+                        label: "<15"
+                    },
+                    {
+                        value: 15,
+                        size: 8,
+                        label: "<30"
+                    },
+                    {
+                        value: 30,
+                        size: 12,
+                        label: ">60"
+                    },
+                    {
+                        value: 60,
+                        size: 15,
+                        label: ">100"
+                    },
+                    {
+                        value: 100,
+                        size: 24,
+                        label: "100+"
+                    }
                 ]
             }]
         },
@@ -420,7 +440,7 @@ define([
         //     </div>
         // `);
 
-        $(".form-check-input").change(function(e) {
+        $(".form-check-input").change(function (e) {
             let layId = $(this).data("id");
 
             let lay = map.findLayerById(layId);

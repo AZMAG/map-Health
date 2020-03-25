@@ -23,6 +23,11 @@
     width: 350px;
     text-align: center;
     padding: 7px;
+    overflow-y: auto;
+}
+
+.help-card {
+    padding-bottom: 2px;
 }
 
 .tutorial-btn {
@@ -30,10 +35,6 @@
     right: 30px;
     top: 10px;
     cursor: pointer;
-}
-
-.help-card {
-    padding-bottom: 2px;
 }
 
 .mag-logo {

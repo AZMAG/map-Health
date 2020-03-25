@@ -294,6 +294,10 @@ a.modal-anchor.link:hover {
   float: left;
 }
 
+.mapsIcon {
+  height: 100px;
+}
+
 /*******************
  Footer
 ********************/

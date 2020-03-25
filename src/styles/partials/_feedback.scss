@@ -1,0 +1,60 @@
+/****************
+* SASS Feedback Form
+*****************/
+
+.form-group.required .control-label:after {
+    content: "*";
+    color: red;
+    margin-left: 4px;
+    font-size: 20px;
+}
+
+.form-check {
+    display: flex;
+    margin: 5px;
+    // margin-bottom: 10px;
+    text-align: left;
+    font-size: small;
+}
+
+.successMessage {
+    color: #3c763d;
+    background-color: #dff0d8;
+    border-color: black;
+    font-size: 23px;
+    /* left: 50%; */
+    top: 55px;
+    left: auto;
+    position: absolute;
+    padding: 50px;
+    font-weight: bold;
+    width: 400px;
+    z-index: 1;
+    border-radius: 4px;
+    text-align: center;
+    border: 6px solid;
+    display: none;
+    left: 50%;
+    transform: translate(-50%, 0);
+}
+
+.btnProvideFeedback {
+    margin-bottom: 10px;
+    font-family: $base-font-family;
+}
+
+.dropdown-toggle {
+    background: #6C757D;
+    color: white;
+}
+
+.dropdown-toggle:hover {
+    background: #989ea4;
+    color: white;
+}
+
+.borderArea {
+    border: .2rem solid #e9e9ea;
+    margin: 5px;
+    padding: 10px;
+}

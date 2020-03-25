@@ -1,0 +1,41 @@
+/****************
+* SASS Tooltip
+*****************/
+
+.iconTooltip {
+    position: absolute;
+    z-index: 9999999999;
+    display: none;
+    border-bottom: 1px dotted $tool-tip;
+    /* If you want dots under the hoverable text */
+
+    &:hover {
+        display: none;
+        opacity: 0;
+    }
+
+    .iconTooltiptext {
+        width: 150px;
+        color: $text-white;
+        text-align: center;
+        font-size: 11px;
+        padding: 0px 0;
+        border-radius: 6px;
+        position: absolute;
+        z-index: 1;
+        background-color: $tool-tip;
+        border: 2px solid $tool-tip;
+
+        &::after {
+            content: " ";
+            position: absolute;
+            top: 50%;
+            right: 100%;
+            margin-top: -9px;
+            border-width: 9px;
+            border-style: solid;
+            border-color: transparent $tool-tip transparent transparent;
+        }
+    }
+
+}

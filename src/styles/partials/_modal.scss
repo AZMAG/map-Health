@@ -1,0 +1,95 @@
+/****************
+* SASS modal
+*****************/
+
+.modal-header {
+    // display: inline;
+    background-color: $modal-head;
+    color: $text-alt;
+
+    .close {
+        color: $text-alt;
+    }
+}
+
+.modal-body {
+    color: $text-main;
+    font-size: .85em;
+
+    h4 {
+        color: $text-highlight;
+        font-size: 22px;
+    }
+}
+
+.modalClose {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 12px;
+    padding: 1px 3px;
+    background-color: transparent;
+    cursor: pointer;
+
+    &:active,
+    &:hover {
+        color: $close-hover;
+
+    }
+}
+
+.modal {
+    overflow-y: scroll;
+}
+
+a.modal-anchor.link {
+    cursor: pointer;
+    color: $link-color;
+    text-decoration: none;
+    background-color: transparent;
+
+    &:hover {
+        color: $link-hover;
+        text-decoration: none;
+    }
+}
+
+.panelTitle {
+    display: inline;
+}
+
+.panel-icon {
+    float: left;
+}
+
+.flexCenter {
+    display: flex;
+    align-items: center;
+}
+
+.marginLeft10 {
+    margin-left: 10px;
+}
+
+.btn-group-xs>.btn,
+.btn-xs {
+    padding: .25rem .4rem;
+    font-size: .75rem;
+    line-height: .5;
+    border-radius: .2rem;
+}
+
+.source {
+    float: left;
+}
+
+.mapsIcon {
+    height: 100px;
+}
+
+.sourceLogo {
+    img {
+        width: 110px;
+        padding: 0 5px 0 5px;
+    }
+}

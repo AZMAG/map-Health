@@ -1,0 +1,59 @@
+/****************
+* SASS Report-panel
+*****************/
+
+#reportPanel {
+    display: none;
+    background: #fff;
+    font: "Avenir Next W00";
+    line-height: 1.5em;
+    overflow: auto;
+    padding: 10px;
+    width: 580px;
+    height: 300px;
+}
+
+#helpInfo {
+    position: absolute;
+    z-index: 1;
+    margin: 15px;
+    background: white;
+    border-radius: 0;
+    border: 1px solid rgba(128, 128, 128, 0.185);
+    text-align: center;
+    padding: 7px;
+    overflow-y: auto;
+    overflow: visible;
+}
+
+.help-card {
+    padding-bottom: 2px;
+}
+
+.tutorial-btn {
+    position: absolute;
+    right: 30px;
+    top: 10px;
+    cursor: pointer;
+}
+
+.mag-logo {
+    width: 200px;
+}
+
+.card-title {
+    margin-top: .50rem;
+}
+
+address.mag {
+    font-size: .85em;
+    margin: 0;
+
+    p {
+        margin: 0;
+    }
+
+    .mag-logo {
+        margin-bottom: 5px;
+    }
+}

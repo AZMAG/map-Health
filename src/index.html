@@ -14,123 +14,49 @@
     <!-- endcomments -->
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="url" content="https://geo.azmag.gov/maps/Health/">
-    <meta name="creation-date" content="2019-02-15">
-    <meta name="revision-date" content="">
+    <meta name="creation-date" content="2020-03-16">
+    <meta name="revision-date" content="2020-03-19">
     <link rel="apple-touch-icon" type="image/png" sizes="152x152" href="./img/icon_144.png">
     <link rel="apple-touch-icon" type="image/png" sizes="120x120" href="./img/icon_114.png">
     <link rel="apple-touch-icon" type="image/png" sizes="76x76" href="./img/icon_72.png">
     <link rel="apple-touch-icon" type="image/png" sizes="60x60" href="./img/icon_57.png">
     <link rel="shortcut icon" type="image-favorites-icon" href="./img/icon_57.png">
+
     <link href='https://fonts.googleapis.com/css?family=Poppins' rel='stylesheet'>
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
     <link rel="stylesheet" href="https://js.arcgis.com/4.15/esri/css/main.css">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.0/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.2/css/bootstrap-select.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/10.6.1/css/bootstrap-slider.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/hopscotch/0.3.1/css/hopscotch.min.css" />
     <link rel="stylesheet" type="text/css" media="screen" href="./styles/main.css">
 </head>
 
-<body>
-    <div id="helpInfo" class="card">
-        <div class="card-body">
-            <i class="fas fa-question-circle infoBtn"></i>
-            <img width="60px" src="./img/MagIcon.png" alt="Mag Logo">
-            <h6 class="card-title">Arizona Healthcare Assets Map</h6>
-            <div class="borderArea">
-                <b>Population Metrics</b><br>
-                <div id="populationMetrics">
-
-                </div>
-                <!-- <select class="selectpicker" name="rendererDropdown" id="rendererDropdown">
-                    <option data-title="Vulnerability" value="Vulnerability">Vulnerability</option>
-                    <option value="TOTAL_POP">Total Population</option>
-                    <option data-title="Population in Poverty" value="Totoal_Pop_Under_Poverty">Population in Poverty</option>
-                </select> -->
-            </div>
-            <div class="borderArea">
-                <b>Healthcare Facilities</b>
-                <div id="layersList"></div>
-            </div>
-            <span class="legal">Source: American Community Survey 2014-2018 5 year estimates, Maricopa Association of Governments and Arizona Department of Health Services</span>
-        </div>
+<body data-container="body">
+    <!-- <div class="successMessage"> -->
+    <div class="successMessage alert alert-success" role="alert">
+        Thank you, MAG has received your feedback.
     </div>
+    <!-- </div> -->
+    <!--info card-->
+    <div id="helpInfo" class="card" role="dialog"></div>
+
+    <div id="dashboard" class="card" role="dialog"></div>
+
     <div id="basemapToggle" class="customWidget esri-component esri-widget--button esri-widget" role="button" tabindex="0" aria-label="Satellite" title="Satellite">
 
         <span class="glyphicon glyphicon-picture"> </span>
         <span class="esri-icon-font-fallback-text">Toggle Basemap</span>
     </div>
-    <div id="viewDiv"></div>
+    <div id="viewDiv">
+        <!-- icon Tooltip -->
+        <span class="iconTooltip"><span class="iconTooltiptext"></span></span>
 
-    <div id="contactModal" class="modal" tabindex="-1" role="dialog">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h6 class="modal-title">Contact Information</h6>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <div>
-                        <a class="link" href="http://www.azmag.gov/" target="_blank"><strong>Maricopa Association of
-                                Goverments</strong></a>
-                        <br>302 N 1st Avenue, Suite 300<br>Phoenix, Arizona
-                        85219<br><em class="fas fa-phone"></em>&nbsp;Phone: (602) 254-6300<br>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                </div>
-            </div>
-        </div>
     </div>
 
-    <div id="feedbackModal" class="modal" tabindex="-1" role="dialog">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">Provide Feedback</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <form id="feedbackForm">
-                        <div class="form-group">
-                            <span id="feedbackFeature"></span>
-                        </div>
-                        <div class="form-group required">
-                            <label class="control-label" for="feedbackText">Feedback</label>
-                            <textarea required class="form-control" id="feedbackText" rows="3"></textarea>
-                        </div>
-                        <div class="form-group">
-                            <label for="fileControl">Attach a file</label>
-                            <input type="file" name="image1" class="form-control-file" id="fileControl">
-                        </div>
-                        <hr>
-                        <b>Contact info</b>
-                        <br>
-                        <div class="form-group required">
-                            <label class="control-label" for="contactName">Name</label>
-                            <input required class="form-control" id="contactName" placeholder="John Doe">
-                        </div>
-                        <div class="form-group required">
-                            <label class="control-label" for="emailAddress">Email address</label>
-                            <input required type="email" class="form-control" id="emailAddress" placeholder="name@example.com">
-                        </div>
-                        <div class="form-group">
-                            <label for="phoneNumber">Phone</label>
-                            <input class="form-control" id="phoneNumber" placeholder="(602) 254-6300">
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                            <button type="submit" class="btn btn-primary">Submit</button>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
+    <div id="feedbackModal" class="modal" tabindex="-1" role="dialog"></div>
+
+
 
     <div id="splashModal" class="modal" tabindex="-1" role="dialog">
         <div class="modal-dialog" role="document">
@@ -156,41 +82,51 @@
     </div>
     <div id="reportPanel"><canvas id="chart" class="chart"></canvas></div>
 
+
+    <!--source modal-->
+    <div class="modal fade" id="sourceModal" role="dialog"></div>
+
+    <div class="dropdown-menu dropdown-menu-sm" id="context-menu">
+        <a class="dropdown-item btn-sm" id="addFeedback" href="#">Add Feedback</a>
+    </div>
+    <!--contact modal-->
+    <div class="modal fade" id="contactModal" role="dialog"></div>
+    <!--privacy modal-->
+    <div class="modal fade" id="privacyModal" role="dialog"></div>
+    <!--terms modal-->
+    <div class="modal fade" id="termsModal" role="dialog"></div>
+    <!--legal modal-->
+    <div class="modal fade" id="legalModal" role="dialog"></div>
+
+
     <!-- Polyfills -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-polyfill/7.2.5/polyfill.min.js"></script>
 
     <!-- Vendor JS Scripts-->
     <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.0/js/bootstrap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.2/js/bootstrap-select.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/10.6.1/bootstrap-slider.min.js"></script>
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/focusable/1.0.0/focus-element-overlay.min.js"></script> -->
+    <script src="./js/focusable.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/hopscotch/0.3.1/js/hopscotch.min.js"></script>
     <script>
         var dojoConfig = {
             packages: [{
                 name: 'mag',
-                location: location.pathname.replace(/\/[^/]+$/, '') + '/js'
+                location: location.pathname.replace(/\/[^/]+$/, '') + './js'
             }]
         };
     </script>
 
     <script src="https://js.arcgis.com/4.15/"></script>
 
-    <!-- comments:comment html -->
-    <!-- <script src="./js/config.js"></script>
-    <script src="./js/utilities.js"></script>
-    <script src="./js/widgets.js"></script>
-    <script src="./js/layer.js"></script>
-    <script src="./js/report.js"></script> -->
-    <!-- endcomments -->
+
     <script>
         require(["mag/main"], function(mag) {});
     </script>
-    <!-- <script src="./js/main.js"></script> -->
 
-    <!-- comments:uncomment-block html -->
-    <!-- <script src="./js/main.js"></script> -->
-    <!-- endcomments -->
 
     <!-- Google Analytics -->
     <!-- comments:uncomment-block html -->

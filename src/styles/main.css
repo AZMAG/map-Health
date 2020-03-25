@@ -1,5 +1,5 @@
 /***************
-*  SASS Main 
+*  SASS Main
 ****************/
 /****************
 * SASS Modules
@@ -10,8 +10,8 @@
 /****************
 * SASS Typography
 *****************/
-/* 
-SASS Partials 
+/*
+SASS Partials
 */
 /****************
 * SASS Widgets
@@ -110,75 +110,9 @@ SASS Partials
   font-weight: 900;
 }
 
-html,
-body,
-#viewDiv {
-  padding: 0;
-  margin: 0;
-  height: 100%;
-  width: 100%;
-}
-
-body {
-  font-family: "Poppins", sans-serif;
-  -webkit-font-smoothing: subpixel-antialiased;
-}
-
-.legal {
-  font-size: x-small;
-}
-
-#helpInfo {
-  position: absolute;
-  z-index: 1;
-  margin: 20px;
-  background: white;
-  border-radius: 10px;
-  border: 1px solid rgba(128, 128, 128, 0.185);
-  width: 350px;
-  text-align: center;
-  padding: 10px;
-}
-
-.slider-selection {
-  background: #BABABA;
-}
-
-.infoBtn {
-  position: absolute;
-  right: 10px;
-  top: 10px;
-  cursor: pointer;
-}
-
-.table {
-  margin-top: 7px;
-}
-
-.table tr {
-  font-size: 11.5px;
-}
-
-#layerChoice {
-  margin-top: 10px;
-}
-
-.form-group.required .control-label:after {
-  content: "*";
-  color: red;
-  margin-left: 4px;
-  font-size: 20px;
-}
-
-.flexCenter {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
-}
-
+/****************
+* SASS Report-panel
+*****************/
 #reportPanel {
   display: none;
   background: #fff;
@@ -190,8 +124,228 @@ body {
   height: 300px;
 }
 
+#helpInfo {
+  position: absolute;
+  z-index: 1;
+  margin: 15px;
+  background: white;
+  border-radius: 0;
+  border: 1px solid rgba(128, 128, 128, 0.185);
+  text-align: center;
+  padding: 7px;
+  overflow-y: auto;
+  overflow: visible;
+}
+
+.help-card {
+  padding-bottom: 2px;
+}
+
+.tutorial-btn {
+  position: absolute;
+  right: 30px;
+  top: 10px;
+  cursor: pointer;
+}
+
+.mag-logo {
+  width: 200px;
+}
+
+.card-title {
+  margin-top: .50rem;
+}
+
+address.mag {
+  font-size: .85em;
+  margin: 0;
+}
+
+address.mag p {
+  margin: 0;
+}
+
+address.mag .mag-logo {
+  margin-bottom: 5px;
+}
+
+/****************
+* SASS Tooltip
+*****************/
+.iconTooltip {
+  position: absolute;
+  z-index: 9999999999;
+  display: none;
+  border-bottom: 1px dotted #1c314a;
+  /* If you want dots under the hoverable text */
+}
+
+.iconTooltip:hover {
+  display: none;
+  opacity: 0;
+}
+
+.iconTooltip .iconTooltiptext {
+  width: 150px;
+  color: #ffffff;
+  text-align: center;
+  font-size: 11px;
+  padding: 0px 0;
+  border-radius: 6px;
+  position: absolute;
+  z-index: 1;
+  background-color: #1c314a;
+  border: 2px solid #1c314a;
+}
+
+.iconTooltip .iconTooltiptext::after {
+  content: " ";
+  position: absolute;
+  top: 50%;
+  right: 100%;
+  margin-top: -9px;
+  border-width: 9px;
+  border-style: solid;
+  border-color: transparent #1c314a transparent transparent;
+}
+
+/****************
+* SASS modal
+*****************/
+.modal-header {
+  background-color: #1c314a;
+  color: #ccd1d6;
+}
+
+.modal-header .close {
+  color: #ccd1d6;
+}
+
+.modal-body {
+  color: #35373d;
+  font-size: .85em;
+}
+
+.modal-body h4 {
+  color: #1c314a;
+  font-size: 22px;
+}
+
+.modalClose {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  font-size: 12px;
+  padding: 1px 3px;
+  background-color: transparent;
+  cursor: pointer;
+}
+
+.modalClose:active, .modalClose:hover {
+  color: #777777;
+}
+
+.modal {
+  overflow-y: scroll;
+}
+
+a.modal-anchor.link {
+  cursor: pointer;
+  color: #007bff;
+  text-decoration: none;
+  background-color: transparent;
+}
+
+a.modal-anchor.link:hover {
+  color: #0056b3;
+  text-decoration: none;
+}
+
+.panelTitle {
+  display: inline;
+}
+
+.panel-icon {
+  float: left;
+}
+
+.flexCenter {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
 .marginLeft10 {
   margin-left: 10px;
+}
+
+.btn-group-xs > .btn,
+.btn-xs {
+  padding: .25rem .4rem;
+  font-size: .75rem;
+  line-height: .5;
+  border-radius: .2rem;
+}
+
+.source {
+  float: left;
+}
+
+.mapsIcon {
+  height: 100px;
+}
+
+.sourceLogo img {
+  width: 110px;
+  padding: 0 5px 0 5px;
+}
+
+/*******************
+ Footer
+********************/
+.footerLinks {
+  text-align: center;
+  font-size: 10px;
+}
+
+.footerLinks p {
+  margin-bottom: .5rem;
+}
+
+.footer-section {
+  margin: 15px 0 0 0;
+}
+
+/*******************
+ Legend
+********************/
+.esri-ui-corner .esri-component.esri-widget--panel {
+  width: 260px;
+}
+
+.esri-legend__service {
+  padding: 12px 15px 0 15px;
+}
+
+.esri-legend__layer-table {
+  margin-bottom: 6px;
+}
+
+.esri-legend__layer-cell {
+  padding: 2px 7px;
+}
+
+/****************
+* SASS Feedback Form
+*****************/
+.form-group.required .control-label:after {
+  content: "*";
+  color: red;
+  margin-left: 4px;
+  font-size: 20px;
 }
 
 .form-check {
@@ -199,7 +353,6 @@ body {
   display: -ms-flexbox;
   display: flex;
   margin: 5px;
-  margin-bottom: 10px;
   text-align: left;
   font-size: small;
 }
@@ -245,6 +398,112 @@ body {
   border: .2rem solid #e9e9ea;
   margin: 5px;
   padding: 10px;
+}
+
+/*******************
+ SASS Popup
+********************/
+.esri-popup__header-title {
+  background-color: #1c314a;
+  color: #ccd1d6;
+}
+
+.esri-popup__header-title:hover {
+  background-color: #ccd1d6;
+  color: #1c314a;
+}
+
+/****************
+* SASS Dashboard
+*****************/
+#dashboard {
+  position: absolute;
+  z-index: 1;
+  margin: 15px;
+  background: white;
+  border-radius: 0;
+  border: 1px solid rgba(128, 128, 128, 0.185);
+  width: 650px;
+  height: 250px;
+  text-align: center;
+  padding: 7px;
+}
+
+html {
+  font-size: 14px;
+}
+
+.container {
+  display: inline;
+  max-width: 350px;
+  height: 100px;
+}
+
+.pricing-header {
+  max-width: 500px;
+}
+
+.card-deck .card {
+  max-width: 220px;
+}
+
+html,
+body,
+#viewDiv {
+  padding: 0;
+  margin: 0;
+  height: 100%;
+  width: 100%;
+}
+
+body {
+  font-family: "Poppins", sans-serif;
+  -webkit-font-smoothing: subpixel-antialiased;
+}
+
+div.hopscotch-bubble .hopscotch-nav-button.next,
+div.hopscotch-bubble .hopscotch-nav-button.prev,
+#skipTourBtn {
+  color: #fff;
+  background-color: #6c757d;
+  border-color: #6c757d;
+  background-image: none;
+}
+
+div.hopscotch-bubble .hopscotch-nav-button.next:hover,
+div.hopscotch-bubble .hopscotch-nav-button.prev:hover,
+#skipTourBtn:hover {
+  color: #fff;
+  background-color: #60686f;
+  border-color: #6c757d;
+  background-image: none;
+}
+
+.legal {
+  font-size: x-small;
+}
+
+.slider-selection {
+  background: #BABABA;
+}
+
+.infoBtn {
+  position: absolute;
+  right: 10px;
+  top: 10px;
+  cursor: pointer;
+}
+
+.table {
+  margin-top: 7px;
+}
+
+.table tr {
+  font-size: 11.5px;
+}
+
+#layerChoice {
+  margin-top: 10px;
 }
 
 .esri-view .esri-view-surface--inset-outline:focus::after {

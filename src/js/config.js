@@ -1,7 +1,8 @@
-define([], function() {
+define([], function () {
     return {
-        mainUrl: "https://services1.arcgis.com/mpVYz37anSdrK4d8/arcgis/rest/services/AZLicensedFacilities/FeatureServer/",
-        // mainUrl: "https://geo.azmag.gov/arcgis/rest/services/maps/HealthData/MapServer/",
+        // mainUrl: "https://services1.arcgis.com/mpVYz37anSdrK4d8/arcgis/rest/services/AZLicensedFacilities/FeatureServer/",
+        mainUrl: "https://geo.azmag.gov/arcgis/rest/services/maps/HealthData/MapServer/",
+        feedbackUrl: "https://geo.azmag.gov/services/HealthcareFeedback/Feedback/SendFeedback",
         initExtent: {
             xmin: -12975596.092135236,
             ymin: 3773390.176100314,
@@ -11,6 +12,9 @@ define([], function() {
                 wkid: 102100
             }
         },
+
+        version: 'v0.0.3 | 2020-03-23',
+        copyright: '2020',
 
         breaks: {
             "TOTAL_POP": [0, 2879, 4487, 6170, 8907, 17951],
@@ -26,64 +30,67 @@ define([], function() {
                 visible: true,
                 showToc: false
             },
-            // {
-            //     type: "feature",
-            //     opacity: .5,
-            //     url: "https://geo.azmag.gov/arcgis/rest/services/maps/HealthData/MapServer/0",
-            //     // index: 0,
-            //     title: "Tracts",
-            //     tocTitle: `Vulnerability <span><i class="fas fa-question-circle infoBtn"></i></span>`,
-            //     id: "Vulnerability",
-            //     visible: true,
-            //     showToc: false,
-            //     backgroundLayer: true
-            // },
-            // {
-            //     type: 'feature',
-            //     title: 'Hospital Locations',
-            //     visible: true,
-            //     showToc: true,
-            //     index: 1
-            // },
-            // {
-            //     type: 'feature',
-            //     title: 'Radiation Control Facility',
-            //     id: 'Radiation_Control_Facility',
-            //     visible: false,
-            //     showToc: true,
-            //     index: 8
-            // }, 
-            // {
-            //     type: 'feature',
-            //     title: 'DUI and/or Domestic Violence Treatment Center',
-            //     id: 'DUI_and_or_Domestic_Violence_Treatment_Center',
-            //     visible: false,
-            //     showToc: true,
-            //     index: 7
-            // },
-            //  {
-            //     type: 'feature',
-            //     title: 'Business Hearing Aid Dispenser',
-            //     id: 'Business_Hearing_Aid_Dispenser',
-            //     visible: false,
-            //     showToc: true,
-            //     index: 6
-            // }, 
-            // {
-            //     type: 'feature',
-            //     title: 'Group Home for Individuals with a Developmental Disability',
-            //     id: 'Group_Home_for_Individuals_with_a_Developmental_Disability',
-            //     visible: false,
-            //     showToc: true,
-            //     index: 5
-            // }, 
+
             {
                 type: 'feature',
-                title: 'Hospital',
-                id: 'Hospital',
-                visible: true,
+                title: 'Residential Facility',
+                id: 'Residential_Facility',
+                definition: 'Facilities intended for long term assistance.',
+                visible: false,
+                scalable: true,
                 showToc: true,
-                index: 0
+                index: 4,
+                uvr: [{
+                    value: 'AL Center',
+                    label: 'Assisted Living Center',
+                    symbol: {
+                        type: 'picture-marker',
+                        url: "icons/AL Center.svg"
+                    }
+                }, {
+                    value: 'AL Home',
+                    label: 'Assisted Living Home',
+                    symbol: {
+                        type: 'picture-marker',
+                        url: "icons/AL Home.svg"
+                    }
+                }]
+            },
+            {
+                type: 'feature',
+                title: 'Long-Term Care Facility',
+                id: 'Long_Term_Care_Facility',
+                definition: 'Nursing Homes',
+                visible: false,
+                scalable: true,
+                showToc: true,
+                index: 2,
+                uvr: [{
+                    value: 'NH',
+                    label: 'Nursing Home',
+                    symbol: {
+                        type: 'picture-marker',
+                        url: "icons/NH_1.svg"
+                    }
+                }]
+            },
+            {
+                type: 'feature',
+                title: 'Testing Facility',
+                id: 'Laboratory',
+                definition: 'Laboratories and other medical testing facilities.',
+                visible: false,
+                scalable: true,
+                showToc: true,
+                index: 5,
+                uvr: [{
+                    value: 'Laboratory',
+                    label: 'Testing Facility',
+                    symbol: {
+                        type: 'picture-marker',
+                        url: "icons/Laboratory.svg"
+                    }
+                }]
             },
             {
                 type: 'feature',
@@ -91,35 +98,55 @@ define([], function() {
                 id: 'Medical_Facility',
                 visible: true,
                 showToc: true,
-                index: 2
+                definition: 'A variety of outpatient treatment facilities',
+                index: 3,
+                uvr: [{
+                    value: 'MED - Other',
+                    label: 'Other Medical Facility',
+                    symbol: {
+                        type: 'picture-marker',
+                        url: "icons/MED.svg"
+                    }
+                }, {
+                    value: 'OSC',
+                    label: 'Outpatient Surgery Center',
+                    symbol: {
+                        type: 'picture-marker',
+                        url: "icons/OSC.svg"
+                    }
+                }, {
+                    value: 'OTC',
+                    label: 'Outpatient Treatment Center',
+                    symbol: {
+                        type: 'picture-marker',
+                        url: "icons/OTC.svg"
+                    }
+                }, {
+                    value: 'BH',
+                    label: 'Behavioral Health Facility',
+                    symbol: {
+                        type: 'picture-marker',
+                        url: "icons/BH.svg"
+                    }
+                }]
             },
             {
                 type: 'feature',
-                title: 'Residential Facility',
-                id: 'Residential_Facility',
-                visible: false,
+                title: 'Hospital',
+                id: 'Hospital',
+                visible: true,
+                scalable: true,
                 showToc: true,
-                index: 4
-            },
-
-            // {
-            //     type: 'feature',
-            //     title: 'Child Care Facility',
-            //     id: 'Child_Care_Facility',
-            //     visible: false,
-            //     showToc: true,
-            //     index: 3
-            // }, 
-
-            {
-                type: 'feature',
-                title: 'Long-Term Care Facility',
-                id: 'Long_Term_Care_Facility',
-                visible: false,
-                showToc: true,
-                index: 1
+                index: 1,
+                uvr: [{
+                    value: 'HOSPITAL',
+                    label: 'Hospital',
+                    symbol: {
+                        type: 'picture-marker',
+                        url: "icons/HOSPITAL.svg"
+                    }
+                }]
             }
-
         ]
     }
 });

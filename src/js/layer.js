@@ -30,7 +30,7 @@ define([
             ]
         },
         Totoal_Pop_Under_Poverty: {
-            title: "Population in Poverty (Percentage)",
+            title: "Population in Poverty",
             cRamp: [
                 [237, 248, 251],
                 [179, 205, 227],
@@ -266,6 +266,7 @@ define([
             }],
 
             objectIdField: "ID",
+            opacity: .35,
             renderer: {
                 type: 'simple',
                 field: 'Confirmed',
@@ -284,27 +285,27 @@ define([
                     field: "Confirmed",
                     stops: [{
                             value: 0,
-                            size: 8,
+                            size: 15,
                             label: "<15"
                         },
                         {
                             value: 15,
-                            size: 12,
+                            size: 30,
                             label: "<30"
                         },
                         {
                             value: 30,
-                            size: 15,
+                            size: 45,
                             label: ">60"
                         },
                         {
                             value: 60,
-                            size: 20,
+                            size: 60,
                             label: ">100"
                         },
                         {
                             value: 100,
-                            size: 28,
+                            size: 75,
                             label: "100+"
                         }
                     ]
@@ -332,7 +333,7 @@ define([
 
     async function addLayers() {
 
-        await addCovidLayer();
+
 
         let tractsLayer = new FeatureLayer({
             url: "https://geo.azmag.gov/arcgis/rest/services/maps/HealthData/MapServer/0",
@@ -448,12 +449,10 @@ define([
                             </i>` : ''}
                     </div>
                 </div>
-                <button type="button" class="btn btn-secondary" data-toggle="popover" data-placement="right" title="Tooltip on right">
-                Tooltip on right
-                </button>
                 `);
             }
         });
+        await addCovidLayer();
 
         $(".form-check-input").change(function (e) {
             let layId = $(this).data("id");
@@ -475,6 +474,8 @@ define([
         let {
             attributes
         } = res.graphic;
+        console.log(attributes);
+
         let {
             TOTAL_POP,
             AGE_0_5,
@@ -484,7 +485,8 @@ define([
             AGE_55_75,
             AGE_75Plus,
             Roundup_Scale,
-            Totoal_Pop_Under_Poverty
+            Totoal_Pop_Under_Poverty,
+            POP_FOR_POVERTY
         } = attributes;
 
         let vuln = 'High';
@@ -502,6 +504,8 @@ define([
             <b>Vulnerability: </b><span>${vuln}</span>
             <br>
             <b> Population Below Poverty: </b><span>${Totoal_Pop_Under_Poverty}</span>
+            <br>
+            <b> Poverty Percentage: </b><span>${Math.round((Totoal_Pop_Under_Poverty / POP_FOR_POVERTY) * 1000) / 10}%</span>
             <br>
             <div class="popupDetails">
                 <table class="table table-sm">

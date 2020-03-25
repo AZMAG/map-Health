@@ -68,5 +68,5 @@ define([
     return {
         map,
         view
-    }
+    };
 });

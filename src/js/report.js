@@ -9,7 +9,10 @@
             "esri/widgets/Expand",
             "esri/core/watchUtils",
             "dojo/topic"
-        ], function({ map, view },
+        ], function ({
+                map,
+                view
+            },
             SketchViewModel,
             Polyline,
             Point,
@@ -56,7 +59,7 @@
                 //         }
                 //     );
 
-                view.when(function() {
+                view.when(function () {
                     drawBufferPolygon();
                     graphicsLayer.visible = false;
                     graphicsLayer2.visible = false;
@@ -77,7 +80,7 @@
                             toggleReport(false);
                         }
 
-                    })
+                    });
 
                     $("#reportPanel").show();
 
@@ -205,7 +208,7 @@
                 // Query the features on the client using FeatureLayerView.queryFeatures
                 return featureLayerView
                     .queryFeatures(query)
-                    .then(function(results) {
+                    .then(function (results) {
                         // Statistics query returns a feature with 'stats' as attributes
                         const attributes = results.features[0].attributes;
                         // Loop through attributes and save the values for use in the population pyramid.
@@ -221,7 +224,7 @@
                         // Return information, seperated by gender
                         return [femaleAgeData, maleAgeData];
                     })
-                    .catch(function(error) {
+                    .catch(function (error) {
                         console.log(error);
                     });
             }
@@ -319,7 +322,7 @@
                     // once center and edge point graphics are added to the layer,
                     // call sketch's update method pass in the graphics so that users
                     // can just drag these graphics to adjust the buffer
-                    setTimeout(function() {
+                    setTimeout(function () {
                         sketchViewModel.update([edgeGraphic, centerGraphic], {
                             tool: "move"
                         });

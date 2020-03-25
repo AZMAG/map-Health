@@ -6,7 +6,7 @@ define([
     "esri/layers/MapImageLayer",
     "esri/layers/GraphicsLayer",
     "esri/Graphic"
-], function(config, {
+], function (config, {
     map,
     view
 }, FeatureLayer, TileLayer, MapImageLayer, GraphicsLayer, Graphic) {
@@ -78,7 +78,7 @@ define([
         }
     });
 
-    $(".popMetricsInput").change(function(e) {
+    $(".popMetricsInput").change(function (e) {
         $("#context-menu").hide();
         let tractsLyr = map.findLayerById("tracts");
         let covidLyr = map.findLayerById("covidCases");
@@ -110,7 +110,7 @@ define([
                 field: "Roundup_Scale_2Pop",
                 type: "class-breaks",
                 classBreakInfos: GetVulnerabilityCB()
-            }
+            };
             lyr.title = "Vulnerability";
         } else {
             let conf = popMetricsConf[val];
@@ -118,11 +118,11 @@ define([
                 type: "class-breaks",
                 field: val,
                 classBreakInfos: GetClassBreaks(config.breaks[val], conf.cRamp)
-            }
+            };
             lyr.title = conf.title;
         }
 
-    };
+    }
 
     function GetVulnerabilityCB() {
         let cbrInfos = [{
@@ -199,16 +199,21 @@ define([
             type: "unique-value",
             field: "Icon_Category",
             uniqueValueInfos: conf.uvr
-        }
+        };
     }
 
     async function addCovidLayer() {
         let queryAllUrl = "https://services1.arcgis.com/0MSEUqKaxRlEPj5g/ArcGIS/rest/services/ncov_cases_US/FeatureServer/0/query?where=Province_State+%3D+%27Arizona%27&outFields=*&f=json";
 
         let res = await fetch(queryAllUrl);
-        let { features } = await res.json();
+        let {
+            features
+        } = await res.json();
 
-        let source = features.map(({ attributes, geometry }) => {
+        let source = features.map(({
+            attributes,
+            geometry
+        }) => {
 
             if (attributes["Admin2"] === "Maricopa") {
                 geometry.y = 33.45;
@@ -223,9 +228,9 @@ define([
                 },
 
                 attributes
-            })
+            });
             return graphic;
-        })
+        });
 
         var cases = new FeatureLayer({
             title: 'COVID-19 Cases (By County)',
@@ -278,12 +283,31 @@ define([
                 visualVariables: [{
                     type: "size",
                     field: "Confirmed",
-                    stops: [
-                        { value: 0, size: 15, label: "<15" },
-                        { value: 15, size: 30, label: "<30" },
-                        { value: 30, size: 45, label: ">60" },
-                        { value: 60, size: 60, label: ">100" },
-                        { value: 100, size: 75, label: "100+" }
+                    stops: [{
+                            value: 0,
+                            size: 15,
+                            label: "<15"
+                        },
+                        {
+                            value: 15,
+                            size: 30,
+                            label: "<30"
+                        },
+                        {
+                            value: 30,
+                            size: 45,
+                            label: ">60"
+                        },
+                        {
+                            value: 60,
+                            size: 60,
+                            label: ">100"
+                        },
+                        {
+                            value: 100,
+                            size: 75,
+                            label: "100+"
+                        }
                     ]
                 }]
             },
@@ -303,7 +327,7 @@ define([
             }],
             visible: false,
             labelsVisible: true
-        })
+        });
         map.add(cases);
     }
 
@@ -325,7 +349,7 @@ define([
             id: 'tracts',
             title: 'Vulnerability',
             opacity: .95
-        })
+        });
         map.add(tractsLayer);
 
         var feedbackAction = {
@@ -419,8 +443,8 @@ define([
                 <div class="form-check">
                     <div class="layerBox">
                         <input type="checkbox" ${conf.visible ? 'checked' : ''} class="form-check-input" data-id="${conf.id}" id="cBox${conf.id}">
-                        <label class="form-check-label" for="cBox${conf.id}">${conf.title}</label> ${conf.definition ? 
-                            `<i data-toggle="popover" data-placement="right" 
+                        <label class="form-check-label" for="cBox${conf.id}">${conf.title}</label> ${conf.definition ?
+                            `<i data-toggle="popover" data-placement="right"
                                 data-content="${conf.definition}" class="fas fa-question-circle" title="${conf.title}">
                             </i>` : ''}
                     </div>
@@ -430,7 +454,7 @@ define([
         });
         await addCovidLayer();
 
-        $(".form-check-input").change(function(e) {
+        $(".form-check-input").change(function (e) {
             let layId = $(this).data("id");
 
             let lay = map.findLayerById(layId);
@@ -447,7 +471,9 @@ define([
 
     function GetTractsPopup(res) {
 
-        let { attributes } = res.graphic;
+        let {
+            attributes
+        } = res.graphic;
         console.log(attributes);
 
         let {

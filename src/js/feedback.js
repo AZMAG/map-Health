@@ -1,7 +1,7 @@
 define([
     'mag/map',
     'mag/config'
-], function({
+], function ({
     view
 }, config) {
 
@@ -21,13 +21,13 @@ define([
     const $emailAddress = $("#emailAddress");
     const $phoneNumber = $("#phoneNumber");
 
-    $("body").on("click", ".btnProvideFeedback", function() {
+    $("body").on("click", ".btnProvideFeedback", function () {
         $(".iconTooltip").hide();
         SetupForm();
         $feedbackModal.modal("show");
     });
 
-    $feedbackForm.submit(function(e) {
+    $feedbackForm.submit(function (e) {
         e.preventDefault();
 
         let data = GetFormData();
@@ -38,14 +38,14 @@ define([
             },
             method: "POST",
             body: JSON.stringify(data)
-        })
+        });
 
         UpdateStoredContact(data);
 
         $feedbackModal.modal("hide");
-        $successMessage.fadeIn(300, function() {
+        $successMessage.fadeIn(300, function () {
             var message = this;
-            setTimeout(function() {
+            setTimeout(function () {
                 $(message).fadeOut(500);
             }, 3000);
         });
@@ -57,7 +57,7 @@ define([
             let selectedFeature = view.popup.selectedFeature;
             let attr = selectedFeature.attributes;
             let lyr = selectedFeature.layer;
-            $feedbackFeature.html(`${lyr.title}:  <strong>${attr["Name"]}</strong>`)
+            $feedbackFeature.html(`${lyr.title}:  <strong>${attr["Name"]}</strong>`);
         }
         if (isNew) {
             $feedbackForm.find("#addressContainer").show();
@@ -113,10 +113,10 @@ define([
             name: $contactName.val(),
             email: $emailAddress.val(),
             phone: $phoneNumber.val()
-        }
+        };
     }
 
-    view.popup.viewModel.on("trigger-action", function(event) {
+    view.popup.viewModel.on("trigger-action", function (event) {
         if (event.action.id === "feedback") {
             SetupForm(false);
             $feedbackModal.modal("show");
@@ -135,7 +135,7 @@ define([
                 display: "block",
                 top,
                 left
-            })
+            });
         } else {
             $("#context-menu").hide();
         }
@@ -145,6 +145,6 @@ define([
         $("#context-menu").hide();
         SetupForm(true);
         $feedbackModal.modal("show");
-    })
+    });
 
 });

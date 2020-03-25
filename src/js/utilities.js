@@ -33,7 +33,7 @@ function GetQueryStringWhere(mpa) {
 }
 
 function GetCOG() {
-    let lowerUrl = location.pathname.toLowerCase()
+    let lowerUrl = location.pathname.toLowerCase();
     if (lowerUrl.indexOf('mag') > -1) {
         return 'MAG';
     } else if (lowerUrl.indexOf('cag') > -1) {

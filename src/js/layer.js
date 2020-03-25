@@ -110,7 +110,7 @@ define([
                 field: "Roundup_Scale_2Pop",
                 type: "class-breaks",
                 classBreakInfos: GetVulnerabilityCB()
-            }
+            };
             lyr.title = "Vulnerability";
         } else {
             let conf = popMetricsConf[val];
@@ -118,11 +118,11 @@ define([
                 type: "class-breaks",
                 field: val,
                 classBreakInfos: GetClassBreaks(config.breaks[val], conf.cRamp)
-            }
+            };
             lyr.title = conf.title;
         }
 
-    };
+    }
 
     function GetVulnerabilityCB() {
         let cbrInfos = [{
@@ -199,7 +199,7 @@ define([
             type: "unique-value",
             field: "Icon_Category",
             uniqueValueInfos: conf.uvr
-        }
+        };
     }
 
     async function addCovidLayer() {
@@ -228,9 +228,9 @@ define([
                 },
 
                 attributes
-            })
+            });
             return graphic;
-        })
+        });
 
         var cases = new FeatureLayer({
             title: 'COVID-19 Cases (By County)',
@@ -327,7 +327,7 @@ define([
             }],
             visible: false,
             labelsVisible: true
-        })
+        });
         map.add(cases);
     }
 
@@ -349,7 +349,7 @@ define([
             id: 'tracts',
             title: 'Vulnerability',
             opacity: .95
-        })
+        });
         map.add(tractsLayer);
 
         var feedbackAction = {

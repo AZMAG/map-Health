@@ -484,16 +484,16 @@ define([
             AGE_25_55,
             AGE_55_75,
             AGE_75Plus,
-            Roundup_Scale,
+            Roundup_Scale_2Pop,
             Totoal_Pop_Under_Poverty,
             POP_FOR_POVERTY
         } = attributes;
 
         let vuln = 'High';
 
-        if (Roundup_Scale <= 2) {
+        if (Roundup_Scale_2Pop === 1) {
             vuln = 'Low';
-        } else if (Roundup_Scale === 3) {
+        } else if (Roundup_Scale_2Pop === 2) {
             vuln = 'Medium';
         }
 

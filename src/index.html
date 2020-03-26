@@ -23,14 +23,11 @@
     <link rel="shortcut icon" type="image-favorites-icon" href="./img/icon_57.png">
 
     <link href='https://fonts.googleapis.com/css?family=Poppins' rel='stylesheet'>
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
-        integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
     <link rel="stylesheet" href="https://js.arcgis.com/4.15/esri/css/main.css">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.0/css/bootstrap.min.css">
-    <link rel="stylesheet"
-        href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.2/css/bootstrap-select.min.css">
-    <link rel="stylesheet"
-        href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/10.6.1/css/bootstrap-slider.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.2/css/bootstrap-select.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/10.6.1/css/bootstrap-slider.min.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/hopscotch/0.3.1/css/hopscotch.min.css" />
     <link rel="stylesheet" type="text/css" media="screen" href="./styles/main.css">
 </head>
@@ -44,7 +41,7 @@
     <!--info card-->
     <div id="helpInfo" class="card" role="dialog"></div>
 
-    <div id="dashboard" class="card" role="dialog"></div>
+    <!-- <div id="dashboard" class="card" role="dialog"></div> -->
 
     <!-- Map -->
     <div id="viewDiv">
@@ -91,15 +88,13 @@
                 location: location.pathname.replace(/\/[^/]+$/, '') + './js'
             }]
         };
-
     </script>
 
     <script src="https://js.arcgis.com/4.15/"></script>
 
 
     <script>
-        require(["mag/main"], function (mag) {});
-
+        require(["mag/main"], function(mag) {});
     </script>
 
 

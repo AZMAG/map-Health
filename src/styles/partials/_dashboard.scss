@@ -4,34 +4,40 @@
 
 #dashboard {
     position: absolute;
+    // float: none;
     z-index: 1;
-    margin: 15px;
+    // margin: 15px;
+    // margin: 0 auto;
+    margin-left: 100px;
+    // margin-right: auto;
+    margin-top: 500px;
+    margin-bottom: 10px;
     background: white;
     border-radius: 0;
     border: 1px solid rgba(128, 128, 128, 0.185);
     width: 650px;
-    height: 150px;
+    height: 200px;
     text-align: center;
     padding: 7px;
+
+    .card-body {
+        flex: none;
+        padding: .9rem;
+        margin-top: auto;
+        margin-bottom: auto;
+    }
+
+    .card {
+        max-height: 155px;
+    }
+
+    .card-header {
+        h6 {
+            font-size: .9rem;
+        }
+    }
 }
 
 .container {
     display: inline;
 }
-
-.card-header {
-    h6 {
-        font-size: .9rem;
-    }
-}
-
-.card-body {
-    flex: none;
-    padding: .9rem;
-    margin-top: auto;
-    margin-bottom: auto;
-}
-
-// .card-deck .card {
-//     min-width: 90px;
-// }

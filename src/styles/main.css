@@ -419,31 +419,37 @@ a.modal-anchor.link:hover {
 #dashboard {
   position: absolute;
   z-index: 1;
-  margin: 15px;
+  margin-left: 100px;
+  margin-top: 500px;
+  margin-bottom: 10px;
   background: white;
   border-radius: 0;
   border: 1px solid rgba(128, 128, 128, 0.185);
   width: 650px;
-  height: 150px;
+  height: 200px;
   text-align: center;
   padding: 7px;
 }
 
-.container {
-  display: inline;
-}
-
-.card-header h6 {
-  font-size: .9rem;
-}
-
-.card-body {
+#dashboard .card-body {
   -webkit-box-flex: 0;
       -ms-flex: none;
           flex: none;
   padding: .9rem;
   margin-top: auto;
   margin-bottom: auto;
+}
+
+#dashboard .card {
+  max-height: 155px;
+}
+
+#dashboard .card-header h6 {
+  font-size: .9rem;
+}
+
+.container {
+  display: inline;
 }
 
 html,

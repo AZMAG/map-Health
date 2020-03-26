@@ -1,4 +1,4 @@
-define([], function () {
+define([], function() {
     return {
         // mainUrl: "https://services1.arcgis.com/mpVYz37anSdrK4d8/arcgis/rest/services/AZLicensedFacilities/FeatureServer/",
         mainUrl: "https://geo.azmag.gov/arcgis/rest/services/maps/HealthData/MapServer/",
@@ -76,7 +76,7 @@ define([], function () {
             },
             {
                 type: 'feature',
-                title: 'Testing Facility',
+                title: 'Diagnostic Facilities',
                 id: 'Laboratory',
                 definition: 'Laboratories and other medical testing facilities.',
                 visible: false,

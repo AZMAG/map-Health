@@ -91,7 +91,7 @@ define([
             if (val === 'Covid') {
                 tractsLyr.visible = false;
                 map.findLayerById("covidCases").visible = true;
-                // $("#dashboard").show();
+                $("#dashboard").show();
             } else {
                 updateTractsRenderer(val);
             }
@@ -99,7 +99,7 @@ define([
             let checked = $(".popMetricsInput:checked").length;
             if (checked === 0) {
                 tractsLyr.visible = false;
-                // $("#dashboard").hide();
+                $("#dashboard").hide();
             }
         }
     });

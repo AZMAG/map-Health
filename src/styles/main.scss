@@ -15,6 +15,7 @@ body,
 }
 
 body {
+    overflow: hidden;
     font-family: $base-font-family;
     -webkit-font-smoothing: subpixel-antialiased
 }

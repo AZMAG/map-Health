@@ -462,6 +462,7 @@ body,
 }
 
 body {
+  overflow: hidden;
   font-family: "Poppins", sans-serif;
   -webkit-font-smoothing: subpixel-antialiased;
 }

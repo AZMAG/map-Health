@@ -2,13 +2,13 @@
  * JavaScript File
  * @Desc: Main
  */
+
 define([
         "mag/config",
         "mag/map",
         "mag/widgets",
         "mag/hover",
-        "mag/intro",
-        // "mag/report"
+        "mag/intro"
     ], function(config) {
         $(document).ready(function() {
             "use strict";
@@ -39,9 +39,9 @@ define([
             }
 
             //*** dashboard binding
-            // $("#dashboard").load("views/dashboard.html", function () {
-            //     $("#dashboard").hide();
-            // });
+            $("#dashboard").load("views/dashboard.html", function() {
+                $("#dashboard").hide();
+            });
 
             //*** feeback binding
             $("#feedbackModal").load("views/modal-feedback.html", function() {
@@ -58,6 +58,10 @@ define([
             //*** legal binding
             $("#legalModal").load("views/modal-legal.html", function() {
                 insertFooter();
+            });
+
+            $("#reportModal").load("views/modal-report.html", function() {
+                require(["mag/report"]);
             });
 
         });

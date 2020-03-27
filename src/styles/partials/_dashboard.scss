@@ -4,12 +4,12 @@
 
 #dashboard {
     position: absolute;
-    // float: none;
+    display: inline-flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: center;
     z-index: 1;
-    // margin: 15px;
-    // margin: 0 auto;
     margin-left: 100px;
-    // margin-right: auto;
     margin-top: 500px;
     margin-bottom: 10px;
     background: white;
@@ -20,14 +20,9 @@
     text-align: center;
     padding: 7px;
 
-    .card-body {
-        flex: none;
-        padding: .9rem;
-        margin-top: auto;
-        margin-bottom: auto;
-    }
 
     .card {
+        flex-direction: column;
         max-height: 155px;
     }
 
@@ -36,8 +31,4 @@
             font-size: .9rem;
         }
     }
-}
-
-.container {
-    display: inline;
 }

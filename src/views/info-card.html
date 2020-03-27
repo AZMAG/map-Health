@@ -1,8 +1,7 @@
 <div class="card-body help-card">
     <i title="About" class="fas fa-info-circle infoBtn"></i>
     <i title="Start Tutorial" class="fas fa-question-circle tutorial-btn"></i>
-    <a href="https://azmag.gov/" target="_blank" title="AZMAG"><img class="mag-logo" src="./img/MAG-logo800.jpg"
-            alt="AZMAG Logo"></a>
+    <a href="https://azmag.gov/" target="_blank" title="AZMAG"><img class="mag-logo" src="./img/MAG-logo800.jpg" alt="AZMAG Logo"></a>
     <h6 class="card-title">Arizona Healthcare Assets Map</h6>
     <div class="borderArea">
         <b>Population Metrics</b><br>
@@ -17,9 +16,27 @@
         <b>Healthcare Facilities</b>
         <div id="layersList"></div>
     </div>
-    <button type="button" class="btn btn-info btn-xs source" data-toggle="modal"
-        data-target="#sourceModal">&nbsp;Source</button>
+    <!-- <button type="button" class="btn btn-info btn-xs source" data-toggle="modal" data-target="#sourceModal">&nbsp;Source</button> -->
 
+    <div class="borderArea">
+        <form id="reportForm">
+            <div class="form-group">
+                <label for="reportType" id="reportType_label">Type of Report:</label>
+                <br>
+                <select class="selectpicker" data-style="btn-sm" id="reportType">
+                    <option data-id="County">Counties</option>
+                </select>
+                <small class="form-text text-muted">Choose the type of geography for the report.</small>
+            </div>
+            <div id="specificReportDiv" class="form-group" style="display: block;">
+                <label for="specificReport" id="specificReport_label">Choose Report:</label>
+                <br>
+                <select class="selectpicker" data-style="btn-sm" id="specificReport"></select>
+                <small class="form-text text-muted">Choose the report to generate.</small>
+            </div>
+            <button id="standardBtnSubmit" type="submit" class="btn btn-sm btn-primary">Submit</button>
+        </form>
+    </div>
 </div>
 <!--Footer section-->
 <footer class="footer-section"></footer>

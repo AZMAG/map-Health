@@ -6,7 +6,7 @@ define([
     "esri/layers/MapImageLayer",
     "esri/layers/GraphicsLayer",
     "esri/Graphic"
-], function (config, {
+], function(config, {
     map,
     view
 }, FeatureLayer, TileLayer, MapImageLayer, GraphicsLayer, Graphic) {
@@ -78,7 +78,7 @@ define([
         }
     });
 
-    $(".popMetricsInput").change(function (e) {
+    $(".popMetricsInput").change(function(e) {
         $("#context-menu").hide();
         let tractsLyr = map.findLayerById("tracts");
         let covidLyr = map.findLayerById("covidCases");
@@ -454,7 +454,7 @@ define([
         });
         await addCovidLayer();
 
-        $(".form-check-input").change(function (e) {
+        $(".form-check-input").change(function(e) {
             let layId = $(this).data("id");
 
             let lay = map.findLayerById(layId);

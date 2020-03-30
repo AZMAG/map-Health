@@ -680,7 +680,7 @@ define([
                 <div class="flexCenter" title="Capacity">
                     <i class="fas fa-user-friends"></i>
                     <div class="marginLeft10">
-                        ${Capacity}
+                        ${Capacity ? Capacity : "N/A"}
                     </div>
                 </div>
                 <div class="flexCenter" title="Phone Number">

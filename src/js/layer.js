@@ -6,7 +6,7 @@ define([
     "esri/layers/MapImageLayer",
     "esri/layers/GraphicsLayer",
     "esri/Graphic"
-], function(config, {
+], function (config, {
     map,
     view
 }, FeatureLayer, TileLayer, MapImageLayer, GraphicsLayer, Graphic) {
@@ -78,7 +78,7 @@ define([
         }
     });
 
-    $(".popMetricsInput").change(function(e) {
+    $(".popMetricsInput").change(function (e) {
         $("#context-menu").hide();
         let tractsLyr = map.findLayerById("tracts");
         let covidLyr = map.findLayerById("covidCases");
@@ -204,6 +204,7 @@ define([
         };
     }
 
+
     async function addCovidLayer() {
         let queryAllUrl = "https://services1.arcgis.com/0MSEUqKaxRlEPj5g/ArcGIS/rest/services/ncov_cases_US/FeatureServer/0/query?where=Province_State+%3D+%27Arizona%27&outFields=*&f=json";
 
@@ -233,6 +234,17 @@ define([
             });
             return graphic;
         });
+
+        // $.each(source, function (k, v) {
+        //     if (k = "Deaths") {
+        //         console.log(v.attributes.Deaths);
+        //     }
+        // });
+
+
+
+
+
 
         var cases = new FeatureLayer({
             title: 'COVID-19 Cases (By County)',
@@ -266,6 +278,7 @@ define([
                 name: 'Active',
                 type: 'single'
             }],
+
 
             objectIdField: "ID",
             opacity: .35,
@@ -454,7 +467,7 @@ define([
         });
         await addCovidLayer();
 
-        $(".form-check-input").change(function(e) {
+        $(".form-check-input").change(function (e) {
             let layId = $(this).data("id");
 
             let lay = map.findLayerById(layId);

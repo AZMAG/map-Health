@@ -35,7 +35,9 @@ define([
                 });
 
                 view.whenLayerView(resultGraphic.layer).then(function(layerView) {
-                    highlight = layerView.highlight(resultGraphic);
+                    try {
+                        highlight = layerView.highlight(resultGraphic);
+                    } catch (error) {}
                 });
             }
         });

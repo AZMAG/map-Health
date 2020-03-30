@@ -15,6 +15,24 @@ define([], function() {
             }
         },
 
+        countyLookup: {
+            '001': 'Apache',
+            '003': 'Cochise',
+            '005': 'Coconino',
+            '007': 'Gila',
+            '009': 'Graham',
+            '011': 'Greenlee',
+            '012': 'La Paz',
+            '013': 'Maricopa',
+            '015': 'Mohave',
+            '017': 'Navajo',
+            '019': 'Pima',
+            '021': 'Pinal',
+            '023': 'Santa Cruz',
+            '025': 'Yavapai',
+            '027': 'Yuma'
+        },
+
         version: 'v0.0.3 | 2020-03-23',
         copyright: '2020',
 

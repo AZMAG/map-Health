@@ -19,19 +19,18 @@
     <!-- <button type="button" class="btn btn-info btn-xs source" data-toggle="modal" data-target="#sourceModal">&nbsp;Source</button> -->
 
     <div class="borderArea">
+        <b>Summary Report</b>
         <form id="reportForm">
             <div class="form-group">
-                <label for="reportType" id="reportType_label">Type of Report:</label>
+                <label class="reportLabel" for="reportType" id="reportType_label">Type of Report:</label>
                 <br>
-                <select class="selectpicker" data-style="btn-sm" id="reportType">
-                    <option data-id="County">Counties</option>
-                </select>
+                <select class="selectpicker_health" data-style="btn-sm" id="reportType"></select>
                 <small class="form-text text-muted">Choose the type of geography for the report.</small>
             </div>
             <div id="specificReportDiv" class="form-group" style="display: block;">
-                <label for="specificReport" id="specificReport_label">Choose Report:</label>
+                <label class="reportLabel" for="specificReport" id="specificReport_label">Choose Report:</label>
                 <br>
-                <select class="selectpicker" data-style="btn-sm" id="specificReport"></select>
+                <select class="selectpicker_health" data-size="5" data-live-search=" true" data-style="btn-sm" id="specificReport"></select>
                 <small class="form-text text-muted">Choose the report to generate.</small>
             </div>
             <button id="standardBtnSubmit" type="submit" class="btn btn-sm btn-primary">Submit</button>

@@ -452,6 +452,65 @@ a.modal-anchor.link:hover {
   display: inline;
 }
 
+#reportModal hr {
+  margin-bottom: 2px;
+}
+
+#reportModal .tableContainer {
+  width: 100%;
+  height: 250px;
+  overflow-y: scroll;
+}
+
+#reportModal .tableContainer .table tr {
+  font-size: 11.5px;
+}
+
+#reportModal i {
+  font-size: 22px;
+}
+
+#reportModal .tab-pane {
+  padding: 2%;
+}
+
+#reportModal img {
+  margin-right: 5px;
+}
+
+#reportModal h5 {
+  font-weight: bold;
+  font-size: 15.5px;
+}
+
+#reportModal .categoryLine {
+  margin-top: 5px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+#reportModal .categoryLine * {
+  margin-left: 6px;
+}
+
+#reportForm .reportLabel {
+  font-size: small;
+  font-weight: bold;
+}
+
+#reportForm h5 {
+  margin-top: 8px;
+  margin-bottom: 8px;
+}
+
+#reportForm small {
+  font-size: smaller;
+}
+
 html,
 body,
 #viewDiv {
@@ -498,14 +557,6 @@ div.hopscotch-bubble .hopscotch-nav-button.prev:hover,
   right: 10px;
   top: 10px;
   cursor: pointer;
-}
-
-.table {
-  margin-top: 7px;
-}
-
-.table tr {
-  font-size: 11.5px;
 }
 
 #layerChoice {

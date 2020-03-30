@@ -1,0 +1,59 @@
+#reportModal {
+    hr {
+        margin-bottom: 2px;
+    }
+
+    .tableContainer {
+        width: 100%;
+        height: 250px;
+        overflow-y: scroll;
+
+        .table tr {
+            font-size: 11.5px;
+        }
+    }
+
+    i {
+        font-size: 22px;
+    }
+
+    .tab-pane {
+        padding: 2%;
+    }
+
+    img {
+        margin-right: 5px;
+    }
+
+    h5 {
+        font-weight: bold;
+        font-size: 15.5px;
+    }
+
+    .categoryLine {
+        margin-top: 5px;
+        display: flex;
+        align-items: center;
+
+        * {
+            margin-left: 6px;
+        }
+    }
+
+}
+
+#reportForm {
+    .reportLabel {
+        font-size: small;
+        font-weight: bold;
+    }
+
+    h5 {
+        margin-top: 8px;
+        margin-bottom: 8px;
+    }
+
+    small {
+        font-size: smaller;
+    }
+}

@@ -5,11 +5,12 @@ define([
     "esri/layers/TileLayer",
     "esri/layers/MapImageLayer",
     "esri/layers/GraphicsLayer",
-    "esri/Graphic"
-], function (config, {
+    "esri/Graphic",
+    "esri/tasks/QueryTask"
+], function(config, {
     map,
     view
-}, FeatureLayer, TileLayer, MapImageLayer, GraphicsLayer, Graphic) {
+}, FeatureLayer, TileLayer, MapImageLayer, GraphicsLayer, Graphic, QueryTask) {
     addLayers();
 
     let $rendererDropdown = $("#rendererDropdown");
@@ -42,6 +43,10 @@ define([
         Covid: {
             title: "COVID-19 Cases (By County)",
             definition: "This feature layer contains the most up-to-date COVID-19 cases and latest trend plot. It covers China, the US, Canada, Australia (at province/state level), and the rest of the world (at country level, represented by either the country centroids or their capitals). Data sources are WHO, US CDC, China NHC, ECDC, and DXY. The China data is automatically updating at least once per hour, and non China data is updating manually. This layer is created and maintained by the Center for Systems Science and Engineering (CSSE) at the Johns Hopkins University."
+        },
+        Capacity: {
+            title: "Capacity (Beds By County)",
+            definition: "This feature layer contains the capcity in beds by county. It covers hospital capacity in Arizona."
         }
     };
 
@@ -78,7 +83,7 @@ define([
         }
     });
 
-    $(".popMetricsInput").change(function (e) {
+    $(".popMetricsInput").change(function(e) {
         $("#context-menu").hide();
         let tractsLyr = map.findLayerById("tracts");
         let covidLyr = map.findLayerById("covidCases");
@@ -90,8 +95,19 @@ define([
             let val = $(this).data("field");
             if (val === 'Covid') {
                 tractsLyr.visible = false;
-                map.findLayerById("covidCases").visible = true;
+                let covidLyr = map.findLayerById("covidCases");
+                covidLyr.renderer = GetCovidRenderer();
+                covidLyr.labelingInfo = GetCovidLabelInfo();
+                covidLyr.title = 'COVID-19 Cases (By County)';
+                covidLyr.visible = true;
                 $("#dashboard").show();
+            } else if (val === 'Capacity') {
+                tractsLyr.visible = false;
+                let covidLyr = map.findLayerById("covidCases");
+                covidLyr.title = 'Capacity (Beds By County)';
+                covidLyr.renderer = GetCapacityRenderer();
+                covidLyr.labelingInfo = GetCapacityLabelInfo();
+                covidLyr.visible = true;
             } else {
                 updateTractsRenderer(val);
             }
@@ -204,19 +220,170 @@ define([
         };
     }
 
+    function GetCovidRenderer(){
+        return {
+            type: 'simple',
+            field: 'Confirmed',
+            symbol: {
+                type: "simple-marker",
+                style: "circle",
+                color: "blue",
+                size: "8px",
+                outline: {
+                    color: [0, 0, 255],
+                    width: 1
+                }
+            },
+            visualVariables: [{
+                type: "size",
+                field: "Confirmed",
+                stops: [{
+                        value: 0,
+                        size: 15,
+                        label: "<15"
+                    },
+                    {
+                        value: 15,
+                        size: 30,
+                        label: "<30"
+                    },
+                    {
+                        value: 30,
+                        size: 45,
+                        label: ">60"
+                    },
+                    {
+                        value: 60,
+                        size: 60,
+                        label: ">100"
+                    },
+                    {
+                        value: 100,
+                        size: 75,
+                        label: "100+"
+                    }
+                ]
+            }]
+        }
+    }
+
+    function GetCapacityRenderer(){
+        return {
+            type: 'simple',
+            field: 'Capacity',
+            symbol: {
+                type: "simple-marker",
+                style: "circle",
+                color: "red",
+                size: "8px",
+                outline: {
+                    color: [0, 0, 255],
+                    width: 1
+                }
+            },
+            visualVariables: [{
+                type: "size",
+                field: "Capacity",
+                stops: [{
+                        value: 0,
+                        size: 10,
+                        label: "0 Beds"
+                    },
+                    {
+                        value: 50,
+                        size: 20,
+                        label: "<150 Beds"
+                    },
+                    {
+                        value: 1000,
+                        size: 40,
+                        label: "<1000 Beds"
+                    },
+                    {
+                        value: 5000,
+                        size: 50,
+                        label: "<5000 Beds"
+                    },
+                    {
+                        value: 15000,
+                        size: 60,
+                        label: "<15000 Beds"
+                    },
+                    {
+                        value: 1000000,
+                        size: 75,
+                        label: "15000+ Beds"
+                    }
+                ]
+            }]
+        }
+    }
+
+    function GetCapacityLabelInfo(){
+        return [{
+            labelPlacement: "above-right",
+            labelExpressionInfo: {
+                expression: "$feature.Admin2 + ' (' + Text($feature.Capacity, '#,###') + ' Beds)'"
+            },
+            symbol: {
+                type: "text",
+                color: "black",
+                haloSize: 1,
+                haloColor: "white"
+            },
+            maxScale: 0,
+            minScale: 0,
+        }]
+    }
+
+    function GetCovidLabelInfo(){
+        return [{
+            labelPlacement: "above-right",
+            labelExpressionInfo: {
+                expression: "$feature.Admin2 + ' (' + $feature.Confirmed + ' Cases)'"
+            },
+            symbol: {
+                type: "text",
+                color: "black",
+                haloSize: 1,
+                haloColor: "white"
+            },
+            maxScale: 0,
+            minScale: 0,
+        }]
+    }
 
     async function addCovidLayer() {
         let queryAllUrl = "https://services1.arcgis.com/0MSEUqKaxRlEPj5g/ArcGIS/rest/services/ncov_cases_US/FeatureServer/0/query?where=Province_State+%3D+%27Arizona%27&outFields=*&f=json";
 
         let res = await fetch(queryAllUrl);
-        let {
-            features
-        } = await res.json();
+        let { features } = await res.json();
 
-        let source = features.map(({
-            attributes,
-            geometry
-        }) => {
+        const pointsQt = new QueryTask({
+            url: config.mainUrl + config.queryLayerIndex
+        });
+
+        const points = await pointsQt.execute({
+            where: '1=1',
+            outFields: ['sj_county', 'FACID', 'Capacity', 'OBJECTID'],
+            returnDistinctValues: true,
+            returnGeometry: false
+        })
+
+        let bedsLookupByCounty = {};
+
+        points.features.forEach(({attributes}) => {
+            if (attributes['sj_county']) {                
+                let countyId = attributes['sj_county'].substr(-3);
+                let county = config.countyLookup[countyId];
+                bedsLookupByCounty[county] = bedsLookupByCounty[county] || 0;
+                bedsLookupByCounty[county] += attributes["Capacity"];
+            }
+        })
+        
+
+        let source = features.map(({ attributes, geometry }) => {
+            attributes["Capacity"] = bedsLookupByCounty[attributes["Admin2"]];
 
             if (attributes["Admin2"] === "Maricopa") {
                 geometry.y = 33.45;
@@ -235,27 +402,17 @@ define([
             return graphic;
         });
 
-        // $.each(source, function (k, v) {
-        //     if (k = "Deaths") {
-        //         console.log(v.attributes.Deaths);
-        //     }
-        // });
-
-
-
-
-
 
         var cases = new FeatureLayer({
             title: 'COVID-19 Cases (By County)',
             id: 'covidCases',
-            // definitionExpression: `Province_State = 'Arizona'`,
             popupTemplate: {
                 title: '{Admin2} County',
                 content: `
-            <b>Confirmed Cases:</b> {Confirmed} <br>
-            <b>Deaths:</b>  {Deaths} <br>
-            <b>Active Cases:</b> {Active}
+                <b>Confirmed Cases:</b> {Confirmed} <br>
+                <b>Deaths:</b>  {Deaths} <br>
+                <b>Active Cases:</b> {Active} <br>
+                <b>Capacity (Number of Beds):</b> {Capacity}
             `
             },
             source,
@@ -277,69 +434,16 @@ define([
             }, {
                 name: 'Active',
                 type: 'single'
+            }, {
+                name: 'Capacity',
+                type: 'single'
             }],
 
 
             objectIdField: "ID",
             opacity: .35,
-            renderer: {
-                type: 'simple',
-                field: 'Confirmed',
-                symbol: {
-                    type: "simple-marker",
-                    style: "circle",
-                    color: "blue",
-                    size: "8px",
-                    outline: {
-                        color: [0, 0, 255],
-                        width: 1
-                    }
-                },
-                visualVariables: [{
-                    type: "size",
-                    field: "Confirmed",
-                    stops: [{
-                            value: 0,
-                            size: 15,
-                            label: "<15"
-                        },
-                        {
-                            value: 15,
-                            size: 30,
-                            label: "<30"
-                        },
-                        {
-                            value: 30,
-                            size: 45,
-                            label: ">60"
-                        },
-                        {
-                            value: 60,
-                            size: 60,
-                            label: ">100"
-                        },
-                        {
-                            value: 100,
-                            size: 75,
-                            label: "100+"
-                        }
-                    ]
-                }]
-            },
-            labelingInfo: [{
-                labelPlacement: "above-right",
-                labelExpressionInfo: {
-                    expression: "$feature.Admin2 + ' (' + $feature.Confirmed + ' Cases)'"
-                },
-                symbol: {
-                    type: "text",
-                    color: "black",
-                    haloSize: 1,
-                    haloColor: "white"
-                },
-                maxScale: 0,
-                minScale: 0,
-            }],
+            renderer: GetCovidRenderer(),
+            labelingInfo: GetCovidLabelInfo(),
             visible: false,
             labelsVisible: true
         });
@@ -467,7 +571,7 @@ define([
         });
         await addCovidLayer();
 
-        $(".form-check-input").change(function (e) {
+        $(".form-check-input").change(function(e) {
             let layId = $(this).data("id");
 
             let lay = map.findLayerById(layId);
@@ -576,7 +680,7 @@ define([
                 <div class="flexCenter" title="Capacity">
                     <i class="fas fa-user-friends"></i>
                     <div class="marginLeft10">
-                        ${Capacity}
+                        ${Capacity ? Capacity : "N/A"}
                     </div>
                 </div>
                 <div class="flexCenter" title="Phone Number">

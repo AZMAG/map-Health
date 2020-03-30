@@ -108,6 +108,7 @@ define([
                 covidLyr.renderer = GetCapacityRenderer();
                 covidLyr.labelingInfo = GetCapacityLabelInfo();
                 covidLyr.visible = true;
+                $("#dashboard").hide();
             } else {
                 updateTractsRenderer(val);
             }
@@ -407,10 +408,6 @@ define([
             });
             return graphic;
         });
-
-        console.log(source);
-
-
 
         var cases = new FeatureLayer({
             title: 'COVID-19 Cases (By County)',

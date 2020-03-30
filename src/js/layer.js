@@ -7,7 +7,7 @@ define([
     "esri/layers/GraphicsLayer",
     "esri/Graphic",
     "esri/tasks/QueryTask"
-], function(config, {
+], function (config, {
     map,
     view
 }, FeatureLayer, TileLayer, MapImageLayer, GraphicsLayer, Graphic, QueryTask) {
@@ -83,7 +83,7 @@ define([
         }
     });
 
-    $(".popMetricsInput").change(function(e) {
+    $(".popMetricsInput").change(function (e) {
         $("#context-menu").hide();
         let tractsLyr = map.findLayerById("tracts");
         let covidLyr = map.findLayerById("covidCases");
@@ -220,7 +220,7 @@ define([
         };
     }
 
-    function GetCovidRenderer(){
+    function GetCovidRenderer() {
         return {
             type: 'simple',
             field: 'Confirmed',
@@ -267,7 +267,7 @@ define([
         }
     }
 
-    function GetCapacityRenderer(){
+    function GetCapacityRenderer() {
         return {
             type: 'simple',
             field: 'Capacity',
@@ -319,7 +319,7 @@ define([
         }
     }
 
-    function GetCapacityLabelInfo(){
+    function GetCapacityLabelInfo() {
         return [{
             labelPlacement: "above-right",
             labelExpressionInfo: {
@@ -336,7 +336,7 @@ define([
         }]
     }
 
-    function GetCovidLabelInfo(){
+    function GetCovidLabelInfo() {
         return [{
             labelPlacement: "above-right",
             labelExpressionInfo: {
@@ -357,7 +357,9 @@ define([
         let queryAllUrl = "https://services1.arcgis.com/0MSEUqKaxRlEPj5g/ArcGIS/rest/services/ncov_cases_US/FeatureServer/0/query?where=Province_State+%3D+%27Arizona%27&outFields=*&f=json";
 
         let res = await fetch(queryAllUrl);
-        let { features } = await res.json();
+        let {
+            features
+        } = await res.json();
 
         const pointsQt = new QueryTask({
             url: config.mainUrl + config.queryLayerIndex
@@ -372,17 +374,22 @@ define([
 
         let bedsLookupByCounty = {};
 
-        points.features.forEach(({attributes}) => {
-            if (attributes['sj_county']) {                
+        points.features.forEach(({
+            attributes
+        }) => {
+            if (attributes['sj_county']) {
                 let countyId = attributes['sj_county'].substr(-3);
                 let county = config.countyLookup[countyId];
                 bedsLookupByCounty[county] = bedsLookupByCounty[county] || 0;
                 bedsLookupByCounty[county] += attributes["Capacity"];
             }
         })
-        
 
-        let source = features.map(({ attributes, geometry }) => {
+
+        let source = features.map(({
+            attributes,
+            geometry
+        }) => {
             attributes["Capacity"] = bedsLookupByCounty[attributes["Admin2"]];
 
             if (attributes["Admin2"] === "Maricopa") {
@@ -401,6 +408,9 @@ define([
             });
             return graphic;
         });
+
+        console.log(source);
+
 
 
         var cases = new FeatureLayer({
@@ -571,7 +581,7 @@ define([
         });
         await addCovidLayer();
 
-        $(".form-check-input").change(function(e) {
+        $(".form-check-input").change(function (e) {
             let layId = $(this).data("id");
 
             let lay = map.findLayerById(layId);

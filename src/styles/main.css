@@ -113,17 +113,6 @@ SASS Partials
 /****************
 * SASS Report-panel
 *****************/
-#reportPanel {
-  display: none;
-  background: #fff;
-  font: "Avenir Next W00";
-  line-height: 1.5em;
-  overflow: auto;
-  padding: 10px;
-  width: 580px;
-  height: 300px;
-}
-
 #helpInfo {
   position: absolute;
   z-index: 1;
@@ -132,13 +121,25 @@ SASS Partials
   border-radius: 0;
   border: 1px solid rgba(128, 128, 128, 0.185);
   text-align: center;
-  padding: 7px;
-  overflow-y: auto;
-  overflow: visible;
+  padding: 12px 5px 5px 5px;
+  max-height: 620px;
+  max-width: 100%;
+}
+
+#helpInfo hr {
+  margin-bottom: 5px;
 }
 
 .help-card {
+  padding: 0 5px 5px 2px;
   padding-bottom: 2px;
+  max-height: 600px;
+  max-width: 100%;
+  overflow-y: auto;
+}
+
+.help-card .borderArea {
+  margin: 0 5px 5px 5px;
 }
 
 .tutorial-btn {
@@ -149,7 +150,7 @@ SASS Partials
 }
 
 .mag-logo {
-  width: 200px;
+  max-width: 200px;
 }
 
 .card-title {
@@ -167,6 +168,14 @@ address.mag p {
 
 address.mag .mag-logo {
   margin-bottom: 5px;
+}
+
+.form-group {
+  margin-bottom: .5rem;
+}
+
+.info-footer {
+  padding-left: 20px;
 }
 
 /****************
@@ -419,32 +428,130 @@ a.modal-anchor.link:hover {
 #dashboard {
   position: absolute;
   z-index: 1;
-  margin: 15px;
+  margin-left: 400px;
+  margin-right: auto;
+  margin-top: 560px;
   background: white;
   border-radius: 0;
   border: 1px solid rgba(128, 128, 128, 0.185);
-  width: 650px;
-  height: 250px;
+  width: 500px;
+  height: 160px;
   text-align: center;
   padding: 7px;
 }
 
-html {
-  font-size: 14px;
+.card-box {
+  display: -webkit-inline-box;
+  display: -ms-inline-flexbox;
+  display: inline-flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -ms-flex-wrap: nowrap;
+      flex-wrap: nowrap;
+  -webkit-box-pack: space-evenly;
+      -ms-flex-pack: space-evenly;
+          justify-content: space-evenly;
+  margin-top: auto;
+  margin-bottom: auto;
 }
 
-.container {
-  display: inline;
-  max-width: 350px;
-  height: 100px;
+.card-box .card {
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-flex: 1;
+      -ms-flex-positive: 1;
+          flex-grow: 1;
+  max-height: 145px;
+  max-width: 150px;
 }
 
-.pricing-header {
-  max-width: 500px;
+.card-box .card-header {
+  padding: .75rem;
 }
 
-.card-deck .card {
-  max-width: 220px;
+.card-box .card-header h6 {
+  font-size: .85rem;
+}
+
+.card-box .card-body-1 {
+  font-size: 2rem;
+  font-weight: 700;
+  -webkit-box-flex: 1;
+      -ms-flex: 1 1 auto;
+          flex: 1 1 auto;
+  min-height: 1px;
+  padding: 1rem;
+}
+
+.card-box .card-body-2 {
+  padding: 5px;
+  -webkit-box-flex: 1;
+      -ms-flex: 1 1 auto;
+          flex: 1 1 auto;
+  min-height: 1px;
+}
+
+#reportModal hr {
+  margin-bottom: 2px;
+}
+
+#reportModal .tableContainer {
+  width: 100%;
+  height: 250px;
+  overflow-y: scroll;
+}
+
+#reportModal .tableContainer .table tr {
+  font-size: 11.5px;
+}
+
+#reportModal i {
+  font-size: 22px;
+}
+
+#reportModal .tab-pane {
+  padding: 2%;
+}
+
+#reportModal img {
+  margin-right: 5px;
+}
+
+#reportModal h5 {
+  font-weight: bold;
+  font-size: 15.5px;
+}
+
+#reportModal .categoryLine {
+  margin-top: 5px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+#reportModal .categoryLine * {
+  margin-left: 6px;
+}
+
+#reportForm .reportLabel {
+  font-size: small;
+  font-weight: bold;
+}
+
+#reportForm h5 {
+  margin-top: 8px;
+  margin-bottom: 8px;
+}
+
+#reportForm small {
+  font-size: smaller;
 }
 
 html,
@@ -457,6 +564,7 @@ body,
 }
 
 body {
+  overflow: hidden;
   font-family: "Poppins", sans-serif;
   -webkit-font-smoothing: subpixel-antialiased;
 }
@@ -492,14 +600,6 @@ div.hopscotch-bubble .hopscotch-nav-button.prev:hover,
   right: 10px;
   top: 10px;
   cursor: pointer;
-}
-
-.table {
-  margin-top: 7px;
-}
-
-.table tr {
-  font-size: 11.5px;
 }
 
 #layerChoice {

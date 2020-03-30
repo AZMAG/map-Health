@@ -1,8 +1,10 @@
-define([], function () {
+define([], function() {
     return {
         // mainUrl: "https://services1.arcgis.com/mpVYz37anSdrK4d8/arcgis/rest/services/AZLicensedFacilities/FeatureServer/",
         mainUrl: "https://geo.azmag.gov/arcgis/rest/services/maps/HealthData/MapServer/",
         feedbackUrl: "https://geo.azmag.gov/services/HealthcareFeedback/Feedback/SendFeedback",
+        queryLayerIndex: 6,
+        demographicsLayerIndex: 7,
         initExtent: {
             xmin: -12975596.092135236,
             ymin: 3773390.176100314,
@@ -11,6 +13,24 @@ define([], function () {
             spatialReference: {
                 wkid: 102100
             }
+        },
+
+        countyLookup: {
+            '001': 'Apache',
+            '003': 'Cochise',
+            '005': 'Coconino',
+            '007': 'Gila',
+            '009': 'Graham',
+            '011': 'Greenlee',
+            '012': 'La Paz',
+            '013': 'Maricopa',
+            '015': 'Mohave',
+            '017': 'Navajo',
+            '019': 'Pima',
+            '021': 'Pinal',
+            '023': 'Santa Cruz',
+            '025': 'Yavapai',
+            '027': 'Yuma'
         },
 
         version: 'v0.0.3 | 2020-03-23',
@@ -76,7 +96,7 @@ define([], function () {
             },
             {
                 type: 'feature',
-                title: 'Testing Facility',
+                title: 'Diagnostic Facilities',
                 id: 'Laboratory',
                 definition: 'Laboratories and other medical testing facilities.',
                 visible: false,

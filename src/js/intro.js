@@ -76,7 +76,7 @@ function startupIntro() {
         localStorage.setItem('toured', true);
     }
 
-    $(".tutorial-btn").click(() => {
+    $("body").on("click", ".tutorial-btn", () => {
         hopscotch.startTour(tour);
     })
 }

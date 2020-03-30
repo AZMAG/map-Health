@@ -2,17 +2,6 @@
 * SASS Report-panel
 *****************/
 
-#reportPanel {
-    display: none;
-    background: #fff;
-    font: "Avenir Next W00";
-    line-height: 1.5em;
-    overflow: auto;
-    padding: 10px;
-    width: 580px;
-    height: 300px;
-}
-
 #helpInfo {
     position: absolute;
     z-index: 1;
@@ -21,13 +10,25 @@
     border-radius: 0;
     border: 1px solid rgba(128, 128, 128, 0.185);
     text-align: center;
-    padding: 7px;
-    overflow-y: auto;
-    overflow: visible;
+    padding: 12px 5px 5px 5px;
+    max-height: 620px;
+    max-width: 100%;
+
+    hr {
+        margin-bottom: 5px;
+    }
 }
 
 .help-card {
+    padding: 0 5px 5px 2px;
     padding-bottom: 2px;
+    max-height: 600px;
+    max-width: 100%;
+    overflow-y: auto;
+
+    .borderArea {
+        margin: 0 5px 5px 5px;
+    }
 }
 
 .tutorial-btn {
@@ -38,7 +39,7 @@
 }
 
 .mag-logo {
-    width: 200px;
+    max-width: 200px;
 }
 
 .card-title {
@@ -56,4 +57,12 @@ address.mag {
     .mag-logo {
         margin-bottom: 5px;
     }
+}
+
+.form-group {
+    margin-bottom: .5rem;
+}
+
+.info-footer {
+    padding-left: 20px;
 }

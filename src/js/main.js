@@ -2,13 +2,13 @@
  * JavaScript File
  * @Desc: Main
  */
+
 define([
         "mag/config",
         "mag/map",
         "mag/widgets",
         "mag/hover",
-        "mag/intro",
-        // "mag/report"
+        "mag/intro"
     ], function(config) {
         $(document).ready(function() {
             "use strict";
@@ -24,7 +24,9 @@ define([
                 $(".infoBtn").click(function() {
                     $("#contactModal").modal("show");
                 });
-
+                $("#reportModal").load("views/modal-report.html", function() {
+                    require(["mag/report"]);
+                });
                 require(["mag/layer"]);
             });
 
@@ -36,16 +38,16 @@ define([
                     //*** copy write binding
                     $(".copyright").html(config.copyright);
                 });
-            };
+            }
 
             //*** dashboard binding
-            $("#dashboard").load("views/dashboard.html", function () {
+            $("#dashboard").load("views/dashboard.html", function() {
                 $("#dashboard").hide();
             });
 
             //*** feeback binding
             $("#feedbackModal").load("views/modal-feedback.html", function() {
-                require(["mag/feedback"])
+                require(["mag/feedback"]);
             });
             //*** terms binding
             $("#termsModal").load("views/modal-terms.html", function() {
@@ -59,7 +61,6 @@ define([
             $("#legalModal").load("views/modal-legal.html", function() {
                 insertFooter();
             });
-
         });
 
         return;

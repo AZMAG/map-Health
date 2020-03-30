@@ -15,6 +15,7 @@ body,
 }
 
 body {
+    overflow: hidden;
     font-family: $base-font-family;
     -webkit-font-smoothing: subpixel-antialiased
 }
@@ -48,14 +49,6 @@ div.hopscotch-bubble .hopscotch-nav-button.prev,
     right: 10px;
     top: 10px;
     cursor: pointer;
-}
-
-.table {
-    margin-top: 7px;
-}
-
-.table tr {
-    font-size: 11.5px;
 }
 
 #layerChoice {

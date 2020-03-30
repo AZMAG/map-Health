@@ -1,381 +1,326 @@
-    define([
-            "mag/map",
-            "esri/widgets/Sketch/SketchViewModel",
-            "esri/geometry/Polyline",
-            "esri/geometry/Point",
-            "esri/Graphic",
-            "esri/layers/FeatureLayer",
-            "esri/geometry/geometryEngine",
-            "esri/widgets/Expand",
-            "esri/core/watchUtils",
-            "dojo/topic"
-        ], function({ map, view },
-            SketchViewModel,
-            Polyline,
-            Point,
-            Graphic,
-            FeatureLayer,
-            geometryEngine,
-            Expand,
-            watchUtils
-        ) {
+define([
+    "mag/config",
+    "esri/tasks/QueryTask"
+], function(config, QueryTask) {
+    const pointsQt = new QueryTask({
+        url: config.mainUrl + config.queryLayerIndex
+    });
+    const geoQt = new QueryTask({
+        url: config.mainUrl + config.demographicsLayerIndex
+    });
 
-            // App 'globals'
-            let sketchViewModel, featureLayerView, pausableWatchHandle, reportExpand;
+    let $reportForm = $("#reportForm");
+    let $reportType = $("#reportType");
+    let $specificReport = $("#specificReport");
 
-            let centerGraphic,
-                edgeGraphic,
-                polylineGraphic,
-                bufferGraphic,
-                centerGeometryAtStart,
-                labelGraphic;
+    $("body").on("click", "#standardBtnSubmit", () => {
+        $("#reportModal").modal("show");
+    })
 
-            const unit = "miles";
+    setupDropdowns();
 
-            // Create layers
-            const graphicsLayer = map.findLayerById("graphicsLayer");
-            const graphicsLayer2 = map.findLayerById("graphicsLayer2");
+    async function getTypes() {
+        let { features } = await geoQt.execute({
+            returnDistinctValues: true,
+            returnGeometry: false,
+            where: '1=1',
+            outFields: ['Type']
+        })
+        return features.map(({ attributes }) => {
+            return attributes['Type'];
+        })
+    }
 
-            // Update UI
-            setUpAppUI();
-            setUpSketch();
+    async function getSpecificReportsByType(type) {
+        const { features } = await geoQt.execute({
+            returnDistinctValues: true,
+            returnGeometry: false,
+            where: `Type = '${type}'`,
+            outFields: ['GEOID', 'Name']
+        })
+        const data = features.map(({ attributes }) => attributes);
 
-            function setUpAppUI() {
-
-                // When layer is loaded, create a watcher to trigger drawing of the buffer polygon
-                // view.whenLayerView(featureLayer).then(function(layerView) {
-                //     featureLayerView = layerView;
-
-                //     pausableWatchHandle = watchUtils.pausable(
-                //         layerView,
-                //         "updating",
-                //         function(val) {
-                //             if (!val) {
-                //                 drawBufferPolygon();
-                //             }
-                //         }
-                //     );
-
-                view.when(function() {
-                    drawBufferPolygon();
-                    graphicsLayer.visible = false;
-                    graphicsLayer2.visible = false;
-                    // Display the chart in an Expand widget
-                    reportExpand = new Expand({
-                        expandIconClass: "esri-icon-table",
-                        expandTooltip: "Open Report",
-                        expanded: false,
-                        view,
-                        content: document.getElementById("reportPanel")
-                    });
-
-                    reportExpand.watch("expanded", (expanded) => {
-                        if (expanded) {
-                            toggleReport(true);
-
-                        } else {
-                            toggleReport(false);
-                        }
-
-                    })
-
-                    $("#reportPanel").show();
-
-                    // Add our components to the UI
-                    view.ui.add(reportExpand, "top-right");
-
-                });
+        data.sort((a, b) => {
+            let aName = a.Name;
+            let bName = b.Name;
+            if (aName < bName) {
+                return -1;
             }
+            return 1;
+        })
 
-            function toggleReport(expand) {
-                graphicsLayer.visible = expand;
-                graphicsLayer2.visible = expand;
+        return data;
+    }
 
-                if (expand) {
-                    sketchViewModel = new SketchViewModel({
-                        view,
-                        layer: graphicsLayer
-                    });
-                    sketchViewModel.on("update", onMove);
-                } else {
-                    if (sketchViewModel) {
-                        sketchViewModel.detstroy();
-                    }
-                }
-            }
+    async function setupDropdowns() {
+        let types = await getTypes();
+        let typeOptions = types.map((type) => {
+            return `<option data-id="${type}">${type}</option>`
+        })
 
-            function setUpSketch() {
+        $reportType.append(typeOptions.join(''));
 
-            }
+        //Setting up initially as County
+        await setupSpecificReportDropdown("County")
 
-            function onMove(event) {
-                // If the edge graphic is moving, keep the center graphic
-                // at its initial location. Only move edge graphic
-                if (event.toolEventInfo && event.toolEventInfo.mover.attributes.edge) {
-                    const toolType = event.toolEventInfo.type;
-                    if (toolType === "move-start") {
-                        centerGeometryAtStart = centerGraphic.geometry;
-                    }
-                    // keep the center graphic at its initial location when edge point is moving
-                    else if (toolType === "move" || toolType === "move-stop") {
-                        centerGraphic.geometry = centerGeometryAtStart;
-                    }
-                }
+        $(".selectpicker_health").selectpicker();
+    }
 
-                // the center or edge graphic is being moved, recalculate the buffer
-                const vertices = [
-                    [centerGraphic.geometry.x, centerGraphic.geometry.y],
-                    [edgeGraphic.geometry.x, edgeGraphic.geometry.y]
-                ];
+    $reportType.change(() => {
+        const type = $reportType.val();
+        setupSpecificReportDropdown(type);
+    })
 
-                // client-side stats query of features that intersect the buffer
-                calculateBuffer(vertices);
+    async function setupSpecificReportDropdown(type) {
+        let data = await getSpecificReportsByType(type);
+        let specificReportOptions = data.map(({ GEOID, Name }) => {
+            return `<option data-id="${GEOID}">${Name}</option>`;
+        })
+        $specificReport.selectpicker('destroy');
+        $specificReport.html(specificReportOptions.join(''));
+        $specificReport.selectpicker();
+    }
 
-                // user is clicking on the view... call update method with the center and edge graphics
-                if (event.state === "cancel" || event.state === "complete") {
-                    sketchViewModel.update([edgeGraphic, centerGraphic], {
-                        tool: "move"
-                    });
-                }
-            }
+    $reportForm.submit((e) => {
+        e.preventDefault();
+        let selectedReport = $specificReport.children("option:selected").data("id");
+        let type = $reportType.val();
+        openReport(selectedReport, type);
+    })
 
-            /*********************************************************************
-             * Edge or center point is being updated. Recalculate the buffer with
-             * updated geometry information.
-             *********************************************************************/
-            function calculateBuffer(vertices) {
-                // Update the geometry of the polyline based on location of edge and center points
-                polylineGraphic.geometry = new Polyline({
-                    paths: vertices,
-                    spatialReference: view.spatialReference
-                });
-
-                // Recalculate the polyline length and buffer polygon
-                const length = geometryEngine.geodesicLength(
-                    polylineGraphic.geometry,
-                    unit
-                );
-                const buffer = geometryEngine.geodesicBuffer(
-                    centerGraphic.geometry,
-                    length,
-                    unit
-                );
-
-                // Update the buffer polygon
-                bufferGraphic.geometry = buffer;
-
-                // Query female and male age groups of the census tracts that intersect
-                // the buffer polygon on the client
-                // queryLayerViewAgeStats(buffer).then(function(newData) {
-                //     // Create a population pyramid chart from the returned result
-                //     updateChart(newData);
-                // });
-
-                // Update label graphic to show the length of the polyline
-                labelGraphic.geometry = edgeGraphic.geometry;
-                labelGraphic.symbol = {
-                    type: "text",
-                    color: "#FFEB00",
-                    text: length.toFixed(2) + " miles",
-                    xoffset: 50,
-                    yoffset: 10,
-                    font: {
-                        // autocast as Font
-                        size: 14,
-                        family: "sans-serif"
-                    }
-                };
-            }
-
-            /*********************************************************************
-             * Spatial query the census tracts feature layer view for statistics
-             * using the updated buffer polygon.
-             *********************************************************************/
-            function queryLayerViewAgeStats(buffer) {
-                // Data storage for the chart
-                let femaleAgeData = [],
-                    maleAgeData = [];
-
-                // Client-side spatial query:
-                // Get a sum of age groups for census tracts that intersect the polygon buffer
-                const query = featureLayerView.layer.createQuery();
-                query.outStatistics = statDefinitions;
-                query.geometry = buffer;
-
-                // Query the features on the client using FeatureLayerView.queryFeatures
-                return featureLayerView
-                    .queryFeatures(query)
-                    .then(function(results) {
-                        // Statistics query returns a feature with 'stats' as attributes
-                        const attributes = results.features[0].attributes;
-                        // Loop through attributes and save the values for use in the population pyramid.
-                        for (var key in attributes) {
-                            if (key.includes("FEM")) {
-                                femaleAgeData.push(attributes[key]);
-                            } else {
-                                // Make 'all male age group population' total negative so that
-                                // data will be displayed to the left of female age group
-                                maleAgeData.push(-Math.abs(attributes[key]));
-                            }
-                        }
-                        // Return information, seperated by gender
-                        return [femaleAgeData, maleAgeData];
-                    })
-                    .catch(function(error) {
-                        console.log(error);
-                    });
-            }
-
-            /***************************************************
-             * Draw the buffer polygon when application loads or
-             * when user searches for a new location
-             **************************************************/
-            function drawBufferPolygon() {
-                // When pause() is called on the watch handle, the callback represented by the
-                // watch is no longer invoked, but is still available for later use
-                // this watch handle will be resumed when user searches for a new location
-                // pausableWatchHandle.pause();
-
-                // Initial location for the center, edge and polylines on the view
-                const viewCenter = view.center.clone();
-                const centerScreenPoint = view.toScreen(viewCenter);
-                const centerPoint = view.toMap({
-                    x: centerScreenPoint.x + 120,
-                    y: centerScreenPoint.y - 120
-                });
-                const edgePoint = view.toMap({
-                    x: centerScreenPoint.x + 240,
-                    y: centerScreenPoint.y - 120
-                });
-
-                // Store updated vertices
-                const vertices = [
-                    [centerPoint.x, centerPoint.y],
-                    [edgePoint.x, edgePoint.y]
-                ];
-
-                // Create center, edge, polyline and buffer graphics for the first time
-                if (!centerGraphic) {
-                    const polyline = new Polyline({
-                        paths: vertices,
-                        spatialReference: view.spatialReference
-                    });
-
-                    // get the length of the initial polyline and create buffer
-                    const length = geometryEngine.geodesicLength(polyline, unit);
-                    const buffer = geometryEngine.geodesicBuffer(
-                        centerPoint,
-                        length,
-                        unit
-                    );
-
-                    // Create the graphics representing the line and buffer
-                    const pointSymbol = {
-                        type: "simple-marker",
-                        style: "circle",
-                        size: 10,
-                        color: [0, 255, 255, 0.5]
-                    };
-                    centerGraphic = new Graphic({
-                        geometry: centerPoint,
-                        symbol: pointSymbol,
-                        attributes: {
-                            center: "center"
-                        }
-                    });
-
-                    edgeGraphic = new Graphic({
-                        geometry: edgePoint,
-                        symbol: pointSymbol,
-                        attributes: {
-                            edge: "edge"
-                        }
-                    });
-
-                    polylineGraphic = new Graphic({
-                        geometry: polyline,
-                        symbol: {
-                            type: "simple-line",
-                            color: [254, 254, 254, 1],
-                            width: 2.5
-                        }
-                    });
-
-                    bufferGraphic = new Graphic({
-                        geometry: buffer,
-                        symbol: {
-                            type: "simple-fill",
-                            color: [150, 150, 150, 0.2],
-                            outline: {
-                                color: "#FFEB00",
-                                width: 2
-                            }
-                        }
-                    });
-                    labelGraphic = labelLength(edgePoint, length);
-
-                    // Add graphics to layer
-                    graphicsLayer.addMany([centerGraphic, edgeGraphic]);
-                    // once center and edge point graphics are added to the layer,
-                    // call sketch's update method pass in the graphics so that users
-                    // can just drag these graphics to adjust the buffer
-                    setTimeout(function() {
-                        sketchViewModel.update([edgeGraphic, centerGraphic], {
-                            tool: "move"
-                        });
-                    }, 1000);
-
-                    graphicsLayer2.addMany([
-                        bufferGraphic,
-                        polylineGraphic,
-                        labelGraphic
-                    ]);
-                }
-                // Move the center and edge graphics to the new location returned from search
-                else {
-                    centerGraphic.geometry = centerPoint;
-                    edgeGraphic.geometry = edgePoint;
-                }
-
-                // Query features that intersect the buffer
-                calculateBuffer(vertices);
-            }
-
-            // Create an population pyramid chart for the census tracts that intersect the buffer polygon
-            // Chart is created using the Chart.js library
-            let chart;
-
-            function updateChart(newData) {
-                reportExpand.expanded = true;
-
-
-                if (!chart) {
-
-                } else {
-
-                }
-            }
-
-            // Label polyline with its length
-            function labelLength(geom, length) {
-                return new Graphic({
-                    geometry: geom,
-                    symbol: {
-                        type: "text",
-                        color: "#FFEB00",
-                        text: length.toFixed(2) + " miles",
-                        xoffset: 50,
-                        yoffset: 10,
-                        font: {
-                            // autocast as Font
-                            size: 14,
-                            family: "sans-serif"
-                        }
-                    }
-                });
-            }
+    function titleCase(string) {
+        var sentence = string.toLowerCase().split(" ");
+        for (var i = 0; i < sentence.length; i++) {
+            sentence[i] = sentence[i][0].toUpperCase() + sentence[i].slice(1);
         }
 
+        return sentence.join(" ");
+    }
 
+    function getPointTableHTML(data) {
+        if (!data) {
+            return '';
+        }
+        let rows = data.map(({ Name, Capacity, P_Address, SUBTYPE_ }) => {
+            return `
+            <tr>
+                <td>${Name}</td>
+                <td>${P_Address ? P_Address : 'N/A'}</td>
+                <td>${SUBTYPE_ ? titleCase(SUBTYPE_) : 'N/A'}</td>
+                <td>${Capacity ? Capacity : 'N/A'}</td>
+            </tr>
+            `
+        })
 
-    );
+        return `
+        <div class="tableContainer">
+            <table class="table table-sm">
+                <thead>
+                <tr>
+                    <th scope="col">Name</th>
+                    <th scope="col">Address</th>
+                    <th scope="col">Type of Facility</th>
+                    <th scope="col">Capacity</th>
+                </tr>
+                </thead>
+                <tbody>
+                    ${rows.join('')}
+                </tbody>
+            </table>
+        </div>`
+    }
+
+    const pointPolyFieldMap = {
+        County: "sj_county",
+        Jurisdiction: "sj_juris",
+        Zip: "sj_zip"
+    }
+
+    async function getPointHTML(selectedReport, type) {
+
+        let categories = {}
+        let categoryTitleLookup = {
+            RES: "Residential Facilities",
+            LTC: "Long-Term Care Facilities",
+            MED: "Medical Facilities",
+            Hospital: "Hospitals"
+        }
+        let pointRes = await pointsQt.execute({
+            returnGeometry: false,
+            outFields: ["*"],
+            where: `${pointPolyFieldMap[type]} = '${selectedReport}'`
+        });
+        let pointFeatures = pointRes.features;
+        let allPoints = pointFeatures.map(({ attributes }) => {
+            let cat = attributes["Category"];
+            if (cat) {
+                categories[cat] = categories[cat] || 0;
+                categories[cat]++;
+            }
+            return attributes;
+        })
+
+        let categoryLines = Object.keys(categories).map((category) => {
+            return `
+            <div class="categoryLine">
+                <img width="20" src="./icons/${category}.svg">
+                <b>${categoryTitleLookup[category]}: </b>
+                <span>${categories[category].toLocaleString()}</span>
+            </div>`;
+        })
+        return `
+        <h5>Total Healthcare Assets: <span class="badge badge-secondary">${allPoints.length.toLocaleString()}</span></h5>
+        <hr>
+        <div class="container">
+            <div class="row">
+                <div class="col col-4">
+                    ${categoryLines.join("")}
+                </div>
+                <div class="col col-8">
+                    ${getPointTableHTML(allPoints)}
+                </div>
+            </div>
+        </div>
+        `
+    }
+
+    function getAgeTableHTML(data) {
+        let ageConfig = [
+            { field: 'UNDER5', title: 'Under 5' },
+            { field: 'AGE5TO9', title: 'Age 5 to 9' },
+            { field: 'AGE10TO14', title: 'Age 10 to 14' },
+            { field: 'AGE15TO19', title: 'Age 15 to 19' },
+            { field: 'AGE20TO24', title: 'Age 20 to 24' },
+            { field: 'AGE25TO34', title: 'Age 25 to 34' },
+            { field: 'AGE35TO44', title: 'Age 35 to 44' },
+            { field: 'AGE45TO54', title: 'Age 45 to 54' },
+            { field: 'AGE55TO59', title: 'Age 55 to 59' },
+            { field: 'AGE60TO64', title: 'Age 60 to 64' },
+            { field: 'AGE65TO74', title: 'Age 65 to 74' },
+            { field: 'AGE75TO84', title: 'Age 75 to 84' },
+            { field: 'AGE85PLUS', title: 'Age 85+' }
+        ]
+
+        let rows = ageConfig.map((age) => {
+            return `
+            <tr>
+                <td>${age.title}</td>
+                <td>${data[age.field].toLocaleString()}</td>
+            </tr>
+            `
+        })
+
+        return `
+        <div class="tableContainer">
+            <table class="table table-sm">
+                <thead>
+                <tr>
+                    <th scope="col">Age Category</th>
+                    <th scope="col">Number of Persons</th>
+                </tr>
+                </thead>
+                <tbody>
+                    ${rows.join('')}
+                </tbody>
+            </table>
+        </div>`
+
+    }
+    async function getPolyData(selectedReport) {
+        const polyRes = await geoQt.execute({
+            returnGeometry: false,
+            outFields: ["*"],
+            where: `GEOID = '${selectedReport}'`
+        })
+        return polyRes.features[0].attributes;
+    }
+
+    async function getPolyHTML(selectedReport) {
+
+        let data = await getPolyData(selectedReport);
+
+        let leftPanelConf = [{
+            field: "TOTAL_POP",
+            // iconClass: "fas fa-male",
+            title: "Total Population"
+        }, {
+            field: "INCOME_BELOW_POVERTY",
+            title: "Total Population Below Poverty"
+        }, {
+            field: "PCT_INCOME_BELOW_POVERTY",
+            title: "Percent of Population Below Poverty",
+            valueFormat: val => `${val.toLocaleString()}%`
+        }, {
+            field: "SQMI",
+            title: "Area",
+            valueFormat: val => `${val > 1 ? Math.round(val).toLocaleString() : val.toFixed(2)} (sq mi)`
+        }, {
+            field: 'MEDIAN_HOUSEHOLD_INCOME',
+            title: 'Median Household Income',
+            valueFormat: val => `$${Math.round(val).toLocaleString()}`
+        }, {
+            field: 'POP_PER_SQMI',
+            title: 'Population Per SQMI'
+        }, {
+            field: 'MALE',
+            title: 'Male Population'
+        }, {
+            field: 'FEMALE',
+            title: 'Female Population'
+        }, ]
+
+        let leftPanelLines = leftPanelConf.map(({ field, title, iconClass, valueFormat }) => {
+            return `
+            <div class="categoryLine">
+                <i class="${iconClass}"></i>
+                <b>${title}: </b>
+                <span>${valueFormat ? valueFormat(data[field]) : data[field].toLocaleString()}</span>
+            </div>`;
+        })
+        return `
+        <div class="container">
+            <div class="row">
+                <div class="col col-6">
+                    ${leftPanelLines.join("")}
+                </div>
+                <div class="col col-6">
+                    <b>Population by Age</b>
+                    <br>
+                    <br>
+                    ${getAgeTableHTML(data)}
+                </div>
+            </div>
+        </div>
+        `
+    }
+
+    async function getTitle(selectedReport, type) {
+        let data = await getPolyData(selectedReport);
+        return `<h5>${data["Name"]} Report</h5>`;
+    }
+
+    async function openReport(selectedReport, type) {
+        const [polyHtml, pointHtml, title] = await Promise.all([getPolyHTML(selectedReport), getPointHTML(selectedReport, type), getTitle(selectedReport, type)]);
+        $("#reportOutput").html(
+            `
+            ${title}
+            <ul class="nav nav-tabs" id="myTab" role="tablist">
+                <li class="nav-item">
+                    <a class="nav-link active" id="demographics-tab" data-toggle="tab" href="#demographics" role="tab" aria-controls="demographics" aria-selected="true">Demographics</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" id="assets-tab" data-toggle="tab" href="#assets" role="tab" aria-controls="assets" aria-selected="false">Healthcare Assets</a>
+                </li>
+            </ul>
+            <div class="tab-content" id="myTabContent">
+                <div class="tab-pane fade show active" id="demographics" role="tabpanel" aria-labelledby="demographics-tab">
+                    ${polyHtml}
+                </div>
+                <div class="tab-pane fade" id="assets" role="tabpanel" aria-labelledby="assets-tab">
+                    ${pointHtml}
+                </div>
+            </div>
+            `
+        )
+    }
+});

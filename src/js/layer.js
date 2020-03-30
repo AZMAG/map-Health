@@ -403,7 +403,6 @@ define([
                     longitude: geometry.x,
                     spatialReference: 4326
                 },
-
                 attributes
             });
             return graphic;

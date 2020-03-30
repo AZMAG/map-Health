@@ -4,31 +4,54 @@
 
 #dashboard {
     position: absolute;
-    display: inline-flex;
-    flex-direction: row;
-    flex-wrap: nowrap;
-    justify-content: center;
     z-index: 1;
-    margin-left: 100px;
-    margin-top: 500px;
-    margin-bottom: 10px;
+    margin-left: 400px;
+    margin-right: auto;
+    margin-top: 560px;
     background: white;
     border-radius: 0;
     border: 1px solid rgba(128, 128, 128, 0.185);
-    width: 650px;
-    height: 200px;
+    width: 500px;
+    height: 160px;
     text-align: center;
     padding: 7px;
+}
 
+.card-box {
+    display: inline-flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: space-evenly;
+    margin-top: auto;
+    margin-bottom: auto;
 
     .card {
         flex-direction: column;
-        max-height: 155px;
+        flex-grow: 1;
+        max-height: 145px;
+        max-width: 150px;
     }
 
     .card-header {
+        padding: .75rem;
+
         h6 {
-            font-size: .9rem;
+            font-size: .85rem;
         }
     }
+
+    .card-body-1 {
+        font-size: 2rem;
+        font-weight: 700;
+        flex: 1 1 auto;
+        min-height: 1px;
+        padding: 1rem;
+    }
+
+    .card-body-2 {
+        padding: 5px;
+        flex: 1 1 auto;
+        min-height: 1px;
+    }
+
 }

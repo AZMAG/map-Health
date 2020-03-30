@@ -24,7 +24,9 @@ define([
                 $(".infoBtn").click(function() {
                     $("#contactModal").modal("show");
                 });
-
+                $("#reportModal").load("views/modal-report.html", function() {
+                    require(["mag/report"]);
+                });
                 require(["mag/layer"]);
             });
 
@@ -59,11 +61,6 @@ define([
             $("#legalModal").load("views/modal-legal.html", function() {
                 insertFooter();
             });
-
-            $("#reportModal").load("views/modal-report.html", function() {
-                require(["mag/report"]);
-            });
-
         });
 
         return;

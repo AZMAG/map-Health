@@ -5,12 +5,6 @@ define([
     "esri/geometry/Extent"
 ], function (config, Map, MapView, Extent) {
 
-    let $splashModal = $('#splashModal');
-
-    $(window).on('load', function () {
-        // $splashModal.modal('show');
-    });
-
     let map = new Map({
         basemap: "gray-vector",
     });
@@ -57,7 +51,6 @@ define([
 
     $(".btnInstructions").click(function () {
         $("#contactModal").modal("hide");
-        $("#splashModal").modal("show");
     });
 
     function TurnOffAllLayers() {

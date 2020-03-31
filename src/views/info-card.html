@@ -6,38 +6,41 @@
     <h6 class="card-title">Arizona Healthcare Assets Map</h6>
 </header>
 <div class="card-body help-card">
-    <div class="borderArea">
-        <b>Population Metrics</b><br>
-        <div id="populationMetrics"></div>
-        <!-- <select class="selectpicker" name="rendererDropdown" id="rendererDropdown">
+    <div class="card-area">
+        <div class="borderArea">
+            <b>Population Metrics</b>
+            <div id="populationMetrics"></div>
+            <!-- <select class="selectpicker" name="rendererDropdown" id="rendererDropdown">
             <option data-title="Vulnerability" value="Vulnerability">Vulnerability</option>
             <option value="TOTAL_POP">Total Population</option>
             <option data-title="Population in Poverty" value="Totoal_Pop_Under_Poverty">Population in Poverty</option>
         </select> -->
-    </div>
-    <div class="borderArea">
-        <b>Healthcare Facilities</b>
-        <div id="layersList"></div>
-    </div>
-    <!-- <button type="button" class="btn btn-info btn-xs source" data-toggle="modal" data-target="#sourceModal">&nbsp;Source</button> -->
+        </div>
+        <div class="borderArea">
+            <b>Healthcare Facilities</b>
+            <div id="layersList"></div>
+        </div>
+        <!-- <button type="button" class="btn btn-info btn-xs source" data-toggle="modal" data-target="#sourceModal">&nbsp;Source</button> -->
 
-    <div class="borderArea">
-        <b>Summary Report</b>
-        <form id="reportForm">
-            <div class="form-group">
-                <label class="reportLabel" for="reportType" id="reportType_label">Type of Report:</label>
-                <br>
-                <select class="selectpicker_health" data-style="btn-sm" id="reportType"></select>
-                <small class="form-text text-muted">Choose the type of geography for the report.</small>
-            </div>
-            <div id="specificReportDiv" class="form-group" style="display: block;">
-                <label class="reportLabel" for="specificReport" id="specificReport_label">Choose Report:</label>
-                <br>
-                <select class="selectpicker_health" data-size="5" data-live-search=" true" data-style="btn-sm" id="specificReport"></select>
-                <small class="form-text text-muted">Choose the report to generate.</small>
-            </div>
-            <button id="standardBtnSubmit" type="submit" class="btn btn-sm btn-primary">Submit</button>
-        </form>
+        <div class="borderArea">
+            <b>Summary Report</b>
+            <form id="reportForm">
+                <div class="form-group">
+                    <label class="reportLabel" for="reportType" id="reportType_label">Type of Report:</label>
+                    <br>
+                    <select class="selectpicker_health" data-style="btn-sm" id="reportType"></select>
+                    <small class="form-text text-muted">Choose the type of geography for the report.</small>
+                </div>
+                <div id="specificReportDiv" class="form-group" style="display: block;">
+                    <label class="reportLabel" for="specificReport" id="specificReport_label">Choose Report:</label>
+                    <br>
+                    <select class="selectpicker_health" data-size="5" data-live-search=" true" data-style="btn-sm"
+                        id="specificReport"></select>
+                    <small class="form-text text-muted">Choose the report to generate.</small>
+                </div>
+                <button id="standardBtnSubmit" type="submit" class="btn btn-sm btn-primary">Submit</button>
+            </form>
+        </div>
     </div>
 </div>
 <hr>

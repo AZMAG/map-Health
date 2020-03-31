@@ -135,11 +135,20 @@ SASS Partials
   padding-bottom: 2px;
   max-height: 600px;
   max-width: 100%;
+  direction: rtl;
   overflow-y: auto;
 }
 
 .help-card .borderArea {
   margin: 0 5px 5px 5px;
+}
+
+.card-area {
+  direction: ltr;
+}
+
+.populationMetrics .layersList {
+  position: relative;
 }
 
 .tutorial-btn {
@@ -425,22 +434,16 @@ a.modal-anchor.link:hover {
 /****************
 * SASS Dashboard
 *****************/
-#dashboard {
-  position: absolute;
-  z-index: 1;
-  margin-left: 400px;
-  margin-right: auto;
-  margin-top: 560px;
-  background: white;
-  border-radius: 0;
-  border: 1px solid rgba(128, 128, 128, 0.185);
-  width: 500px;
-  height: 160px;
+#dashboardModal {
   text-align: center;
-  padding: 7px;
 }
 
-.card-box {
+#dashboardModal .modal-dialog {
+  position: relative;
+  top: 60vh;
+}
+
+#dashboardModal .card-box {
   display: -webkit-inline-box;
   display: -ms-inline-flexbox;
   display: inline-flex;
@@ -457,7 +460,7 @@ a.modal-anchor.link:hover {
   margin-bottom: auto;
 }
 
-.card-box .card {
+#dashboardModal .card-box .card {
   -webkit-box-orient: vertical;
   -webkit-box-direction: normal;
       -ms-flex-direction: column;
@@ -469,15 +472,15 @@ a.modal-anchor.link:hover {
   max-width: 150px;
 }
 
-.card-box .card-header {
+#dashboardModal .card-box .card-header {
   padding: .75rem;
 }
 
-.card-box .card-header h6 {
+#dashboardModal .card-box .card-header h6 {
   font-size: .85rem;
 }
 
-.card-box .card-body-1 {
+#dashboardModal .card-box .card-body-1 {
   font-size: 2rem;
   font-weight: 700;
   -webkit-box-flex: 1;
@@ -487,7 +490,7 @@ a.modal-anchor.link:hover {
   padding: 1rem;
 }
 
-.card-box .card-body-2 {
+#dashboardModal .card-box .card-body-2 {
   padding: 5px;
   -webkit-box-flex: 1;
       -ms-flex: 1 1 auto;

@@ -7,7 +7,7 @@ define([
     "esri/layers/GraphicsLayer",
     "esri/Graphic",
     "esri/tasks/QueryTask"
-], function(config, {
+], function (config, {
     map,
     view
 }, FeatureLayer, TileLayer, MapImageLayer, GraphicsLayer, Graphic, QueryTask) {
@@ -58,7 +58,7 @@ define([
             <div class="form-check">
                 <div class="layerBox">
                     <input checked type="checkbox" class="popMetricsInput form-check-input" data-field="${key}" id="cBox${key}">
-                    <label class="form-check-label" for="cBox${key}">${conf.title}</label> <i title=${conf.title} data-toggle="popover" data-content="${conf.definition}" class=" vulnerabilityPopover fas fa-question-circle"></i>
+                    <label class="form-check-label" for="cBox${key}">${conf.title}</label> <i title=${conf.title} data-toggle="popover" data-boundary="window" data-content="${conf.definition}" class=" vulnerabilityPopover fas fa-question-circle"></i>
                 </div>
             </div>
         `);
@@ -67,7 +67,7 @@ define([
                 <div class="form-check">
                     <div class="layerBox">
                         <input type="checkbox" class="popMetricsInput form-check-input" data-field="${key}" id="cBox${key}">
-                        <label class="form-check-label" for="cBox${key}">${conf.title}</label> <i title=${conf.title} data-toggle="popover" data-content="${conf.definition}" class=" vulnerabilityPopover fas fa-question-circle"></i>
+                        <label class="form-check-label" for="cBox${key}">${conf.title}</label> <i title=${conf.title} data-toggle="popover" data-boundary="window" data-content="${conf.definition}" class=" vulnerabilityPopover fas fa-question-circle"></i>
                     </div>
                 </div>
             `);
@@ -83,7 +83,7 @@ define([
         }
     });
 
-    $(".popMetricsInput").change(function(e) {
+    $(".popMetricsInput").change(function (e) {
         $("#context-menu").hide();
         let tractsLyr = map.findLayerById("tracts");
         let covidLyr = map.findLayerById("covidCases");
@@ -100,7 +100,7 @@ define([
                 covidLyr.labelingInfo = GetCovidLabelInfo();
                 covidLyr.title = 'COVID-19 Cases (By County)';
                 covidLyr.visible = true;
-                $("#dashboard").show();
+                $("#dashboardModal").modal("show");
             } else if (val === 'Capacity') {
                 tractsLyr.visible = false;
                 let covidLyr = map.findLayerById("covidCases");
@@ -115,7 +115,7 @@ define([
             let checked = $(".popMetricsInput:checked").length;
             if (checked === 0) {
                 tractsLyr.visible = false;
-                $("#dashboard").hide();
+                $("#dashboardModal").modal("hide");
             }
         }
     });
@@ -220,7 +220,7 @@ define([
         };
     }
 
-    function GetCovidRenderer(){
+    function GetCovidRenderer() {
         return {
             type: 'simple',
             field: 'Confirmed',
@@ -267,7 +267,7 @@ define([
         }
     }
 
-    function GetCapacityRenderer(){
+    function GetCapacityRenderer() {
         return {
             type: 'simple',
             field: 'Capacity',
@@ -319,7 +319,7 @@ define([
         }
     }
 
-    function GetCapacityLabelInfo(){
+    function GetCapacityLabelInfo() {
         return [{
             labelPlacement: "above-right",
             labelExpressionInfo: {
@@ -336,7 +336,7 @@ define([
         }]
     }
 
-    function GetCovidLabelInfo(){
+    function GetCovidLabelInfo() {
         return [{
             labelPlacement: "above-right",
             labelExpressionInfo: {
@@ -357,7 +357,9 @@ define([
         let queryAllUrl = "https://services1.arcgis.com/0MSEUqKaxRlEPj5g/ArcGIS/rest/services/ncov_cases_US/FeatureServer/0/query?where=Province_State+%3D+%27Arizona%27&outFields=*&f=json";
 
         let res = await fetch(queryAllUrl);
-        let { features } = await res.json();
+        let {
+            features
+        } = await res.json();
 
         const pointsQt = new QueryTask({
             url: config.mainUrl + config.queryLayerIndex
@@ -372,17 +374,22 @@ define([
 
         let bedsLookupByCounty = {};
 
-        points.features.forEach(({attributes}) => {
-            if (attributes['sj_county']) {                
+        points.features.forEach(({
+            attributes
+        }) => {
+            if (attributes['sj_county']) {
                 let countyId = attributes['sj_county'].substr(-3);
                 let county = config.countyLookup[countyId];
                 bedsLookupByCounty[county] = bedsLookupByCounty[county] || 0;
                 bedsLookupByCounty[county] += attributes["Capacity"];
             }
         })
-        
 
-        let source = features.map(({ attributes, geometry }) => {
+
+        let source = features.map(({
+            attributes,
+            geometry
+        }) => {
             attributes["Capacity"] = bedsLookupByCounty[attributes["Admin2"]];
 
             if (attributes["Admin2"] === "Maricopa") {
@@ -400,7 +407,27 @@ define([
                 attributes
             });
             return graphic;
+
         });
+        // console.log(source);
+
+        var deaths = [];
+        var cases = [];
+        $.each(source, function (index, item) {
+            var i = item.attributes;
+            deaths.push(i.Deaths);
+            cases.push(i.Confirmed);
+        });
+
+        const deathsSum = deaths.reduce((a, b) => a + b, 0);
+        // console.log(deathsSum);
+        var ds = new Intl.NumberFormat().format(deathsSum);
+        $("#deaths").text(ds);
+
+        const casesSum = cases.reduce((a, b) => a + b, 0);
+        // console.log(casesSum);
+        var cs = new Intl.NumberFormat().format(casesSum);
+        $("#cases").text(cs);
 
 
         var cases = new FeatureLayer({
@@ -561,7 +588,7 @@ define([
                     <div class="layerBox">
                         <input type="checkbox" ${conf.visible ? 'checked' : ''} class="form-check-input" data-id="${conf.id}" id="cBox${conf.id}">
                         <label class="form-check-label" for="cBox${conf.id}">${conf.title}</label> ${conf.definition ?
-                            `<i data-toggle="popover" data-placement="right"
+                            `<i data-toggle="popover" data-boundary="window"
                                 data-content="${conf.definition}" class="fas fa-question-circle" title="${conf.title}">
                             </i>` : ''}
                     </div>
@@ -571,7 +598,7 @@ define([
         });
         await addCovidLayer();
 
-        $(".form-check-input").change(function(e) {
+        $(".form-check-input").change(function (e) {
             let layId = $(this).data("id");
 
             let lay = map.findLayerById(layId);
@@ -591,7 +618,7 @@ define([
         let {
             attributes
         } = res.graphic;
-        console.log(attributes);
+        // console.log(attributes);
 
         let {
             TOTAL_POP,

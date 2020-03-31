@@ -239,28 +239,28 @@ define([
                 field: "Confirmed",
                 stops: [{
                         value: 0,
-                        size: 15,
+                        size: 5,
                         label: "<15"
                     },
                     {
                         value: 15,
-                        size: 30,
+                        size: 20,
                         label: "<30"
                     },
                     {
                         value: 30,
-                        size: 45,
-                        label: ">60"
-                    },
-                    {
-                        value: 60,
-                        size: 60,
-                        label: ">100"
+                        size: 30,
+                        label: "<100"
                     },
                     {
                         value: 100,
+                        size: 45,
+                        label: "<500"
+                    },
+                    {
+                        value: 500,
                         size: 75,
-                        label: "100+"
+                        label: "500+"
                     }
                 ]
             }]
@@ -284,35 +284,31 @@ define([
             visualVariables: [{
                 type: "size",
                 field: "Capacity",
-                stops: [{
+                stops: [
+                    {
                         value: 0,
+                        size: 5,
+                        label: "<100 Beds"
+                    },
+                    {
+                        value: 100,
                         size: 10,
-                        label: "0 Beds"
-                    },
-                    {
-                        value: 50,
-                        size: 20,
-                        label: "<150 Beds"
-                    },
-                    {
-                        value: 1000,
-                        size: 40,
                         label: "<1000 Beds"
                     },
                     {
-                        value: 5000,
-                        size: 50,
+                        value: 1000,
+                        size: 35,
                         label: "<5000 Beds"
                     },
                     {
-                        value: 15000,
-                        size: 60,
-                        label: "<15000 Beds"
+                        value: 5000,
+                        size: 65,
+                        label: "<15000 beds"
                     },
                     {
-                        value: 1000000,
-                        size: 75,
-                        label: "15000+ Beds"
+                        value: 15000,
+                        size: 85,
+                        label: "15000+ beds"
                     }
                 ]
             }]
@@ -329,7 +325,11 @@ define([
                 type: "text",
                 color: "black",
                 haloSize: 1,
-                haloColor: "white"
+                haloColor: "white",
+                font: {
+                    size: 12,
+                    weight: "bold"
+                }
             },
             maxScale: 0,
             minScale: 0,
@@ -346,7 +346,11 @@ define([
                 type: "text",
                 color: "black",
                 haloSize: 1,
-                haloColor: "white"
+                haloColor: "white",
+                font: {
+                    size: 12,
+                    weight: "bold"
+                }
             },
             maxScale: 0,
             minScale: 0,

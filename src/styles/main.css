@@ -122,7 +122,7 @@ SASS Partials
   border: 1px solid rgba(128, 128, 128, 0.185);
   text-align: center;
   padding: 12px 5px 5px 5px;
-  max-height: 620px;
+  max-height: 80vh;
   max-width: 100%;
 }
 
@@ -133,7 +133,7 @@ SASS Partials
 .help-card {
   padding: 0 5px 5px 2px;
   padding-bottom: 2px;
-  max-height: 600px;
+  max-height: 80vh;
   max-width: 100%;
   overflow-y: auto;
 }

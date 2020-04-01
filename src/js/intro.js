@@ -48,15 +48,24 @@ function startupIntro() {
                     Focusable.setFocus($($("#layersList").parent()));
                 }
             },
-            // {
-            //     title: "Toggle Healthcare Facilities Layers",
-            //     content: 'The facilities that can be displayed on the map are shown here.  Click a checkbox to toggle the facilities layer on the map.',
-            //     target: $("#layersList").parent()[0],
-            //     placement: "right",
-            //     onShow: function () {
-            //         Focusable.setFocus($($("#layersList").parent()));
-            //     }
-            // }
+            {
+                title: "Open a summary report",
+                content: 'Use this area of the site to open a Summary Report window that includes demographics and healthcare asset information on a particular County, Jurisdiction or Zip code.',
+                target: $("#reportForm").parent()[0],
+                placement: "right",
+                onShow: function () {
+                    Focusable.setFocus($($("#reportForm").parent()));
+                }
+            },
+            {
+                title: "Identify features on the map",
+                content: 'Click anywhere on the map to identify features underneath the cursor.  You can click on points or on the background Population Metrics to get a popup with more information.',
+                target: $("#helpInfo")[0],
+                placement: "right",
+                onShow: function(){
+                    Focusable.hide();
+                }
+            }
         ],
         showPrevButton: true,
         onStart: function () {

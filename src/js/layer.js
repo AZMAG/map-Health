@@ -18,7 +18,7 @@ define([
     let popMetricsConf = {
         Vulnerability: {
             title: "Vulnerability (Index)",
-            definition: "The vulnerable population index is a weighted sum of select attributes by Census Tract that indicate increased health risk.  The attributes include factors like elderly and very young population, those with disabilities, those under the poverty level, and households that lack modern communications (e.g. internet, telephone)."
+            definition: "The Vulnerability Index is a weighted sum of selected attributes from the latest Census American Community Survey (2014-2018) by Census Block Group that indicate increased risk to the health of the populations that live there. The attributes that make up the index are Total Population, Population 65 and older, population under the poverty level, households lacking a computer or internet access, and population 65 and older that lack telephone service."
         },
         TOTAL_POP: {
             title: "Total Population",
@@ -58,7 +58,7 @@ define([
             <div class="form-check">
                 <div class="layerBox">
                     <input checked type="checkbox" class="popMetricsInput form-check-input" data-field="${key}" id="cBox${key}">
-                    <label class="form-check-label" for="cBox${key}">${conf.title}</label> <i title=${conf.title} data-toggle="popover" data-content="${conf.definition}" class=" vulnerabilityPopover fas fa-question-circle"></i>
+                    <label class="form-check-label" for="cBox${key}">${conf.title}</label> <i title=${conf.title} data-toggle="popover" data-boundary="window" data-content="${conf.definition}" class=" vulnerabilityPopover fas fa-question-circle"></i>
                 </div>
             </div>
         `);
@@ -67,7 +67,7 @@ define([
                 <div class="form-check">
                     <div class="layerBox">
                         <input type="checkbox" class="popMetricsInput form-check-input" data-field="${key}" id="cBox${key}">
-                        <label class="form-check-label" for="cBox${key}">${conf.title}</label> <i title=${conf.title} data-toggle="popover" data-content="${conf.definition}" class=" vulnerabilityPopover fas fa-question-circle"></i>
+                        <label class="form-check-label" for="cBox${key}">${conf.title}</label> <i title=${conf.title} data-toggle="popover" data-boundary="window" data-content="${conf.definition}" class=" vulnerabilityPopover fas fa-question-circle"></i>
                     </div>
                 </div>
             `);
@@ -240,28 +240,28 @@ define([
                 field: "Confirmed",
                 stops: [{
                         value: 0,
-                        size: 15,
+                        size: 5,
                         label: "<15"
                     },
                     {
                         value: 15,
-                        size: 30,
+                        size: 20,
                         label: "<30"
                     },
                     {
                         value: 30,
-                        size: 45,
-                        label: ">60"
-                    },
-                    {
-                        value: 60,
-                        size: 60,
-                        label: ">100"
+                        size: 30,
+                        label: "<100"
                     },
                     {
                         value: 100,
+                        size: 45,
+                        label: "<500"
+                    },
+                    {
+                        value: 500,
                         size: 75,
-                        label: "100+"
+                        label: "500+"
                     }
                 ]
             }]
@@ -287,33 +287,28 @@ define([
                 field: "Capacity",
                 stops: [{
                         value: 0,
+                        size: 5,
+                        label: "<100 Beds"
+                    },
+                    {
+                        value: 100,
                         size: 10,
-                        label: "0 Beds"
-                    },
-                    {
-                        value: 50,
-                        size: 20,
-                        label: "<150 Beds"
-                    },
-                    {
-                        value: 1000,
-                        size: 40,
                         label: "<1000 Beds"
                     },
                     {
-                        value: 5000,
-                        size: 50,
+                        value: 1000,
+                        size: 35,
                         label: "<5000 Beds"
                     },
                     {
-                        value: 15000,
-                        size: 60,
-                        label: "<15000 Beds"
+                        value: 5000,
+                        size: 65,
+                        label: "<15000 beds"
                     },
                     {
-                        value: 1000000,
-                        size: 75,
-                        label: "15000+ Beds"
+                        value: 15000,
+                        size: 85,
+                        label: "15000+ beds"
                     }
                 ]
             }]
@@ -330,7 +325,11 @@ define([
                 type: "text",
                 color: "black",
                 haloSize: 1,
-                haloColor: "white"
+                haloColor: "white",
+                font: {
+                    size: 12,
+                    weight: "bold"
+                }
             },
             maxScale: 0,
             minScale: 0,
@@ -347,7 +346,11 @@ define([
                 type: "text",
                 color: "black",
                 haloSize: 1,
-                haloColor: "white"
+                haloColor: "white",
+                font: {
+                    size: 12,
+                    weight: "bold"
+                }
             },
             maxScale: 0,
             minScale: 0,
@@ -407,7 +410,27 @@ define([
                 attributes
             });
             return graphic;
+
         });
+        // console.log(source);
+
+        var deaths = [];
+        var cases = [];
+        $.each(source, function (index, item) {
+            var i = item.attributes;
+            deaths.push(i.Deaths);
+            cases.push(i.Confirmed);
+        });
+
+        const deathsSum = deaths.reduce((a, b) => a + b, 0);
+        // console.log(deathsSum);
+        var ds = new Intl.NumberFormat().format(deathsSum);
+        $("#deaths").text(ds);
+
+        const casesSum = cases.reduce((a, b) => a + b, 0);
+        // console.log(casesSum);
+        var cs = new Intl.NumberFormat().format(casesSum);
+        $("#cases").text(cs);
 
         var cases = new FeatureLayer({
             title: 'COVID-19 Cases (By County)',
@@ -567,7 +590,7 @@ define([
                     <div class="layerBox">
                         <input type="checkbox" ${conf.visible ? 'checked' : ''} class="form-check-input" data-id="${conf.id}" id="cBox${conf.id}">
                         <label class="form-check-label" for="cBox${conf.id}">${conf.title}</label> ${conf.definition ?
-                            `<i data-toggle="popover" data-placement="right"
+                            `<i data-toggle="popover" data-boundary="window"
                                 data-content="${conf.definition}" class="fas fa-question-circle" title="${conf.title}">
                             </i>` : ''}
                     </div>
@@ -597,7 +620,7 @@ define([
         let {
             attributes
         } = res.graphic;
-        console.log(attributes);
+        // console.log(attributes);
 
         let {
             TOTAL_POP,

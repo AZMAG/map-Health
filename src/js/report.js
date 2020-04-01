@@ -107,7 +107,7 @@ define([
                 <td>${Name}</td>
                 <td>${P_Address ? P_Address : 'N/A'}</td>
                 <td>${SUBTYPE_ ? titleCase(SUBTYPE_) : 'N/A'}</td>
-                <td>${Capacity ? Capacity : 'N/A'}</td>
+                <td>${Capacity ? Capacity.toLocaleString() : 'N/A'}</td>
             </tr>
             `
         })
@@ -120,7 +120,7 @@ define([
                     <th scope="col">Name</th>
                     <th scope="col">Address</th>
                     <th scope="col">Type of Facility</th>
-                    <th scope="col">Capacity</th>
+                    <th scope="col">Number of Beds</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -170,13 +170,13 @@ define([
         })
         return `
         <h5>Total Healthcare Assets: <span class="badge badge-secondary">${allPoints.length.toLocaleString()}</span></h5>
-        <hr>
+        <br>
         <div class="container">
             <div class="row">
-                <div class="col col-4">
+                <div class="col col-5">
                     ${categoryLines.join("")}
                 </div>
-                <div class="col col-8">
+                <div class="col col-7">
                     ${getPointTableHTML(allPoints)}
                 </div>
             </div>
@@ -224,8 +224,8 @@ define([
                 </tbody>
             </table>
         </div>`
-
     }
+
     async function getPolyData(selectedReport) {
         const polyRes = await geoQt.execute({
             returnGeometry: false,
@@ -249,7 +249,7 @@ define([
         }, {
             field: "PCT_INCOME_BELOW_POVERTY",
             title: "Percent of Population Below Poverty",
-            valueFormat: val => `${val.toLocaleString()}%`
+            valueFormat: val => `${ parseFloat(val).toFixed(1)}%`
         }, {
             field: "SQMI",
             title: "Area",

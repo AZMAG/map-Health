@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lass="no-js" lang="en">
 
 <head>
     <meta charset="utf-8">
@@ -15,24 +15,35 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="url" content="https://geo.azmag.gov/maps/Health/">
     <meta name="creation-date" content="2020-03-16">
-    <meta name="revision-date" content="2020-03-19">
+    <meta name="revision-date" content="2020-04-01">
+    <!-- Fav and touch icons -->
     <link rel="apple-touch-icon" type="image/png" sizes="152x152" href="./img/icon_144.png">
     <link rel="apple-touch-icon" type="image/png" sizes="120x120" href="./img/icon_114.png">
     <link rel="apple-touch-icon" type="image/png" sizes="76x76" href="./img/icon_72.png">
     <link rel="apple-touch-icon" type="image/png" sizes="60x60" href="./img/icon_57.png">
     <link rel="shortcut icon" type="image-favorites-icon" href="./img/icon_57.png">
+    <link rel="manifest" href="site.webmanifest">
 
     <link href='https://fonts.googleapis.com/css?family=Poppins' rel='stylesheet'>
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
-        integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
     <link rel="stylesheet" href="https://js.arcgis.com/4.15/esri/css/main.css">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.0/css/bootstrap.min.css">
-    <link rel="stylesheet"
-        href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.2/css/bootstrap-select.min.css">
-    <link rel="stylesheet"
-        href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/10.6.1/css/bootstrap-slider.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.2/css/bootstrap-select.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/10.6.1/css/bootstrap-slider.min.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/hopscotch/0.3.1/css/hopscotch.min.css" />
-    <link rel="stylesheet" type="text/css" media="screen" href="./styles/main.css">
+    <!-- Application CSS -->
+    <!-- comments:comment html -->
+    <link rel="stylesheet" type="text/css" media="screen" href="./css/main.css">
+    <!-- endcomments -->
+    <!-- comments:uncomment html -->
+    <!-- <link rel="stylesheet" type="text/css" href="./css/master.min.css"> -->
+    <!-- endcomments -->
+    <!--  removed once App goes into production -->
+    <!-- comments:comment html -->
+    <meta http-equiv="cache-control" content="no-cache" />
+    <meta http-equiv="expires" content="0" />
+    <meta http-equiv="pragma" content="no-cache" />
+    <!-- endcomments -->
 </head>
 
 <body data-container="body">
@@ -95,17 +106,14 @@
                 location: location.pathname.replace(/\/[^/]+$/, '') + './js'
             }]
         };
-
     </script>
 
     <script src="https://js.arcgis.com/4.15/"></script>
 
 
     <script>
-        require(["mag/main"], function (mag) {});
-
+        require(["mag/main.REPLACE"], function(mag) {});
     </script>
-
 
     <!-- Google Analytics -->
     <!-- comments:uncomment-block html -->

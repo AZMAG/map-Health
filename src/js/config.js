@@ -1,4 +1,4 @@
-define([], function() {
+define([], function () {
     return {
         // mainUrl: "https://services1.arcgis.com/mpVYz37anSdrK4d8/arcgis/rest/services/AZLicensedFacilities/FeatureServer/",
         mainUrl: "https://geo.azmag.gov/arcgis/rest/services/maps/HealthData/MapServer/",
@@ -14,6 +14,9 @@ define([], function() {
                 wkid: 102100
             }
         },
+
+        version: "v1.0. | 2020-04-01",
+        copyright: "2020",
 
         countyLookup: {
             '001': 'Apache',
@@ -32,9 +35,6 @@ define([], function() {
             '025': 'Yavapai',
             '027': 'Yuma'
         },
-
-        version: 'v0.0.3 | 2020-03-23',
-        copyright: '2020',
 
         breaks: {
             "TOTAL_POP": [0, 2879, 4487, 6170, 8907, 17951],

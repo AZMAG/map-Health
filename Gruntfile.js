@@ -121,6 +121,7 @@ module.exports = function(grunt) {
         toggleComments: {
             customOptions: {
                 options: {
+                    padding: 0,
                     removeCommands: true
                 },
                 files: {

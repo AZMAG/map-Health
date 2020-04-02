@@ -7,7 +7,7 @@ define([
     "esri/layers/GraphicsLayer",
     "esri/Graphic",
     "esri/tasks/QueryTask"
-], function (config, {
+], function(config, {
     map,
     view
 }, FeatureLayer, TileLayer, MapImageLayer, GraphicsLayer, Graphic, QueryTask) {
@@ -45,8 +45,8 @@ define([
             definition: "This feature layer contains the most up-to-date COVID-19 cases and latest trend plot. It covers China, the US, Canada, Australia (at province/state level), and the rest of the world (at country level, represented by either the country centroids or their capitals). Data sources are WHO, US CDC, China NHC, ECDC, and DXY. The China data is automatically updating at least once per hour, and non China data is updating manually. This layer is created and maintained by the Center for Systems Science and Engineering (CSSE) at the Johns Hopkins University."
         },
         Capacity: {
-            title: "Capacity (Beds By County)",
-            definition: "This feature layer contains the capcity in beds by county. It covers hospital capacity in Arizona."
+            title: "Hospital Beds By County",
+            definition: "This feature layer contains the capcity in hospital beds by county. It covers hospital capacity in Arizona."
         }
     };
 
@@ -83,7 +83,7 @@ define([
         }
     });
 
-    $(".popMetricsInput").change(function (e) {
+    $(".popMetricsInput").change(function(e) {
         $("#context-menu").hide();
         let tractsLyr = map.findLayerById("tracts");
         let covidLyr = map.findLayerById("covidCases");
@@ -104,7 +104,7 @@ define([
             } else if (val === 'Capacity') {
                 tractsLyr.visible = false;
                 let covidLyr = map.findLayerById("covidCases");
-                covidLyr.title = 'Capacity (Beds By County)';
+                covidLyr.title = 'Hospital Beds By County';
                 covidLyr.renderer = GetCapacityRenderer();
                 covidLyr.labelingInfo = GetCapacityLabelInfo();
                 covidLyr.visible = true;
@@ -416,7 +416,7 @@ define([
 
         var deaths = [];
         var cases = [];
-        $.each(source, function (index, item) {
+        $.each(source, function(index, item) {
             var i = item.attributes;
             deaths.push(i.Deaths);
             cases.push(i.Confirmed);
@@ -436,13 +436,16 @@ define([
             title: 'COVID-19 Cases (By County)',
             id: 'covidCases',
             popupTemplate: {
-                title: '{Admin2} County',
-                content: `
-                <b>Confirmed Cases:</b> {Confirmed} <br>
-                <b>Deaths:</b>  {Deaths} <br>
-                <b>Active Cases:</b> {Active} <br>
-                <b>Capacity (Number of Beds):</b> {Capacity}
-            `
+                title: '{Admin2} County <span style="display: none;">{*}</span>',
+                content: function({ graphic }) {
+                    let { Confirmed, Deaths, Capacity } = graphic.attributes;
+
+                    return `
+                        <b>Confirmed Cases:</b> ${Confirmed.toLocaleString()} <br>
+                        <b>Deaths:</b>  ${Deaths.toLocaleString()} <br>
+                        <b>Number of Beds:</b> ${Capacity.toLocaleString()}
+                    `
+                }
             },
             source,
             spatialReference: {
@@ -600,7 +603,7 @@ define([
         });
         await addCovidLayer();
 
-        $(".form-check-input").change(function (e) {
+        $(".form-check-input").change(function(e) {
             let layId = $(this).data("id");
 
             let lay = map.findLayerById(layId);
@@ -645,11 +648,11 @@ define([
 
         let html = `
         <div class="popupContent">
-            <b>Total Population: </b><span>${TOTAL_POP}</span>
+            <b>Total Population: </b><span>${TOTAL_POP.toLocaleString()}</span>
             <br>
             <b>Vulnerability: </b><span>${vuln}</span>
             <br>
-            <b> Population Below Poverty: </b><span>${Totoal_Pop_Under_Poverty}</span>
+            <b> Population Below Poverty: </b><span>${Totoal_Pop_Under_Poverty.toLocaleString()}</span>
             <br>
             <b> Poverty Percentage: </b><span>${Math.round((Totoal_Pop_Under_Poverty / POP_FOR_POVERTY) * 1000) / 10}%</span>
             <br>
@@ -662,12 +665,12 @@ define([
                     </tr>
                 </thead>
                 <tbody>
-                    <tr><td>Age 0 - 5</td><td>${AGE_0_5}</td></tr>
-                    <tr><td>Age 5 - 10</td><td>${AGE_5_10}</td></tr>
-                    <tr><td>Age 10 - 25</td><td>${AGE_10_25}</td></tr>
-                    <tr><td>Age 25 - 55</td><td>${AGE_25_55}</td></tr>
-                    <tr><td>Age 55 - 75</td><td>${AGE_55_75}</td></tr>
-                    <tr><td>Age 75+</td><td>${AGE_75Plus}</td></tr>
+                    <tr><td>Age 0 - 5</td><td>${AGE_0_5.toLocaleString()}</td></tr>
+                    <tr><td>Age 5 - 10</td><td>${AGE_5_10.toLocaleString()}</td></tr>
+                    <tr><td>Age 10 - 25</td><td>${AGE_10_25.toLocaleString()}</td></tr>
+                    <tr><td>Age 25 - 55</td><td>${AGE_25_55.toLocaleString()}</td></tr>
+                    <tr><td>Age 55 - 75</td><td>${AGE_55_75.toLocaleString()}</td></tr>
+                    <tr><td>Age 75+</td><td>${AGE_75Plus.toLocaleString()}</td></tr>
                 </tbody>
                 </table>
             </div>
@@ -706,7 +709,7 @@ define([
                         ${P_city}, ${P_State} ${P_zip}
                     </div>
                 </div>
-                <div class="flexCenter" title="Capacity">
+                <div class="flexCenter" title="Number of Beds">
                     <i class="fas fa-user-friends"></i>
                     <div class="marginLeft10">
                         ${Capacity ? Capacity : "N/A"}

@@ -143,19 +143,25 @@ define([
             RES: "Residential Facilities",
             LTC: "Long-Term Care Facilities",
             MED: "Medical Facilities",
-            Hospital: "Hospitals"
+            Hospital: "Hospitals",
+            Capacity: "Hospital Beds"
         }
         let pointRes = await pointsQt.execute({
             returnGeometry: false,
             outFields: ["*"],
             where: `${pointPolyFieldMap[type]} = '${selectedReport}'`
         });
+        console.log(pointRes);
+        
         let pointFeatures = pointRes.features;
         let allPoints = pointFeatures.map(({ attributes }) => {
             let cat = attributes["Category"];
             if (cat) {
                 categories[cat] = categories[cat] || 0;
                 categories[cat]++;
+
+                categories["Capacity"] = categories["Capacity"] || 0;
+                categories["Capacity"] += attributes["Capacity"];
             }
             return attributes;
         })
@@ -238,12 +244,20 @@ define([
     async function getPolyHTML(selectedReport) {
 
         let data = await getPolyData(selectedReport);
-
+        
         let leftPanelConf = [{
             field: "TOTAL_POP",
             // iconClass: "fas fa-male",
             title: "Total Population"
         }, {
+            field: "AGE65PLUS",
+            title: "Population Age 65+"
+        }, {
+            field: "AGE65PLUS",
+            pctField: "TOTAL_POP",
+            title: "Percent of Population Age 65+",
+            valueFormat: val => `${ parseFloat(val).toFixed(1)}%`
+        },{
             field: "INCOME_BELOW_POVERTY",
             title: "Total Population Below Poverty"
         }, {
@@ -269,12 +283,13 @@ define([
             title: 'Female Population'
         }, ]
 
-        let leftPanelLines = leftPanelConf.map(({ field, title, iconClass, valueFormat }) => {
+        let leftPanelLines = leftPanelConf.map(({ pctField, field, title, iconClass, valueFormat }) => {
+            let val = pctField ? (data[field] / data[pctField]) * 100 : data[field];
             return `
             <div class="categoryLine">
                 <i class="${iconClass}"></i>
                 <b>${title}: </b>
-                <span>${valueFormat ? valueFormat(data[field]) : data[field].toLocaleString()}</span>
+                <span>${valueFormat ? valueFormat(val) : val.toLocaleString()}</span>
             </div>`;
         })
         return `

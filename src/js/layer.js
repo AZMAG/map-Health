@@ -358,7 +358,7 @@ define([
     }
 
     async function addCovidLayer() {
-        let queryAllUrl = "https://services1.arcgis.com/0MSEUqKaxRlEPj5g/ArcGIS/rest/services/ncov_cases_US/FeatureServer/0/query?where=Province_State+%3D+%27Arizona%27&outFields=*&f=json";
+        let queryAllUrl = config.covidLayerURL;
 
         let res = await fetch(queryAllUrl);
         let {
@@ -485,7 +485,7 @@ define([
     async function addLayers() {
 
         let tractsLayer = new FeatureLayer({
-            url: "https://geo.azmag.gov/arcgis/rest/services/maps/HealthData/MapServer/0",
+            url: config.healthLayerURL,
             popupTemplate: {
                 title: '<div style="display: none;">{*}</div>',
                 content: GetTractsPopup

@@ -1,8 +1,16 @@
-define([], function () {
+define([], function() {
+
+    var streetsURL = "https://server.arcgisonline.com/arcgis/rest/services/Reference/World_Transportation/MapServer";
+
     return {
         // mainUrl: "https://services1.arcgis.com/mpVYz37anSdrK4d8/arcgis/rest/services/AZLicensedFacilities/FeatureServer/",
         mainUrl: "https://geo.azmag.gov/arcgis/rest/services/maps/HealthData/MapServer/",
         feedbackUrl: "https://geo.azmag.gov/services/HealthcareFeedback/Feedback/SendFeedback",
+
+        covidLayerURL: "https://services1.arcgis.com/0MSEUqKaxRlEPj5g/ArcGIS/rest/services/ncov_cases_US/FeatureServer/0/query?where=Province_State+%3D+%27Arizona%27&outFields=*&f=json",
+
+        healthLayerURL: "https://geo.azmag.gov/arcgis/rest/services/maps/HealthData/MapServer/0",
+
         queryLayerIndex: 6,
         demographicsLayerIndex: 7,
         initExtent: {
@@ -41,16 +49,14 @@ define([], function () {
             "Totoal_Pop_Under_Poverty": [0, 440, 889, 1473, 2331, 3962]
         },
 
-
         layers: [{
                 type: "tile",
-                url: 'http://server.arcgisonline.com/arcgis/rest/services/Reference/World_Transportation/MapServer',
+                url: streetsURL,
                 title: "Streets",
                 id: "Streets",
                 visible: true,
                 showToc: false
             },
-
             {
                 type: 'feature',
                 title: 'Residential Facility',

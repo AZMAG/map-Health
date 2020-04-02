@@ -1,6 +1,6 @@
 ![](http://geo.azmag.gov/maps/readonaz/app/resources/img/maglogo_black.png)
 
-# MAG Health #
+# MAG Healthcare #
 
 [![Website](https://img.shields.io/website-up-down-green-red/http/shields.io.svg?label=my-website)](http://geo.azmag.gov/maps/health)
 [![GitHub version](https://badge.fury.io/gh/AZMAG%2Fmap-Health.svg)](https://badge.fury.io/gh/AZMAG%2Fmap-Health)
@@ -31,7 +31,7 @@ And constructed with the following guidelines:
 2. **MINOR** version when you add functionality in a backwards-compatible manner **bumps the minor** resets patch
 3. **PATCH** version when you make backwards-compatible bug fixes and misc changes **bumps only the patch**
 
-### version | 1.0. ###
+### version | 1.0.0 ###
 
 * #### Updated | 2020-04-01 ####
 

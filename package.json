@@ -1,70 +1,70 @@
 {
-  "name": "map-Health",
-  "version": "1.0.",
-  "date": "2020-04-01",
-  "copyright": "2020",
-  "description": "MAG webmap on health care locations in AZ",
-  "keywords": [
-    "health",
-    "healthcare",
-    "hospitals",
-    "MAG",
-    "region",
-    "maps",
-    "mapping",
-    "state",
-    "Arizona",
-    "ESRI",
-    "#MAGmaps"
-  ],
-  "main": "src/main.js",
-  "homepage": "https://geo.azmag.gov/maps/health",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/AZMAG/map-health/"
-  },
-  "author": "MAG Regional Analytics (https://www.azmag.gov/)",
-  "contributors": [{
-      "name": "Jack Fairfield",
-      "email": "jfairfield@azmag.gov"
+    "name": "map-Health",
+    "version": "1.0.0",
+    "date": "2020-04-01",
+    "copyright": "2020",
+    "description": "MAG webmap on healthcare locations in AZ",
+    "keywords": [
+        "health",
+        "healthcare",
+        "hospitals",
+        "MAG",
+        "region",
+        "maps",
+        "mapping",
+        "state",
+        "Arizona",
+        "ESRI",
+        "#MAGmaps"
+    ],
+    "main": "src/main.js",
+    "homepage": "https://geo.azmag.gov/maps/health",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/AZMAG/map-health/"
     },
-    {
-      "name": "Vern Wolfley",
-      "email": "vwolfley@azmag.gov"
-    }
-  ],
-  "private": true,
-  "dependencies": {},
-  "devDependencies": {
-    "@babel/core": "^7.8.3",
-    "@babel/preset-env": "^7.8.3",
-    "grunt": "^1.0.4",
-    "grunt-babel": "^8.0.0",
-    "grunt-comment-toggler": "^0.2.2",
-    "grunt-contrib-clean": "^2.0.0",
-    "grunt-contrib-concat": "^1.0.1",
-    "grunt-contrib-copy": "^1.0.0",
-    "grunt-contrib-cssmin": "^3.0.0",
-    "grunt-contrib-htmlmin": "^3.1.0",
-    "grunt-contrib-jshint": "^2.1.0",
-    "grunt-contrib-uglify": "^4.0.1",
-    "grunt-sass": "^3.1.0",
-    "grunt-text-replace": "^0.4.0",
-    "jshint-stylish": "^2.2.1",
-    "jshint-stylish-ex": ">=0.2.0",
-    "lodash": "^4.17.15",
-    "matchdep": "^2.0.0",
-    "node-sass": "^4.13.1",
-    "normalize.css": ">=8.0.1"
-  },
-  "engines": {
-    "node": ">=12.13.1",
-    "npm": ">=6.13.1"
-  },
-  "browserslist": [
-    "> 1%",
-    "last 2 versions",
-    "not ie <= 9"
-  ],
-  "license": "MIT"
+    "author": "MAG Regional Analytics (https://www.azmag.gov/)",
+    "contributors": [{
+            "name": "Jack Fairfield",
+            "email": "jfairfield@azmag.gov"
+        },
+        {
+            "name": "Vern Wolfley",
+            "email": "vwolfley@azmag.gov"
+        }
+    ],
+    "private": true,
+    "dependencies": {},
+    "devDependencies": {
+        "@babel/core": "^7.8.3",
+        "@babel/preset-env": "^7.8.3",
+        "grunt": "^1.0.4",
+        "grunt-babel": "^8.0.0",
+        "grunt-comment-toggler": "^0.2.2",
+        "grunt-contrib-clean": "^2.0.0",
+        "grunt-contrib-concat": "^1.0.1",
+        "grunt-contrib-copy": "^1.0.0",
+        "grunt-contrib-cssmin": "^3.0.0",
+        "grunt-contrib-htmlmin": "^3.1.0",
+        "grunt-contrib-jshint": "^2.1.0",
+        "grunt-contrib-uglify": "^4.0.1",
+        "grunt-sass": "^3.1.0",
+        "grunt-text-replace": "^0.4.0",
+        "jshint-stylish": "^2.2.1",
+        "jshint-stylish-ex": ">=0.2.0",
+        "lodash": "^4.17.15",
+        "matchdep": "^2.0.0",
+        "node-sass": "^4.13.1",
+        "normalize.css": ">=8.0.1"
+    },
+    "engines": {
+        "node": ">=12.13.1",
+        "npm": ">=6.13.1"
+    },
+    "browserslist": [
+        "> 1%",
+        "last 2 versions",
+        "not ie <= 9"
+    ],
+    "license": "MIT"
 }

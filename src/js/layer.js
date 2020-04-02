@@ -45,7 +45,7 @@ define([
             definition: "This feature layer contains the most up-to-date COVID-19 cases and latest trend plot. It covers China, the US, Canada, Australia (at province/state level), and the rest of the world (at country level, represented by either the country centroids or their capitals). Data sources are WHO, US CDC, China NHC, ECDC, and DXY. The China data is automatically updating at least once per hour, and non China data is updating manually. This layer is created and maintained by the Center for Systems Science and Engineering (CSSE) at the Johns Hopkins University."
         },
         Capacity: {
-            title: "Hospital Beds By County",
+            title: "Hospital Beds (By County)",
             definition: "This feature layer contains the capcity in hospital beds by county. It covers hospital capacity in Arizona."
         }
     };
@@ -104,7 +104,7 @@ define([
             } else if (val === 'Capacity') {
                 tractsLyr.visible = false;
                 let covidLyr = map.findLayerById("covidCases");
-                covidLyr.title = 'Hospital Beds By County';
+                covidLyr.title = 'Hospital Beds (By County)';
                 covidLyr.renderer = GetCapacityRenderer();
                 covidLyr.labelingInfo = GetCapacityLabelInfo();
                 covidLyr.visible = true;
@@ -390,10 +390,7 @@ define([
         })
 
 
-        let source = features.map(({
-            attributes,
-            geometry
-        }) => {
+        let source = features.filter(({geometry}) => geometry).map(({ attributes, geometry }) => {
             attributes["Capacity"] = bedsLookupByCounty[attributes["Admin2"]];
 
             if (attributes["Admin2"] === "Maricopa") {
@@ -438,11 +435,12 @@ define([
             popupTemplate: {
                 title: '{Admin2} County <span style="display: none;">{*}</span>',
                 content: function({ graphic }) {
-                    let { Confirmed, Deaths, Capacity } = graphic.attributes;
+                    let { Confirmed, Deaths, Capacity, Active } = graphic.attributes;
 
                     return `
                         <b>Confirmed Cases:</b> ${Confirmed.toLocaleString()} <br>
                         <b>Deaths:</b>  ${Deaths.toLocaleString()} <br>
+                        <b>Active:</b> ${(Confirmed - Deaths).toLocaleString()} <br>
                         <b>Number of Beds:</b> ${Capacity.toLocaleString()}
                     `
                 }

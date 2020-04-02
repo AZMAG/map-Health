@@ -18,27 +18,29 @@ module.exports = function(grunt) {
     grunt.initConfig({
 
         pkg: grunt.file.readJSON("package.json"),
+
         babel: {
             options: {
                 sourceMap: true,
-                presets: ['env']
+                presets: ['@babel/preset-env']
             },
             CAG: {
                 files: {
-                    "./dist/CAG/js/main.js": "./dist/CAG/js/main.js"
-                }
-            },
-            MAG: {
-                files: {
-                    "./dist/MAG/js/main.js": "./dist/MAG/js/main.js"
-                }
-            },
-            Shared: {
-                files: {
-                    "./dist/shared/js/main.js": "./dist/shared/js/main.js"
+                    "./dist/js/config.js": "./dist/js/config.js",
+                    "./dist/js/feedback.js": "./dist/js/feedback.js",
+                    "./dist/js/focusable.js": "./dist/js/focusable.js",
+                    "./dist/js/hover.js": "./dist/js/hover.js",
+                    "./dist/js/intro.js": "./dist/js/intro.js",
+                    "./dist/js/layer.js": "./dist/js/layer.js",
+                    "./dist/js/main.REPLACE.js": "./dist/js/main.REPLACE.js",
+                    "./dist/js/map.js": "./dist/js/map.js",
+                    "./dist/js/report.js": "./dist/js/report.js",
+                    "./dist/js/utilities.js": "./dist/js/utilities.js",
+                    "./dist/js/widgets.js": "./dist/js/widgets.js"
                 }
             }
         },
+
         copy: {
             build: {
                 cwd: "src/",
@@ -50,11 +52,38 @@ module.exports = function(grunt) {
             rename: {
                 files: [{
                     expand: true,
-                    src: ["src/app/js/scripts.REPLACE.js"],
+                    src: ["src/js/main.REPLACE.js"],
                     rename: function() {
                         return jsFilePath;
                     }
                 }]
+            }
+        },
+
+        sass: {
+            options: {
+                implementation: sass,
+                sourceMap: true
+            },
+            dist: {
+                files: {
+                    "dist/css/master.css": "dist/sass/main.scss"
+                }
+            }
+        },
+
+        cssmin: {
+            options: {
+                specialComments: "all",
+                processImport: false,
+                roundingPrecision: -1,
+                mergeIntoShorthands: false,
+                advanced: false,
+            },
+            target: {
+                files: {
+                    "dist/css/master.min.css": "dist/css/master.css"
+                }
             }
         },
 
@@ -77,20 +106,22 @@ module.exports = function(grunt) {
                 src: ["dist/"]
             },
             clean_css: {
-                src: ["dist/css/*.css", "!dist/css/master.min.css"]
+                src: ["dist/css/*.css", "!dist/css/master.min.css",
+                    "dist/css/*.css.map", "!dist/css/master.css.map",
+                ]
             },
             clean_sass: {
                 src: ["dist/sass/"]
             },
             clean_js: {
-                src: ["dist/js/scripts.REPLACE.js"]
+                src: ["dist/js/main.REPLACE.js", "dist/js/main.REPLACE.js.map"]
             }
         },
 
         toggleComments: {
             customOptions: {
                 options: {
-                    removeCommands: false
+                    removeCommands: true
                 },
                 files: {
                     "dist/index.html": "dist/index.html",

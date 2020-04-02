@@ -140,11 +140,11 @@ define([
 
         let categories = {}
         let categoryTitleLookup = {
-            RES: "Residential Facilities",
-            LTC: "Long-Term Care Facilities",
-            MED: "Medical Facilities",
             Hospital: "Hospitals",
-            Capacity: "Hospital Beds"
+            Capacity: "Hospital Beds",
+            MED: "Medical Facilities",
+            RES: "Residential Facilities",
+            LTC: "Long-Term Care Facilities"
         }
         let pointRes = await pointsQt.execute({
             returnGeometry: false,
@@ -166,7 +166,7 @@ define([
             return attributes;
         })
 
-        let categoryLines = Object.keys(categories).map((category) => {
+        let categoryLines = Object.keys(categoryTitleLookup).map((category) => {
             return `
             <div class="categoryLine">
                 <img width="20" src="./icons/${category}.svg">
@@ -174,6 +174,7 @@ define([
                 <span>${categories[category].toLocaleString()}</span>
             </div>`;
         })
+
         return `
         <h5>Total Healthcare Assets: <span class="badge badge-secondary">${allPoints.length.toLocaleString()}</span></h5>
         <br>

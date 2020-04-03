@@ -60,8 +60,8 @@ function startupIntro() {
             {
                 title: "Identify features on the map",
                 content: 'Click anywhere on the map to identify features underneath the cursor.  You can click on points or on the background Population Metrics to get a popup with more information.',
-                target: $("#helpInfo")[0],
-                placement: "right",
+                target: $(".introTarget")[0],
+                placement: "bottom",
                 onShow: function(){
                     Focusable.hide();
                 }

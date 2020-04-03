@@ -147,14 +147,16 @@ define([], function() {
                         type: 'picture-marker',
                         url: "icons/OTC.svg"
                     }
-                }, {
-                    value: 'BH',
-                    label: 'Behavioral Health Facility',
-                    symbol: {
-                        type: 'picture-marker',
-                        url: "icons/BH.svg"
-                    }
-                }]
+                },
+                // {
+                //     value: 'BH',
+                //     label: 'Behavioral Health Facility',
+                //     symbol: {
+                //         type: 'picture-marker',
+                //         url: "icons/BH.svg"
+                //     }
+                // }
+            ]
             },
             {
                 type: 'feature',

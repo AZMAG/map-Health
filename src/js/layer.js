@@ -485,7 +485,7 @@ define([
         let tractsLayer = new FeatureLayer({
             url: config.healthLayerURL,
             popupTemplate: {
-                title: '<div style="display: none;">{*}</div>',
+                title: 'Tract {TRACT}<div style="display: none;">{*}</div>',
                 content: GetTractsPopup
             },
             renderer: {
@@ -621,7 +621,7 @@ define([
         let {
             attributes
         } = res.graphic;
-        // console.log(attributes);
+        console.log(attributes);
 
         let {
             TOTAL_POP,
@@ -682,6 +682,9 @@ define([
         let {
             attributes
         } = res.graphic;
+        
+        
+        
         let {
             Name,
             Capacity,
@@ -692,12 +695,31 @@ define([
             P_zip,
             P_city,
             P_State,
-            P_county
+            P_county,
+            Icon_Category,
+            Category
         } = attributes;
 
+        let categoryTitle = ''
+        let catImg = ''
+
+        
+        config.layers.forEach(layer => {
+            if (layer.uvr) {
+                layer.uvr.forEach(row => {
+                    if (row.value === Icon_Category) {
+                        categoryTitle = row.label;
+                        catImg = row.symbol.url;
+                    }
+                })
+                
+            }
+            
+        });
+        
         let html = `
         <div class="popupContent">
-            <b>${Name}</b>
+            <b>${Name} (${categoryTitle})</b>
             <br>
             <div class="popupDetails">
                 <div class="flexCenter" title="Address">
@@ -710,7 +732,7 @@ define([
                 <div class="flexCenter" title="Number of Beds">
                     <i class="fas fa-user-friends"></i>
                     <div class="marginLeft10">
-                        ${Capacity ? Capacity : "N/A"}
+                        ${Capacity ? Capacity : "N/A"} (Number of Beds)
                     </div>
                 </div>
                 <div class="flexCenter" title="Phone Number">

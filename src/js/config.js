@@ -110,7 +110,7 @@ define([], function() {
                 showToc: true,
                 index: 5,
                 uvr: [{
-                    value: 'Laboratory',
+                    value: 'LABORATORY',
                     label: 'Testing Facility',
                     symbol: {
                         type: 'picture-marker',
@@ -127,7 +127,7 @@ define([], function() {
                 definition: 'A variety of outpatient treatment facilities',
                 index: 3,
                 uvr: [{
-                    value: 'MED - Other',
+                    value: 'MED - OTHER',
                     label: 'Other Medical Facility',
                     symbol: {
                         type: 'picture-marker',

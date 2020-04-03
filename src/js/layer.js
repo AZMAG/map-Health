@@ -738,7 +738,7 @@ define([
                 <div class="flexCenter" title="Phone Number">
                     <i class="fas fa-phone"></i>
                     <div class="marginLeft10">
-                        ${Telephone ? Telephone.replace(')', ') ') : ''}
+                        ${Telephone ? Telephone.replace(')', ') ') : 'N/A'}
                     </div>
                 </div>
                 <div class="flexCenter" title="Operating Status">

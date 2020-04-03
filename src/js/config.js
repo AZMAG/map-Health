@@ -67,14 +67,14 @@ define([], function() {
                 showToc: true,
                 index: 4,
                 uvr: [{
-                    value: 'AL Center',
+                    value: 'AL CENTER',
                     label: 'Assisted Living Center',
                     symbol: {
                         type: 'picture-marker',
                         url: "icons/AL Center.svg"
                     }
                 }, {
-                    value: 'AL Home',
+                    value: 'AL HOME',
                     label: 'Assisted Living Home',
                     symbol: {
                         type: 'picture-marker',

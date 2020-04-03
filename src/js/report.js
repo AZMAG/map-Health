@@ -167,12 +167,12 @@ define([
         })
 
         let categoryLines = Object.keys(categoryTitleLookup).map((category) => {
-            return `
+            return categories[category] ? `
             <div class="categoryLine">
                 <img width="20" src="./icons/${category}.svg">
                 <b>${categoryTitleLookup[category]}: </b>
                 <span>${categories[category].toLocaleString()}</span>
-            </div>`;
+            </div>` : ''
         })
 
         return `

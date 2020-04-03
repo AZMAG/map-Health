@@ -1,33 +1,47 @@
-module.exports = function (grunt) {
+function randomString(length, chars) {
+    var result = "";
+    for (var i = length; i > 0; --i) result += chars[Math.round(Math.random() * (chars.length - 1))];
+    return result;
+}
+const fileHash = randomString(32, "0123456789abcdefghijklmnopqrstuvwxyz");
+const jsFilePath = `dist/js/main.${fileHash}.js`;
+const fileName = "main.${fileHash}.js";
+
+module.exports = function(grunt) {
 
     "use strict";
 
+    const sass = require("node-sass");
+
+    require('load-grunt-tasks')(grunt);
     require("matchdep").filterDev("grunt-*").forEach(grunt.loadNpmTasks);
 
     grunt.initConfig({
 
+        config: {
+            out: 'dist',
+            src: 'src',
+            demos: 'demos'
+        },
+
         pkg: grunt.file.readJSON("package.json"),
+        license: grunt.file.read('LICENSE'),
+
         babel: {
             options: {
-                sourceMap: true,
-                presets: ['env']
+                sourceMap: false,
+                presets: ['@babel/preset-env']
             },
-            CAG: {
-                files: {
-                    "./dist/CAG/js/main.js": "./dist/CAG/js/main.js"
-                }
-            },
-            MAG: {
-                files: {
-                    "./dist/MAG/js/main.js": "./dist/MAG/js/main.js"
-                }
-            },
-            Shared: {
-                files: {
-                    "./dist/shared/js/main.js": "./dist/shared/js/main.js"
-                }
+            release: {
+                files: [{
+                    expand: true,
+                    cwd: "<%=config.src%>/js/",
+                    src: ["**/*.js"],
+                    dest: "<%=config.out%>/js/"
+                }]
             }
         },
+
         copy: {
             build: {
                 cwd: "src/",
@@ -35,8 +49,61 @@ module.exports = function (grunt) {
                 dest: "dist/",
                 expand: true,
                 dot: true
+            },
+            rename: {
+                files: [{
+                    expand: true,
+                    src: ["src/js/main.REPLACE.js"],
+                    rename: function() {
+                        return jsFilePath;
+                    }
+                }]
             }
         },
+
+        sass: {
+            options: {
+                implementation: sass,
+                sourceMap: true
+            },
+            release: {
+                files: {
+                    "dist/css/master.css": "dist/sass/main.scss"
+                }
+            }
+        },
+
+        cssmin: {
+            options: {
+                specialComments: "all",
+                processImport: false,
+                roundingPrecision: -1,
+                mergeIntoShorthands: false,
+                advanced: false,
+            },
+            release: {
+                files: {
+                    "dist/css/master.min.css": "dist/css/master.css"
+                }
+            }
+        },
+
+        postcss: {
+            options: {
+                map: false,
+                processors: [
+                    require('pixrem')(),
+                    require('postcss-preset-env')()
+                ]
+            },
+            release: {
+                files: {
+                    '<%=config.out%>/css/master1.min.css': '<%=config.out%>/css/master.min.css'
+                }
+            }
+        },
+
+
         uglify: {
             options: {
                 mangle: true
@@ -49,70 +116,39 @@ module.exports = function (grunt) {
                 }
             }
         },
+
         clean: {
             build: {
                 src: ["dist/"]
             },
-            cleanjs: {
-                src: ["dist/CAG/js/*.js",
-                    "!dist/CAG/js/main.js",
-                    "dist/MAG/js/*.js",
-                    "!dist/MAG/js/main.js",
-                    "dist/shared/js/*.js",
-                    "!dist/shared/js/main.js"
-                ]
-            }
-        },
-        concat: {
-            CAG: {
-                src: ["src/CAG/js/*"],
-                dest: "dist/CAG/js/main.js"
-            },
-            MAG: {
-                src: ["src/MAG/js/*"],
-                dest: "dist/MAG/js/main.js"
-            },
-            Shared: {
-                src: ["src/shared/js/*"],
-                dest: "dist/shared/js/main.js"
-            }
-        },
-        postcss: {
-            options: {
-                map: true,
-                map: {
-                    inline: false,
-                    annotation: 'dist/shared/css/maps/'
-                },
-                processors: [
-                    require('postcss-cssnext')(),
-                    require('cssnano')()
+            clean_css: {
+                src: ["dist/css/*.css", "!dist/css/master.min.css",
+                    "dist/css/*.css.map", "!dist/css/master.css.map",
                 ]
             },
-            dist: {
-                files: {
-                    'dist/shared/css/main.css': 'src/shared/css/main.css'
-                }
+            clean_sass: {
+                src: ["dist/sass/"]
             },
+            clean_js: {
+                src: ["dist/js/main.REPLACE.js", "dist/js/main.REPLACE.js.map"]
+            }
         },
+
         toggleComments: {
             customOptions: {
                 options: {
-                    removeCommands: false
+                    padding: 0,
+                    removeCommands: true
                 },
                 files: {
-                    "dist/CAG/index.html": "dist/CAG/index.html",
-                    "dist/CAG/js/main.js": "dist/CAG/js/main.js",
-                    "dist/MAG/index.html": "dist/MAG/index.html",
-                    "dist/MAG/js/main.js": "dist/MAG/js/main.js"
+                    "dist/index.html": "dist/index.html",
                 }
             }
         },
         replace: {
             update_Meta: {
-                src: ["src/MAG/index.html", "src/CAG/index.html", "README.md"], // source files array
-                // src: ["README.md"], // source files array
-                overwrite: true, // overwrite matched source files
+                src: ["src/index.html", "README.md", "LICENSE", "src/LICENSE", "src/js/config.js", "src/humans.txt"], // source files array
+                overwrite: true,
                 replacements: [{
                     // html pages
                     from: /(<meta name="revision-date" content=")[0-9]{4}-[0-9]{2}-[0-9]{2}(">)/g,
@@ -125,6 +161,10 @@ module.exports = function (grunt) {
                     // config.js
                     from: /(v)([0-9]+)(?:\.([0-9]+))(?:\.([0-9]+))( \| )[0-9]{4}-[0-9]{2}-[0-9]{2}/g,
                     to: 'v' + '<%= pkg.version %>' + ' | ' + '<%= pkg.date %>',
+                }, {
+                    // config.js    this.copyright = "2018";
+                    from: /(copyright: )+(")([0-9]{4})+(")/g,
+                    to: 'copyright: "' + "<%= pkg.copyright %>" + '"'
                 }, {
                     // humans.txt
                     from: /(Version\: )([0-9]+)(?:\.([0-9]+))(?:\.([0-9]+))/g,
@@ -141,10 +181,31 @@ module.exports = function (grunt) {
                     // README.md
                     from: /(\* #### Updated \| )[0-9]{4}-[0-9]{2}-[0-9]{2}/g,
                     to: "* #### Updated | " + '<%= pkg.date %>',
+                }, {
+                    // LICENSE
+                    from: /(Copyright \(c\) )[0-9]{4}/g,
+                    to: "Copyright (c) " + "<%= pkg.copyright %>",
+                }]
+            },
+            release: {
+                src: ["dist/index.html"],
+                overwrite: true,
+                replacements: [{
+                    from: "REPLACE",
+                    to: fileHash,
                 }]
             }
         }
     });
 
-    grunt.registerTask("build", ["clean:build", "replace", "copy", "clean:cleanjs", "concat", "toggleComments", "babel", "uglify", "postcss"]);
+    grunt.registerTask("test", ["replace"]);
+
+    grunt.registerTask("build-html", ["replace:update_Meta", "copy", "toggleComments"]);
+    grunt.registerTask("build-css", ["sass", "cssmin", "postcss", "clean:clean_css", "clean:clean_sass"]);
+    grunt.registerTask("build-js", ["babel"]);
+    grunt.registerTask("build-rename", ["replace:release", "copy:rename", "clean:clean_js"]);
+
+    grunt.registerTask("ts", ["postcss"]);
+
+    grunt.registerTask("build", ["clean:build", "build-html", "build-css", "build-js", "build-rename"]);
 };

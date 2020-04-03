@@ -13,31 +13,32 @@ module.exports = function(grunt) {
 
     const sass = require("node-sass");
 
+    require('load-grunt-tasks')(grunt);
     require("matchdep").filterDev("grunt-*").forEach(grunt.loadNpmTasks);
 
     grunt.initConfig({
 
+        config: {
+            out: 'dist',
+            src: 'src',
+            demos: 'demos'
+        },
+
         pkg: grunt.file.readJSON("package.json"),
+        license: grunt.file.read('LICENSE'),
 
         babel: {
             options: {
-                sourceMap: true,
+                sourceMap: false,
                 presets: ['@babel/preset-env']
             },
-            CAG: {
-                files: {
-                    "./dist/js/config.js": "./dist/js/config.js",
-                    "./dist/js/feedback.js": "./dist/js/feedback.js",
-                    "./dist/js/focusable.js": "./dist/js/focusable.js",
-                    "./dist/js/hover.js": "./dist/js/hover.js",
-                    "./dist/js/intro.js": "./dist/js/intro.js",
-                    "./dist/js/layer.js": "./dist/js/layer.js",
-                    "./dist/js/main.REPLACE.js": "./dist/js/main.REPLACE.js",
-                    "./dist/js/map.js": "./dist/js/map.js",
-                    "./dist/js/report.js": "./dist/js/report.js",
-                    "./dist/js/utilities.js": "./dist/js/utilities.js",
-                    "./dist/js/widgets.js": "./dist/js/widgets.js"
-                }
+            release: {
+                files: [{
+                    expand: true,
+                    cwd: "<%=config.src%>/js/",
+                    src: ["**/*.js"],
+                    dest: "<%=config.out%>/js/"
+                }]
             }
         },
 
@@ -65,7 +66,7 @@ module.exports = function(grunt) {
                 implementation: sass,
                 sourceMap: true
             },
-            dist: {
+            release: {
                 files: {
                     "dist/css/master.css": "dist/sass/main.scss"
                 }
@@ -80,9 +81,24 @@ module.exports = function(grunt) {
                 mergeIntoShorthands: false,
                 advanced: false,
             },
-            target: {
+            release: {
                 files: {
                     "dist/css/master.min.css": "dist/css/master.css"
+                }
+            }
+        },
+
+        postcss: {
+            options: {
+                map: false,
+                processors: [
+                    require('pixrem')(),
+                    require('postcss-preset-env')()
+                ]
+            },
+            release: {
+                files: {
+                    '<%=config.out%>/css/master1.min.css': '<%=config.out%>/css/master.min.css'
                 }
             }
         },
@@ -171,7 +187,7 @@ module.exports = function(grunt) {
                     to: "Copyright (c) " + "<%= pkg.copyright %>",
                 }]
             },
-            File_Reference: {
+            release: {
                 src: ["dist/index.html"],
                 overwrite: true,
                 replacements: [{
@@ -185,10 +201,11 @@ module.exports = function(grunt) {
     grunt.registerTask("test", ["replace"]);
 
     grunt.registerTask("build-html", ["replace:update_Meta", "copy", "toggleComments"]);
-    grunt.registerTask("build-css", ["sass", "cssmin", "clean:clean_css", "clean:clean_sass"]);
+    grunt.registerTask("build-css", ["sass", "cssmin", "postcss", "clean:clean_css", "clean:clean_sass"]);
     grunt.registerTask("build-js", ["babel"]);
-    grunt.registerTask("build-rename", ["replace:File_Reference", "copy:rename", "clean:clean_js"]);
+    grunt.registerTask("build-rename", ["replace:release", "copy:rename", "clean:clean_js"]);
 
+    grunt.registerTask("ts", ["postcss"]);
 
     grunt.registerTask("build", ["clean:build", "build-html", "build-css", "build-js", "build-rename"]);
 };

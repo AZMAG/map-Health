@@ -10,6 +10,8 @@ define([], function() {
         covidLayerURL: "https://services1.arcgis.com/0MSEUqKaxRlEPj5g/ArcGIS/rest/services/ncov_cases_US/FeatureServer/0/query?where=Province_State+%3D+%27Arizona%27&outFields=*&f=json",
 
         healthLayerURL: "https://geo.azmag.gov/arcgis/rest/services/maps/HealthData/MapServer/0",
+        
+        historicalCovidDataURL: "https://geo.azmag.gov/arcgis/rest/services/Hosted/Covid_19_NY_Times_Historical/FeatureServer/0",
 
         queryLayerIndex: 6,
         demographicsLayerIndex: 7,
@@ -67,14 +69,14 @@ define([], function() {
                 showToc: true,
                 index: 4,
                 uvr: [{
-                    value: 'AL CENTER',
+                    value: 'AL Center',
                     label: 'Assisted Living Center',
                     symbol: {
                         type: 'picture-marker',
                         url: "icons/AL Center.svg"
                     }
                 }, {
-                    value: 'AL HOME',
+                    value: 'AL Home',
                     label: 'Assisted Living Home',
                     symbol: {
                         type: 'picture-marker',
@@ -110,7 +112,7 @@ define([], function() {
                 showToc: true,
                 index: 5,
                 uvr: [{
-                    value: 'LABORATORY',
+                    value: 'Laboratory',
                     label: 'Testing Facility',
                     symbol: {
                         type: 'picture-marker',
@@ -127,7 +129,7 @@ define([], function() {
                 definition: 'A variety of outpatient treatment facilities',
                 index: 3,
                 uvr: [{
-                    value: 'MED - OTHER',
+                    value: 'MED - Other',
                     label: 'Other Medical Facility',
                     symbol: {
                         type: 'picture-marker',

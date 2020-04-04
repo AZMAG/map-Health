@@ -107,9 +107,9 @@ define([
                 <td>${Name}</td>
                 <td>${P_Address ? P_Address : 'N/A'}</td>
                 <td>${SUBTYPE_ ? titleCase(SUBTYPE_) : 'N/A'}</td>
-                <td>${Capacity ? Capacity.toLocaleString() : 'N/A'}</td>
-            </tr>
-            `
+                </tr>
+                `
+            // <td>${Capacity ? Capacity.toLocaleString() : 'N/A'}</td>
         })
 
         return `
@@ -120,7 +120,6 @@ define([
                     <th scope="col">Name</th>
                     <th scope="col">Address</th>
                     <th scope="col">Type of Facility</th>
-                    <th scope="col">Number of Beds</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -152,7 +151,7 @@ define([
             where: `${pointPolyFieldMap[type]} = '${selectedReport}'`
         });
         console.log(pointRes);
-        
+
         let pointFeatures = pointRes.features;
         let allPoints = pointFeatures.map(({ attributes }) => {
             let cat = attributes["Category"];
@@ -160,8 +159,11 @@ define([
                 categories[cat] = categories[cat] || 0;
                 categories[cat]++;
 
-                categories["Capacity"] = categories["Capacity"] || 0;
-                categories["Capacity"] += attributes["Capacity"];
+                if (cat === "Hospital") {
+                    categories["Capacity"] = categories["Capacity"] || 0;
+                    categories["Capacity"] += attributes["Capacity"];
+                }
+
             }
             return attributes;
         })
@@ -245,7 +247,7 @@ define([
     async function getPolyHTML(selectedReport) {
 
         let data = await getPolyData(selectedReport);
-        
+
         let leftPanelConf = [{
             field: "TOTAL_POP",
             // iconClass: "fas fa-male",
@@ -258,7 +260,7 @@ define([
             pctField: "TOTAL_POP",
             title: "Percent of Population Age 65+",
             valueFormat: val => `${ parseFloat(val).toFixed(1)}%`
-        },{
+        }, {
             field: "INCOME_BELOW_POVERTY",
             title: "Total Population Below Poverty"
         }, {

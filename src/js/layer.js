@@ -301,14 +301,9 @@ define([
                         label: "<5000 Beds"
                     },
                     {
-                        value: 5000,
-                        size: 65,
-                        label: "<15000 beds"
-                    },
-                    {
                         value: 15000,
-                        size: 85,
-                        label: "15000+ beds"
+                        size: 65,
+                        label: "5000+ beds"
                     }
                 ]
             }]
@@ -340,7 +335,7 @@ define([
         return [{
             labelPlacement: "above-right",
             labelExpressionInfo: {
-                expression: "$feature.Admin2 + ' (' + $feature.Confirmed + ' Cases)'"
+                expression: "$feature.Admin2 + ' (' + Text($feature.Confirmed, '#,###') + ' Cases)'"
             },
             symbol: {
                 type: "text",
@@ -358,7 +353,7 @@ define([
     }
 
     async function addCovidLayer() {
-        let queryAllUrl = config.covidLayerURL;        
+        let queryAllUrl = config.covidLayerURL;
 
         let res = await fetch(queryAllUrl);
         let {
@@ -378,9 +373,7 @@ define([
 
         let bedsLookupByCounty = {};
 
-        points.features.forEach(({
-            attributes
-        }) => {
+        points.features.forEach(({ attributes }) => {
             if (attributes['sj_county']) {
                 let countyId = attributes['sj_county'].substr(-3);
                 let county = config.countyLookup[countyId];
@@ -392,7 +385,7 @@ define([
         })
 
 
-        let source = features.filter(({geometry}) => geometry).map(({ attributes, geometry }) => {
+        let source = features.filter(({ geometry }) => geometry).map(({ attributes, geometry }) => {
             attributes["Capacity"] = bedsLookupByCounty[attributes["Admin2"]];
 
             if (attributes["Admin2"] === "Maricopa") {
@@ -684,9 +677,9 @@ define([
         let {
             attributes
         } = res.graphic;
-        
-        
-        
+
+
+
         let {
             Name,
             Capacity,
@@ -705,7 +698,7 @@ define([
         let categoryTitle = ''
         let catImg = ''
 
-        
+
         config.layers.forEach(layer => {
             if (layer.uvr) {
                 layer.uvr.forEach(row => {
@@ -714,11 +707,11 @@ define([
                         catImg = row.symbol.url;
                     }
                 })
-                
+
             }
-            
+
         });
-        
+
         let html = `
         <div class="popupContent">
             <b>${Name} (${categoryTitle})</b>

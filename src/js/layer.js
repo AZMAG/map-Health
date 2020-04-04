@@ -358,7 +358,7 @@ define([
     }
 
     async function addCovidLayer() {
-        let queryAllUrl = config.covidLayerURL;
+        let queryAllUrl = config.covidLayerURL;        
 
         let res = await fetch(queryAllUrl);
         let {
@@ -371,7 +371,7 @@ define([
 
         const points = await pointsQt.execute({
             where: '1=1',
-            outFields: ['sj_county', 'FACID', 'Capacity', 'OBJECTID'],
+            outFields: ['sj_county', 'FACID', 'Capacity', 'OBJECTID', 'Category'],
             returnDistinctValues: true,
             returnGeometry: false
         })
@@ -384,8 +384,10 @@ define([
             if (attributes['sj_county']) {
                 let countyId = attributes['sj_county'].substr(-3);
                 let county = config.countyLookup[countyId];
-                bedsLookupByCounty[county] = bedsLookupByCounty[county] || 0;
-                bedsLookupByCounty[county] += attributes["Capacity"];
+                if (attributes['Category'] === 'Hospital') {
+                    bedsLookupByCounty[county] = bedsLookupByCounty[county] || 0;
+                    bedsLookupByCounty[county] += attributes["Capacity"];
+                }
             }
         })
 

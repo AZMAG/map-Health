@@ -314,7 +314,7 @@ define([
         return [{
             labelPlacement: "above-right",
             labelExpressionInfo: {
-                expression: "$feature.Admin2 + ' (' + Text($feature.Capacity, '#,###') + ' Beds)'"
+                expression: "$feature.Admin2 + ' (' + IIf($feature.Capacity > 0, Text($feature.Capacity, '#,###'), '0') + ' Beds)'"
             },
             symbol: {
                 type: "text",

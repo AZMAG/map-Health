@@ -11,7 +11,7 @@
  * 1. Correct the line height in all browsers.
  * 2. Prevent adjustments of font size after orientation changes in iOS.
  */
-html {
+ html {
   line-height: 1.15;
   /* 1 */
   -webkit-text-size-adjust: 100%;
@@ -468,8 +468,9 @@ SASS Partials
   border: 1px solid rgba(128, 128, 128, 0.185);
   text-align: center;
   padding: 12px 5px 5px 5px;
-  max-height: 80vh;
-  max-width: 100%;
+  max-height: 85vh;
+  width: 20vw;
+  min-width: 370px;
 }
 
 #helpInfo hr {
@@ -479,17 +480,23 @@ SASS Partials
 .help-card {
   padding: 0 5px 5px 2px;
   padding-bottom: 2px;
-  max-height: 80vh;
+  max-height: 85vh;
   max-width: 100%;
   overflow-y: auto;
 }
 
-.help-card .borderArea {
-  margin: 0 5px 5px 5px;
+.borderArea {
+  border: 0.2rem solid #e9e9ea;
+  margin: 2px;
+  padding: 50px;
 }
 
 .card-area {
   direction: ltr;
+}
+
+.chartContainer {
+  height: 350px;
 }
 
 .populationMetrics .layersList {
@@ -508,11 +515,11 @@ SASS Partials
 }
 
 .card-title {
-  margin-top: .50rem;
+  margin-top: 0.5rem;
 }
 
 address.mag {
-  font-size: .85em;
+  font-size: 0.85em;
   margin: 0;
 }
 
@@ -525,7 +532,7 @@ address.mag .mag-logo {
 }
 
 .form-group {
-  margin-bottom: .5rem;
+  margin-bottom: 0.5rem;
 }
 
 .info-footer {
@@ -725,7 +732,6 @@ a.modal-anchor.link:hover {
   background-color: #dff0d8;
   border-color: black;
   font-size: 23px;
-  /* left: 50%; */
   top: 55px;
   left: auto;
   position: absolute;
@@ -760,7 +766,7 @@ a.modal-anchor.link:hover {
 .borderArea {
   border: .2rem solid #e9e9ea;
   margin: 5px;
-  padding: 10px;
+  padding: 5px;
 }
 
 /*******************
@@ -1018,6 +1024,17 @@ div.hopscotch-bubble .hopscotch-nav-button.prev:hover,
 
 .legal {
   font-size: x-small;
+}
+
+.introTarget {
+  margin-left: 41%;
+  height: 100px;
+  width: 100px;
+  z-index: 114;
+  top: 100px;
+  left: 100px;
+  display: block;
+  position: absolute;
 }
 
 .slider-selection {

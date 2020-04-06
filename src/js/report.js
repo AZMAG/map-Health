@@ -50,12 +50,21 @@ define(["mag/config", "mag/historicalData", "esri/tasks/QueryTask"], function (c
     }
 
     async function setupDropdowns() {
-        let types = await getTypes();
-        let typeOptions = types.map((type) => {
-            return `<option data-id="${type}">${type}</option>`;
-        });
+        // let types = await getTypes();
+        // let typeOptions = types.map((type) => {
+        //     return `<option data-id="${type}">${type}</option>`;
+        // });
 
-        $reportType.append(typeOptions.join(""));
+        //typeOptions.join("")
+        let tempHtml = `
+        <option data-id="County">County</option>
+        <option data-id="Zip">Zip</option>
+        <option data-id="Jurisdiction">Jurisdiction</option>
+        <option data-id="Congressional District">Congressional District</option>
+        <option data-id="Legislative District">Legislative District</option>
+        `
+
+        $reportType.append(tempHtml); 
 
         $(".selectpicker_health").selectpicker();
         $reportType.selectpicker('val', 'County');
@@ -87,6 +96,8 @@ define(["mag/config", "mag/historicalData", "esri/tasks/QueryTask"], function (c
             .children("option:selected")
             .data("id");
         let type = $reportType.val();
+        console.log({selectedReport, type});
+        
         openReport(selectedReport, type);
     });
 
@@ -135,8 +146,8 @@ define(["mag/config", "mag/historicalData", "esri/tasks/QueryTask"], function (c
         County: "sj_county",
         Jurisdiction: "sj_juris",
         Zip: "sj_zip",
-        Legislative: 'sj_legislative',
-        Congressional: 'sj_congress'
+        'Legislative District': 'sj_legislative',
+        'Congressional District': 'sj_congress'
     };
 
     async function getPointHTML(selectedReport, type) {

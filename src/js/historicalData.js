@@ -43,8 +43,6 @@ define(["mag/config", "esri/tasks/QueryTask"], function (config, QueryTask) {
                 maintainAspectRatio: false,
             },
         });
-
-        return "chart goes here";
     }
 
     return { getDataByCounty, createHistoricalChart };

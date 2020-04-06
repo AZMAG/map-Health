@@ -57,10 +57,13 @@ define(["mag/config", "mag/historicalData", "esri/tasks/QueryTask"], function (c
 
         $reportType.append(typeOptions.join(""));
 
+        $(".selectpicker_health").selectpicker();
+        $reportType.selectpicker('val', 'County');
+
+
         //Setting up initially as County
         await setupSpecificReportDropdown("County");
 
-        $(".selectpicker_health").selectpicker();
     }
 
     $reportType.change(() => {
@@ -132,6 +135,8 @@ define(["mag/config", "mag/historicalData", "esri/tasks/QueryTask"], function (c
         County: "sj_county",
         Jurisdiction: "sj_juris",
         Zip: "sj_zip",
+        Legislative: 'sj_legislative',
+        Congressional: 'sj_congress'
     };
 
     async function getPointHTML(selectedReport, type) {
@@ -234,6 +239,8 @@ define(["mag/config", "mag/historicalData", "esri/tasks/QueryTask"], function (c
     }
 
     async function getPolyData(selectedReport) {
+        console.log(selectedReport);
+        
         const polyRes = await geoQt.execute({
             returnGeometry: false,
             outFields: ["*"],
@@ -366,7 +373,11 @@ define(["mag/config", "mag/historicalData", "esri/tasks/QueryTask"], function (c
                 <div class="tab-pane fade" id="historical" role="tabpanel" aria-labelledby="historical-tab">
                     <div class="chartContainer">
                         <canvas id="historicalChart"></canvas>
-                    </div>
+                        </div>
+                        <br />
+                        <small>Data Source:  
+                        <a href="https://www.nytimes.com/interactive/2020/us/coronavirus-us-cases.html" target="_blank" ><b>The New York Times</b></a>
+                        </small>
                 </div>
             </div>
             `

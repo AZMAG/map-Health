@@ -1,4 +1,14 @@
-define(["mag/config", "mag/historicalData", "esri/tasks/QueryTask"], function (config, {createHistoricalChart}, QueryTask) {
+define([
+    "mag/config",
+    "mag/layer",
+    "mag/historicalData",
+    "esri/tasks/QueryTask",
+], function (
+    config,
+    { addHighlightGraphicToMap, clearHighlightLayer },
+    { createHistoricalChart },
+    QueryTask
+) {
     const pointsQt = new QueryTask({
         url: config.mainUrl + config.queryLayerIndex,
     });
@@ -11,8 +21,35 @@ define(["mag/config", "mag/historicalData", "esri/tasks/QueryTask"], function (c
     let $specificReport = $("#specificReport");
 
     $("body").on("click", "#standardBtnSubmit", () => {
-        $("#reportModal").modal("show");
+        $("#reportModal").modal({
+            backdrop: 'static'
+        });
     });
+
+    $("body").on("click", ".reportClose", () => {
+        clearHighlightLayer();
+    });
+    
+
+    $(".reportHeader").on("mousedown", function(mousedownEvt) {
+        var $draggable = $(this);
+        var x = mousedownEvt.pageX - $draggable.offset().left,
+            y = mousedownEvt.pageY - $draggable.offset().top;
+        $("body").on("mousemove.draggable", function(mousemoveEvt) {
+            $draggable.closest(".modal-dialog").offset({
+                "left": mousemoveEvt.pageX - x,
+                "top": mousemoveEvt.pageY - y
+            });
+        });
+        $("body").one("mouseup", function() {
+            $("body").off("mousemove.draggable");
+        });
+        $draggable.closest(".modal").one("bs.modal.hide", function() {
+            $("body").off("mousemove.draggable");
+            
+        });
+    });
+
 
     setupDropdowns();
 
@@ -62,17 +99,15 @@ define(["mag/config", "mag/historicalData", "esri/tasks/QueryTask"], function (c
         <option data-id="Jurisdiction">Jurisdiction</option>
         <option data-id="Congressional District">Congressional District</option>
         <option data-id="Legislative District">Legislative District</option>
-        `
+        `;
 
-        $reportType.append(tempHtml); 
+        $reportType.append(tempHtml);
 
         $(".selectpicker_health").selectpicker();
-        $reportType.selectpicker('val', 'County');
-
+        $reportType.selectpicker("val", "County");
 
         //Setting up initially as County
         await setupSpecificReportDropdown("County");
-
     }
 
     $reportType.change(() => {
@@ -96,8 +131,8 @@ define(["mag/config", "mag/historicalData", "esri/tasks/QueryTask"], function (c
             .children("option:selected")
             .data("id");
         let type = $reportType.val();
-        console.log({selectedReport, type});
-        
+        console.log({ selectedReport, type });
+
         openReport(selectedReport, type);
     });
 
@@ -146,8 +181,8 @@ define(["mag/config", "mag/historicalData", "esri/tasks/QueryTask"], function (c
         County: "sj_county",
         Jurisdiction: "sj_juris",
         Zip: "sj_zip",
-        'Legislative District': 'sj_legislative',
-        'Congressional District': 'sj_congress'
+        "Legislative District": "sj_legislative",
+        "Congressional District": "sj_congress",
     };
 
     async function getPointHTML(selectedReport, type) {
@@ -203,6 +238,16 @@ define(["mag/config", "mag/historicalData", "esri/tasks/QueryTask"], function (c
                     ${getPointTableHTML(allPoints)}
                 </div>
             </div>
+            <br />
+            <small>Data Source:  
+                <a href="https://www.azdhs.gov/" target="_blank" >
+                    <b>Arizona Department of Health Services </b>
+                </a>
+                &
+                <a href="https://azmag.gov/" target="_blank">
+                    <b>Maricopa Association of Governments</b>
+                </a>
+            </small>
         </div>
         `;
     }
@@ -250,24 +295,34 @@ define(["mag/config", "mag/historicalData", "esri/tasks/QueryTask"], function (c
     }
 
     async function getPolyData(selectedReport) {
-        console.log(selectedReport);
-        
         const polyRes = await geoQt.execute({
-            returnGeometry: false,
+            returnGeometry: true,
             outFields: ["*"],
             where: `GEOID = '${selectedReport}'`,
         });
-        return polyRes.features[0].attributes;
+        return polyRes.features[0];
     }
 
     async function getPolyHTML(selectedReport) {
-        let data = await getPolyData(selectedReport);
+        let { geometry, attributes: data } = await getPolyData(selectedReport);
+        addHighlightGraphicToMap(geometry);
 
         let leftPanelConf = [
             {
-                field: "TOTAL_POP",
-                // iconClass: "fas fa-male",
-                title: "Total Population",
+                field: "POPESTIMATE2018",
+                title: "2018 1 Year Population Estimate",
+                valueFormat: (val, data, i) => {
+                    if (val) {
+                        return val.toLocaleString();
+                    } else {
+                        return data["TOTAL_POP"].toLocaleString();
+                    }
+                },
+                titleFormat: (val, data, i) => {
+                    return val
+                        ? leftPanelConf[i].title
+                        : " ACS 2017-2018 5 Year Population";
+                },
             },
             {
                 field: "AGE65PLUS",
@@ -318,16 +373,21 @@ define(["mag/config", "mag/historicalData", "esri/tasks/QueryTask"], function (c
         ];
 
         let leftPanelLines = leftPanelConf.map(
-            ({ pctField, field, title, iconClass, valueFormat }) => {
+            (
+                { pctField, field, title, iconClass, valueFormat, titleFormat },
+                i
+            ) => {
                 let val = pctField
                     ? (data[field] / data[pctField]) * 100
                     : data[field];
                 return `
             <div class="categoryLine">
                 <i class="${iconClass}"></i>
-                <b>${title}: </b>
+                <b>${titleFormat ? titleFormat(val, data, i) : title}: </b>
                 <span>${
-                    valueFormat ? valueFormat(val) : val.toLocaleString()
+                    valueFormat
+                        ? valueFormat(val, data, i)
+                        : val.toLocaleString()
                 }</span>
             </div>`;
             }
@@ -345,6 +405,10 @@ define(["mag/config", "mag/historicalData", "esri/tasks/QueryTask"], function (c
                             <br>
                             ${getAgeTableHTML(data)}
                         </div>
+                        <br />
+                        <small>Data Source:  
+                        <a href="https://www.census.gov/programs-surveys/acs" target="_blank" ><b>American Community Survey</b></a>
+                        </small>
                     </div>
                 </div>
                 `,
@@ -353,7 +417,7 @@ define(["mag/config", "mag/historicalData", "esri/tasks/QueryTask"], function (c
     }
 
     async function getTitle(selectedReport, type) {
-        let data = await getPolyData(selectedReport);
+        let { attributes: data } = await getPolyData(selectedReport);
         return `<h5>${data["Name"]} Report</h5>`;
     }
 

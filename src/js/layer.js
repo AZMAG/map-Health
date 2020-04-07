@@ -19,7 +19,7 @@ define([
     Graphic,
     QueryTask
 ) {
-    addLayers();
+    let lyrs = addLayers();
 
     let $rendererDropdown = $("#rendererDropdown");
 
@@ -378,6 +378,12 @@ define([
         ];
     }
 
+    function addHighlightLayer() {
+        let gfxLayer = new GraphicsLayer({ id: "gfx" });
+        map.add(gfxLayer);
+        return gfxLayer;
+    }
+
     async function addCovidLayer() {
         let queryAllUrl = config.covidLayerURL;
 
@@ -670,11 +676,14 @@ define([
             placement: "right",
             container: "body",
         });
+
+        let highlightLayer = addHighlightLayer();
+
+        return { tractsLayer, highlightLayer };
     }
 
     function GetTractsPopup(res) {
         let { attributes } = res.graphic;
-        console.log(attributes);
 
         let {
             TOTAL_POP,
@@ -791,14 +800,45 @@ define([
                         ${Telephone ? Telephone.replace(")", ") ") : "N/A"}
                     </div>
                 </div>
-                <div class="flexCenter" title="Operating Status">
-                    <i class="fas fa-door-open"></i>
-                    <div class="marginLeft10">
-                        ${OPERSTDESC === "ACTIVE" ? "Operating" : "Closed"}
-                    </div>
-                </div>
+                
                 </div>
         </div>`;
+        // <div class="flexCenter" title="Operating Status">
+        //             <i class="fas fa-door-open"></i>
+        //             <div class="marginLeft10">
+        //                 ${OPERSTDESC === "ACTIVE" ? "Operating" : "Closed"}
+        //             </div>
+        //         </div>
         return html;
     }
+
+    async function addHighlightGraphicToMap(geometry) {
+        let { highlightLayer } = await lyrs;
+        await clearHighlightLayer();
+
+        let graphic = new Graphic({
+            geometry,
+            symbol: {
+                type: "simple-fill",
+                color: [51, 51, 204, 0.9],
+                style: "solid",
+                outline: {
+                    color: "white",
+                    width: 1,
+                },
+            },
+        });
+
+        highlightLayer.add(graphic);
+        view.goTo(geometry)
+    }
+
+    async function clearHighlightLayer(){
+        console.log("clearing");
+        
+        let { highlightLayer } = await lyrs;
+        return highlightLayer.removeAll();
+    }
+
+    return { addHighlightGraphicToMap, clearHighlightLayer };
 });

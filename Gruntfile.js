@@ -16,6 +16,15 @@ module.exports = function(grunt) {
     require('load-grunt-tasks')(grunt);
     require("matchdep").filterDev("grunt-*").forEach(grunt.loadNpmTasks);
 
+    var paths = {
+        // 'magcore': '',
+        'esri': 'empty:',
+        'dojo': 'empty:',
+        'dojox': 'empty:',
+        'dijit': 'empty:',
+        'dojo/text': '../../node_modules/requirejs-text/text'
+    };
+
     grunt.initConfig({
 
         config: {
@@ -39,6 +48,36 @@ module.exports = function(grunt) {
                     src: ["**/*.js"],
                     dest: "<%=config.out%>/js/"
                 }]
+            }
+        },
+
+        requirejs: {
+            release: {
+                options: {
+                    locale: "en-us",
+                    baseUrl: './dist/js',
+                    // name: "main.REPLACE",
+                    // allow dependencies to be resolved but don't include in output (empty:)
+                    // paths: paths,
+                    paths: { "jquery": "empty:" },
+                    // but don't include them in the main build
+                    exclude: {},
+                    include: {},
+                    inlineText: true,
+                    optimize: 'none',
+                    generateSourceMaps: false,
+                    preserveLicenseComments: true,
+                    findNestedDependencies: true,
+                    removeCombined: true,
+                    out: function(text, sourceMapText) {
+                        var UglifyJS = require('uglify-es'),
+                            uglified = UglifyJS.minify(text),
+                            config = grunt.config.get('config'),
+                            pkg = grunt.config.get('pkg');
+
+                        grunt.file.write(`dist/js/${pkg.name}.min.js`, uglified.code);
+                    }
+                }
             }
         },
 
@@ -102,7 +141,6 @@ module.exports = function(grunt) {
                 }
             }
         },
-
 
         uglify: {
             options: {
@@ -206,6 +244,8 @@ module.exports = function(grunt) {
     grunt.registerTask("build-rename", ["replace:release", "copy:rename", "clean:clean_js"]);
 
     grunt.registerTask("ts", ["postcss"]);
+    grunt.registerTask("tsjs", ["clean:build", "copy", "requirejs"]);
+
 
     grunt.registerTask("build", ["clean:build", "build-html", "build-css", "build-js", "build-rename"]);
 };

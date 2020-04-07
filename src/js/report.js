@@ -315,14 +315,12 @@ define([
                     if (val) {
                         return val.toLocaleString();
                     } else {
-                        return 'N/a' //data["TOTAL_POP"].toLocaleString();
+                        return data["TOTAL_POP"].toLocaleString();
                     }
                 },
                 titleFormat: (val, data, i) => {
-                    return leftPanelConf[i].title;
-                    // return val
-                    //     ? 
-                    //     : " ACS 2017-2018 5 Year Population";
+                    // return leftPanelConf[i].title;
+                    return val ? leftPanelConf[i].title : " ACS 2017-2018 5 Year Population";
                 },
             },
             {

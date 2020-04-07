@@ -403,12 +403,13 @@ define([
                             <br>
                             <br>
                             ${getAgeTableHTML(data)}
-                        </div>
-                        <br />
-                        <small>Data Source:  
-                        <a href="https://www.census.gov/programs-surveys/acs" target="_blank" ><b>American Community Survey</b></a>
-                        </small>
+                        </div>                        
                     </div>
+                    <br />
+                        <small>Data Source:  
+                        <a href="https://www.census.gov/newsroom/press-releases/2019/acs-5-year.html" target="_blank" ><b>American Community Survey, 2014-2018 5 year estimates</b></a>
+                        & <a href="https://www.census.gov/data/datasets/time-series/demo/popest/2010s-total-cities-and-towns.html" target="_blank" ><b>2018 Census Estimates</b></a>
+                        </small>
                 </div>
                 `,
             data,

@@ -310,18 +310,19 @@ define([
         let leftPanelConf = [
             {
                 field: "POPESTIMATE2018",
-                title: "2018 1 Year Population Estimate",
+                title: "2018 Census Estimates",
                 valueFormat: (val, data, i) => {
                     if (val) {
                         return val.toLocaleString();
                     } else {
-                        return data["TOTAL_POP"].toLocaleString();
+                        return 'N/a' //data["TOTAL_POP"].toLocaleString();
                     }
                 },
                 titleFormat: (val, data, i) => {
-                    return val
-                        ? leftPanelConf[i].title
-                        : " ACS 2017-2018 5 Year Population";
+                    return leftPanelConf[i].title;
+                    // return val
+                    //     ? 
+                    //     : " ACS 2017-2018 5 Year Population";
                 },
             },
             {

@@ -123,7 +123,7 @@ define([
             let checked = $(".popMetricsInput:checked").length;
             if (checked === 0) {
                 tractsLyr.visible = false;
-                $("#dashboard").hide();
+                $("#dashboardModal").modal("hide");
             }
         }
     });
@@ -371,7 +371,9 @@ define([
         let queryAllUrl = config.covidLayerURL;
 
         let res = await fetch(queryAllUrl);
-        let { features } = await res.json();
+        let {
+            features
+        } = await res.json();
 
         const pointsQt = new QueryTask({
             url: config.mainUrl + config.queryLayerIndex,

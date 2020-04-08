@@ -468,9 +468,14 @@ SASS Partials
   border: 1px solid rgba(128, 128, 128, 0.185);
   text-align: center;
   padding: 12px 5px 5px 5px;
+<<<<<<< HEAD:src/styles/main.css
+  max-height: 80vh;
+  max-width: 100%;
+=======
   max-height: 85vh;
   width: 20vw;
   min-width: 370px;
+>>>>>>> release/v1.1.0:src/sass/main.css
 }
 
 #helpInfo hr {
@@ -480,7 +485,11 @@ SASS Partials
 .help-card {
   padding: 0 5px 5px 2px;
   padding-bottom: 2px;
+<<<<<<< HEAD:src/styles/main.css
+  max-height: 80vh;
+=======
   max-height: 85vh;
+>>>>>>> release/v1.1.0:src/sass/main.css
   max-width: 100%;
   overflow-y: auto;
 }
@@ -497,6 +506,14 @@ SASS Partials
 
 .chartContainer {
   height: 300px;
+}
+
+.populationMetrics .layersList {
+  position: relative;
+}
+
+.card-area {
+  direction: ltr;
 }
 
 .populationMetrics .layersList {
@@ -799,6 +816,9 @@ a.modal-anchor.link:hover {
 /****************
 * SASS Dashboard
 *****************/
+<<<<<<< HEAD:src/styles/main.css
+#dashboardModal {
+=======
 #dashboard {
   position: absolute;
   bottom: 55px;
@@ -810,10 +830,12 @@ a.modal-anchor.link:hover {
   border: 1px solid rgba(128, 128, 128, 0.185);
   width: 500px;
   height: 160px;
+>>>>>>> release/v1.1.0:src/sass/main.css
   text-align: center;
-  padding: 7px;
 }
 
+<<<<<<< HEAD:src/styles/main.css
+=======
 #dashboard .card-deck {
   display: -webkit-inline-box;
   display: -ms-inline-flexbox;
@@ -875,11 +897,14 @@ a.modal-anchor.link:hover {
   text-align: center;
 }
 
+>>>>>>> release/v1.1.0:src/sass/main.css
 #dashboardModal .modal-dialog {
   position: relative;
   top: 60vh;
 }
 
+<<<<<<< HEAD:src/styles/main.css
+=======
 #dashboardModal .modal-content.ui-resizable {
   overflow-y: scroll;
   position: static;
@@ -889,6 +914,7 @@ a.modal-anchor.link:hover {
   max-height: 100%;
 }
 
+>>>>>>> release/v1.1.0:src/sass/main.css
 #dashboardModal .card-box {
   display: -webkit-inline-box;
   display: -ms-inline-flexbox;

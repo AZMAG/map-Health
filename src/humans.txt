@@ -47,7 +47,7 @@
 # SITE
     Site Name: Health Viewer
     Site URL: http://geo.azmag.gov/maps/health/
-    Version: 1.1.0
+    Version: 1.1.1
 	Last updated: 2020-04-08
     Creation date: 2020-03-16
 	Language: English

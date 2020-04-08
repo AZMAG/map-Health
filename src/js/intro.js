@@ -1,7 +1,7 @@
 define([
     "mag/config",
     "mag/map",
-], function (config, {
+], function(config, {
     map,
     view
 }) {
@@ -18,7 +18,7 @@ function startupIntro() {
                 content: 'Welcome to the Arizona Healthcare Assets Map.  Click next to continue to view the instructions on using this tool.',
                 target: $("#helpInfo")[0],
                 placement: "right",
-                onShow: function () {
+                onShow: function() {
                     Focusable.setFocus($("#helpInfo"));
                 }
             }, {
@@ -26,7 +26,7 @@ function startupIntro() {
                 content: 'Use the tools in this area to navigate around the map, toggle the basemap and find/zoom to an address.',
                 target: $(".esri-ui-bottom-left")[0],
                 placement: "top",
-                onShow: function () {
+                onShow: function() {
                     Focusable.setFocus($(".esri-ui-bottom-left"));
                 }
             },
@@ -35,7 +35,7 @@ function startupIntro() {
                 content: 'Use this area to toggle between different population metrics.  This will change the background (Census Tracts) to give some demographic context to the map.',
                 target: $("#populationMetrics").parent()[0],
                 placement: "right",
-                onShow: function () {
+                onShow: function() {
                     Focusable.setFocus($($("#populationMetrics").parent()));
                 }
             },
@@ -44,7 +44,7 @@ function startupIntro() {
                 content: 'The facilities that can be displayed on the map are shown here.  Click a checkbox to toggle the facilities layer on the map.',
                 target: $("#layersList").parent()[0],
                 placement: "right",
-                onShow: function () {
+                onShow: function() {
                     Focusable.setFocus($($("#layersList").parent()));
                 }
             },
@@ -53,7 +53,7 @@ function startupIntro() {
                 content: 'Use this area of the site to open a Summary Report window that includes demographics and healthcare asset information on a particular County, Jurisdiction or Zip code.',
                 target: $("#reportForm").parent()[0],
                 placement: "right",
-                onShow: function () {
+                onShow: function() {
                     Focusable.setFocus($($("#reportForm").parent()));
                 }
             },
@@ -62,24 +62,24 @@ function startupIntro() {
                 content: 'Click anywhere on the map to identify features underneath the cursor.  You can click on points or on the background Population Metrics to get a popup with more information.',
                 target: $(".introTarget")[0],
                 placement: "bottom",
-                onShow: function(){
+                onShow: function() {
                     Focusable.hide();
                 }
             }
         ],
         showPrevButton: true,
-        onStart: function () {
+        onStart: function() {
             Focusable.hide();
         },
-        onEnd: function () {
+        onEnd: function() {
             Focusable.hide();
         },
-        onClose: function () {
+        onClose: function() {
             Focusable.hide();
         }
     };
 
-    if(!localStorage.getItem('toured')){
+    if (!localStorage.getItem('toured')) {
         // Start the tour!
         hopscotch.startTour(tour);
         localStorage.setItem('toured', true);

@@ -49,11 +49,11 @@ define([
         },
         Covid: {
             title: "COVID-19 Cases (By County)",
-            definition: "This feature layer contains the most up-to-date COVID-19 cases and latest trend plot. It covers China, the US, Canada, Australia (at province/state level), and the rest of the world (at country level, represented by either the country centroids or their capitals). Data sources are WHO, US CDC, China NHC, ECDC, and DXY. The China data is automatically updating at least once per hour, and non China data is updating manually. This layer is created and maintained by the Center for Systems Science and Engineering (CSSE) at the Johns Hopkins University.",
+            definition: "This feature layer contains the most up-to-date COVID-19 data at state and county level.  This layer is created and maintained by the Center for Systems Science and Engineering (CSSE) at the Johns Hopkins University.",
         },
         Capacity: {
             title: "Hospital Beds (By County)",
-            definition: "This feature layer contains the capcity in hospital beds by county. It covers hospital capacity in Arizona.",
+            definition: "This feature layer contains the capacity in hospital beds by county. It covers hospital capacity in Arizona.",
         },
     };
 

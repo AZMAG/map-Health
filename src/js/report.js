@@ -237,15 +237,7 @@ define([
                 </div>
             </div>
             <br />
-            <small>Data Source:
-                <a href="https://www.azdhs.gov/" target="_blank" >
-                    <b>Arizona Department of Health Services </b>
-                </a>
-                &
-                <a href="https://azmag.gov/" target="_blank">
-                    <b>Maricopa Association of Governments</b>
-                </a>
-            </small>
+            <button type="button" class="btn btn-info btn-xs source" data-toggle="modal" data-target="#sourceModal" data-dismiss="modal">Source</button>
         </div>
         `;
     }
@@ -402,10 +394,11 @@ define([
                         </div>
                     </div>
                     <br />
-                        <small>Data Source:
-                        <a href="https://www.census.gov/newsroom/press-releases/2019/acs-5-year.html" target="_blank" ><b>American Community Survey, 2014-2018 5 year estimates</b></a>
-                        & <a href="https://www.census.gov/data/datasets/time-series/demo/popest/2010s-total-cities-and-towns.html" target="_blank" ><b>2018 Census Estimates</b></a>
-                        </small>
+                    <button type="button"
+                    class="btn btn-info btn-xs source"
+                    data-toggle="modal"
+                    data-target="#sourceModal"
+                    data-dismiss="modal">Source</button>
                 </div>
                 `,
             data,
@@ -446,9 +439,11 @@ define([
                         <canvas id="historicalChart"></canvas>
                         </div>
                         <br />
-                        <small>Data Source:
-                        <a href="https://www.nytimes.com/interactive/2020/us/coronavirus-us-cases.html" target="_blank" ><b>The New York Times</b></a>
-                        </small>
+                        <button type="button"
+                        class="btn btn-info btn-xs source"
+                        data-toggle="modal"
+                        data-target="#sourceModal"
+                        data-dismiss="modal">Source</button>
                 </div>
             </div>
             `

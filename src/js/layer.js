@@ -253,18 +253,18 @@ define([
                         //     label: "<15",
                         // },
                         // {
-                        value: 24,
+                        value: 0,
                         size: 15,
-                        label: " less than 25",
+                        label: "less than 50",
                     },
                     {
-                        value: 99,
+                        value: 50,
                         size: 30,
                         label: "less than 100",
                     },
                     {
-                        value: 499,
-                        size: 50,
+                        value: 100,
+                        size: 45,
                         label: "less than 500",
                     },
                     {
@@ -295,24 +295,24 @@ define([
                 type: "size",
                 field: "Capacity",
                 stops: [{
-                        value: 99,
+                        value: 0,
                         size: 15,
                         label: "less than 100 Beds",
                     },
                     {
-                        value: 999,
+                        value: 100,
                         size: 30,
                         label: "less than 1,000 Beds",
                     },
                     {
-                        value: 4999,
+                        value: 1000,
                         size: 50,
                         label: "less than 5,000 Beds",
                     },
                     {
                         value: 5000,
                         size: 70,
-                        label: "5,000 + Beds",
+                        label: "5000 + Beds",
                     },
                 ],
             }, ],
@@ -436,25 +436,6 @@ define([
             deaths.push(i.Deaths);
             cases.push(i.Confirmed);
         });
-        // console.log(source);
-
-        var deaths = [];
-        var cases = [];
-        $.each(source, function(index, item) {
-            var i = item.attributes;
-            deaths.push(i.Deaths);
-            cases.push(i.Confirmed);
-        });
-
-        const deathsSum = deaths.reduce((a, b) => a + b, 0);
-        // console.log(deathsSum);
-        var ds = new Intl.NumberFormat().format(deathsSum);
-        $("#deaths").text(ds);
-
-        const casesSum = cases.reduce((a, b) => a + b, 0);
-        // console.log(casesSum);
-        var cs = new Intl.NumberFormat().format(casesSum);
-        $("#cases").text(cs);
 
         const deathsSum = deaths.reduce((a, b) => a + b, 0);
         // console.log(deathsSum);

@@ -253,17 +253,17 @@ define([
                         //     label: "<15",
                         // },
                         // {
-                        value: 24,
+                        value: 0,
                         size: 15,
-                        label: "less than 25",
+                        label: "less than 50",
                     },
                     {
-                        value: 99,
+                        value: 50,
                         size: 30,
-                        label: "less than 250",
+                        label: "less than 100",
                     },
                     {
-                        value: 499,
+                        value: 100,
                         size: 45,
                         label: "less than 500",
                     },
@@ -300,12 +300,12 @@ define([
                         label: "less than 100 Beds",
                     },
                     {
-                        value: 999,
+                        value: 100,
                         size: 30,
                         label: "less than 1,000 Beds",
                     },
                     {
-                        value: 4999,
+                        value: 1000,
                         size: 50,
                         label: "less than 5,000 Beds",
                     },

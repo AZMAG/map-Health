@@ -2,8 +2,10 @@
 *  SASS Main
 ****************/
 
+@import "vendor/base";
 @import "modules/base";
 @import "partials/base";
+
 
 html,
 body,
@@ -38,6 +40,17 @@ div.hopscotch-bubble .hopscotch-nav-button.prev,
 
 .legal {
     font-size: x-small;
+}
+
+.introTarget {
+    margin-left: 41%;
+    height: 100px;
+    width: 100px;
+    z-index: 114;
+    top: 100px;
+    left: 100px;
+    display: block;
+    position: absolute;
 }
 
 .slider-selection {

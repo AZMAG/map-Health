@@ -1,0 +1,43 @@
+{
+    "name": "Arizona Healthcare Assets Map",
+    "short_name": "AZ Healthcare",
+    "description": "Interactive mapping and reporting tools for exploration of Arizona Healthcare",
+    "start_url": "https://geo.azmag.gov/maps/health/",
+    "categories": [
+        "health",
+        "hospitals",
+        "services",
+        "health care",
+        "MAG",
+        "MAG Region",
+        "Counties",
+        "Statewide",
+        "Arizona",
+        "maps",
+        "ESRI",
+        "#MAGmaps"
+    ],
+    "lang": "en-US",
+    "dir": "auto",
+    "display": "standalone",
+    "scope": "/",
+    "background_color": "#fafafa",
+    "theme_color": "#081f21",
+    "icons": [{
+        "src": "img/icon_144.png",
+        "sizes": "144x144",
+        "type": "image/png"
+    }, {
+        "src": "img/icon_114.png",
+        "sizes": "114x114",
+        "type": "image/png"
+    }, {
+        "src": "img/icon_72.png",
+        "sizes": "72x72",
+        "type": "image/png"
+    }, {
+        "src": "img/icon_57.png",
+        "sizes": "57x57",
+        "type": "image/png"
+    }]
+}

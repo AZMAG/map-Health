@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lass="no-js" lang="en">
 
 <head>
     <meta charset="utf-8">
@@ -13,38 +13,49 @@
         </script> -->
     <!-- endcomments -->
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="url" content="https://geo.azmag.gov/maps/Health/">
+    <meta name="url" content="https://geo.azmag.gov/maps/health/">
     <meta name="creation-date" content="2020-03-16">
-    <meta name="revision-date" content="2020-03-19">
+    <meta name="revision-date" content="2020-04-08">
+    <meta name="version" content="1.1.0">
+    <!-- Fav and touch icons -->
     <link rel="apple-touch-icon" type="image/png" sizes="152x152" href="./img/icon_144.png">
     <link rel="apple-touch-icon" type="image/png" sizes="120x120" href="./img/icon_114.png">
     <link rel="apple-touch-icon" type="image/png" sizes="76x76" href="./img/icon_72.png">
-    <link rel="apple-touch-icon" type="image/png" sizes="60x60" href="./img/icon_57.png">
+    <link rel="apple-touch-icon" type="image/png" sizes="57x57" href="./img/icon_57.png">
     <link rel="shortcut icon" type="image-favorites-icon" href="./img/icon_57.png">
+    <!-- <link rel="manifest" href="site.webmanifest"> -->
 
     <link href='https://fonts.googleapis.com/css?family=Poppins' rel='stylesheet'>
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
-        integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
     <link rel="stylesheet" href="https://js.arcgis.com/4.15/esri/css/main.css">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.0/css/bootstrap.min.css">
-    <link rel="stylesheet"
-        href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.2/css/bootstrap-select.min.css">
-    <link rel="stylesheet"
-        href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/10.6.1/css/bootstrap-slider.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.2/css/bootstrap-select.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/10.6.1/css/bootstrap-slider.min.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/hopscotch/0.3.1/css/hopscotch.min.css" />
-    <link rel="stylesheet" type="text/css" media="screen" href="./styles/main.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.css" />
+    <!-- Application CSS -->
+    <!-- comments:comment html -->
+    <link rel="stylesheet" type="text/css" media="screen" href="./css/main.css">
+    <!-- endcomments -->
+    <!-- comments:uncomment html -->
+    <!-- <link rel="stylesheet" type="text/css" href="./css/master.min.css"> -->
+    <!-- endcomments -->
+    <!-- comments:comment html -->
+    <!--  removed once App goes into production -->
+    <meta http-equiv="cache-control" content="no-cache" />
+    <meta http-equiv="expires" content="0" />
+    <meta http-equiv="pragma" content="no-cache" />
+    <!-- endcomments -->
 </head>
 
 <body data-container="body">
-    <!-- <div class="successMessage"> -->
     <div class="successMessage alert alert-success" role="alert">
         Thank you, MAG has received your feedback.
     </div>
-    <!-- </div> -->
+    <div class="introTarget" style="display: block; position: absolute; z-index: 1; margin-left: 41%; top: 400px;">
+    </div>
     <!--info card-->
     <div id="helpInfo" class="card" role="dialog"></div>
-
-    <!-- <div id="dashboard" class="card" role="dialog"></div> -->
 
     <!-- Map -->
     <div id="viewDiv">
@@ -61,7 +72,7 @@
     </div>
 
     <!--source modal-->
-    <div class="modal fade" id="dashboardModal" role="dialog"></div>
+    <div class="" id="dashboard" role="dialog"></div>
     <!--source modal-->
     <div class="modal fade" id="sourceModal" role="dialog"></div>
     <!--contact modal-->
@@ -80,11 +91,13 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-polyfill/7.2.5/polyfill.min.js"></script>
 
     <!-- Vendor JS Scripts-->
-    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.0/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.2/js/bootstrap-select.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/10.6.1/bootstrap-slider.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.bundle.min.js"></script>
     <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/focusable/1.0.0/focus-element-overlay.min.js"></script> -->
     <script src="./js/focusable.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/hopscotch/0.3.1/js/hopscotch.min.js"></script>
@@ -95,17 +108,13 @@
                 location: location.pathname.replace(/\/[^/]+$/, '') + './js'
             }]
         };
-
     </script>
 
     <script src="https://js.arcgis.com/4.15/"></script>
 
-
     <script>
-        require(["mag/main"], function (mag) {});
-
+        require(["mag/main.REPLACE"], function(mag) {});
     </script>
-
 
     <!-- Google Analytics -->
     <!-- comments:uncomment-block html -->

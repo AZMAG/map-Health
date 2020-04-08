@@ -22,6 +22,15 @@
     }
 }
 
+.modal.fade.show{
+    background-color: transparent;
+    pointer-events: none;
+}
+.modal-backdrop{
+    background-color: transparent;
+    pointer-events: none;
+}
+
 .modalClose {
     position: absolute;
     top: 10px;
@@ -36,6 +45,10 @@
         color: $close-hover;
 
     }
+}
+
+.reportHeader{
+    cursor: move;
 }
 
 .modal {

@@ -1,0 +1,55 @@
+# humanstxt.org/
+# The humans responsible & technology colophon
+
+# TEAM
+
+    Maricopa Association of Governments
+        Name:  Jack Fairfield
+        Role: GIS Engineer II
+        Contact:
+        Twitter:
+        From: Tempe, AZ
+
+    	Name:  Vern Wolfley
+    	Role: GGIS Engineer III
+    	Contact:
+    	Twitter: @vernwolfley
+    	From: Litchfield Park, AZ
+
+    	Name:  Jason Howard
+    	Role: GIS Program Manager
+    	Contact:
+    	Twitter:
+    	From: Chandler, AZ
+
+        Name:  Anubhav Bagley
+        Role: Regional Analytics Director
+        Contact:
+        Twitter:
+        From: Phoenix, AZ
+
+# THANKS
+
+    Jesse Ayers -- @azmag
+    Hanyi Li -- @azmag
+    Peter Burnett -- @azmag
+    Maggie Wong -- @azmag
+    Christian Gort -- @azmag
+    Nicole Funicello -- @azmag
+    Deborah Brown -- @azmag
+    Mark Roberts -- @azmag
+
+# TECHNOLOGY COLOPHON
+
+    Standards: HTML5, CSS3
+    Components: HTML5BoilerPlate, Normalize.css, jQuery, Require.js, ESRI Javascript API, Grunt
+
+# SITE
+    Site Name: Health Viewer
+    Site URL: http://geo.azmag.gov/maps/health/
+    Version: 1.1.0
+	Last updated: 2020-04-08
+    Creation date: 2020-03-16
+	Language: English
+	Doctype: HTML5
+	IDE: VS Code

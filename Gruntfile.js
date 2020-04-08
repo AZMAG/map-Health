@@ -58,8 +58,7 @@ module.exports = function(grunt) {
                     baseUrl: './dist/js',
                     // name: "main.REPLACE",
                     // allow dependencies to be resolved but don't include in output (empty:)
-                    // paths: paths,
-                    paths: { "jquery": "empty:" },
+                    paths: paths,
                     // but don't include them in the main build
                     exclude: {},
                     include: {},

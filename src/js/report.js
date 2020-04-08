@@ -3,10 +3,8 @@ define([
     "mag/layer",
     "mag/historicalData",
     "esri/tasks/QueryTask",
-], function (
-    config,
-    { addHighlightGraphicToMap, clearHighlightLayer },
-    { createHistoricalChart },
+], function(
+    config, { addHighlightGraphicToMap, clearHighlightLayer }, { createHistoricalChart },
     QueryTask
 ) {
     const pointsQt = new QueryTask({
@@ -29,7 +27,7 @@ define([
     $("body").on("click", ".reportClose", () => {
         clearHighlightLayer();
     });
-    
+
 
     $(".reportHeader").on("mousedown", function(mousedownEvt) {
         var $draggable = $(this);
@@ -46,7 +44,7 @@ define([
         });
         $draggable.closest(".modal").one("bs.modal.hide", function() {
             $("body").off("mousemove.draggable");
-            
+
         });
     });
 
@@ -131,7 +129,7 @@ define([
             .children("option:selected")
             .data("id");
         let type = $reportType.val();
-        console.log({ selectedReport, type });
+        // console.log({ selectedReport, type });
 
         openReport(selectedReport, type);
     });
@@ -216,14 +214,14 @@ define([
         });
 
         let categoryLines = Object.keys(categoryTitleLookup).map((category) => {
-            return categories[category]
-                ? `
+            return categories[category] ?
+                `
             <div class="categoryLine">
                 <img width="20" src="./icons/${category}.svg">
                 <b>${categoryTitleLookup[category]}: </b>
                 <span>${categories[category].toLocaleString()}</span>
-            </div>`
-                : "";
+            </div>` :
+                "";
         });
 
         return `
@@ -239,15 +237,7 @@ define([
                 </div>
             </div>
             <br />
-            <small>Data Source:  
-                <a href="https://www.azdhs.gov/" target="_blank" >
-                    <b>Arizona Department of Health Services </b>
-                </a>
-                &
-                <a href="https://azmag.gov/" target="_blank">
-                    <b>Maricopa Association of Governments</b>
-                </a>
-            </small>
+            <button type="button" class="btn btn-info btn-xs source" data-toggle="modal" data-target="#sourceModal" data-dismiss="modal">Source</button>
         </div>
         `;
     }
@@ -307,8 +297,7 @@ define([
         let { geometry, attributes: data } = await getPolyData(selectedReport);
         addHighlightGraphicToMap(geometry);
 
-        let leftPanelConf = [
-            {
+        let leftPanelConf = [{
                 field: "POPESTIMATE2018",
                 title: "2018 Census Estimates",
                 valueFormat: (val, data, i) => {
@@ -372,13 +361,12 @@ define([
         ];
 
         let leftPanelLines = leftPanelConf.map(
-            (
-                { pctField, field, title, iconClass, valueFormat, titleFormat },
+            ({ pctField, field, title, iconClass, valueFormat, titleFormat },
                 i
             ) => {
-                let val = pctField
-                    ? (data[field] / data[pctField]) * 100
-                    : data[field];
+                let val = pctField ?
+                    (data[field] / data[pctField]) * 100 :
+                    data[field];
                 return `
             <div class="categoryLine">
                 <i class="${iconClass}"></i>
@@ -403,13 +391,14 @@ define([
                             <br>
                             <br>
                             ${getAgeTableHTML(data)}
-                        </div>                        
+                        </div>
                     </div>
                     <br />
-                        <small>Data Source:  
-                        <a href="https://www.census.gov/newsroom/press-releases/2019/acs-5-year.html" target="_blank" ><b>American Community Survey, 2014-2018 5 year estimates</b></a>
-                        & <a href="https://www.census.gov/data/datasets/time-series/demo/popest/2010s-total-cities-and-towns.html" target="_blank" ><b>2018 Census Estimates</b></a>
-                        </small>
+                    <button type="button"
+                    class="btn btn-info btn-xs source"
+                    data-toggle="modal"
+                    data-target="#sourceModal"
+                    data-dismiss="modal">Source</button>
                 </div>
                 `,
             data,
@@ -450,9 +439,11 @@ define([
                         <canvas id="historicalChart"></canvas>
                         </div>
                         <br />
-                        <small>Data Source:  
-                        <a href="https://www.nytimes.com/interactive/2020/us/coronavirus-us-cases.html" target="_blank" ><b>The New York Times</b></a>
-                        </small>
+                        <button type="button"
+                        class="btn btn-info btn-xs source"
+                        data-toggle="modal"
+                        data-target="#sourceModal"
+                        data-dismiss="modal">Source</button>
                 </div>
             </div>
             `
@@ -461,7 +452,7 @@ define([
             let county = polyData.data["Name"];
             $("#reportTabs").append(`
                 <li class="nav-item">
-                    <a class="nav-link" id="historical-tab" data-toggle="tab" href="#historical" 
+                    <a class="nav-link" id="historical-tab" data-toggle="tab" href="#historical"
                     role="tab" aria-controls="historical" aria-selected="false">Historical Covid-19 Data</a>
                 </li>
             `);

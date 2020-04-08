@@ -30,7 +30,7 @@ define([], function () {
             },
         },
 
-        version: "v1.1.0 | 2020-04-08",
+        version: "v1.1.1 | 2020-04-08",
         copyright: "2020",
 
         countyLookup: {

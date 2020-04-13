@@ -21,9 +21,22 @@ define([
 ) {
     addLayers();
 
-    let $rendererDropdown = $("#rendererDropdown");
-
     let popMetricsConf = {
+        Covid_Zip: {
+            title: "COVID-19 Cases (By Zip Code)",
+            definition:
+                "This feature layer contains the most up-to-date COVID-19 cases from AZDHS by Zip Code.",
+        },
+        Covid: {
+            title: "COVID-19 Cases (By County)",
+            definition:
+                "This feature layer contains the most up-to-date COVID-19 cases from JHU by county.",
+        },
+        Capacity: {
+            title: "Hospital Beds (By County)",
+            definition:
+                "This feature layer contains the capcity in hospital beds by county. It covers hospital capacity in Arizona.",
+        },
         Vulnerability: {
             title: "Vulnerability (Index)",
             definition:
@@ -49,16 +62,6 @@ define([
                 [129, 15, 124],
             ],
         },
-        Covid: {
-            title: "COVID-19 Cases (By County)",
-            definition:
-                "This feature layer contains the most up-to-date COVID-19 cases and latest trend plot. It covers China, the US, Canada, Australia (at province/state level), and the rest of the world (at country level, represented by either the country centroids or their capitals). Data sources are WHO, US CDC, China NHC, ECDC, and DXY. The China data is automatically updating at least once per hour, and non China data is updating manually. This layer is created and maintained by the Center for Systems Science and Engineering (CSSE) at the Johns Hopkins University.",
-        },
-        Capacity: {
-            title: "Hospital Beds (By County)",
-            definition:
-                "This feature layer contains the capcity in hospital beds by county. It covers hospital capacity in Arizona.",
-        },
     };
 
     Object.keys(popMetricsConf).forEach((key) => {
@@ -68,7 +71,7 @@ define([
             $("#populationMetrics").append(`
             <div class="form-check">
                 <div class="layerBox">
-                    <input checked type="checkbox" class="popMetricsInput form-check-input" data-field="${key}" id="cBox${key}">
+                    <input type="checkbox" class="popMetricsInput form-check-input" data-field="${key}" id="cBox${key}">
                     <label class="form-check-label" for="cBox${key}">${conf.title}</label> <i title=${conf.title} data-toggle="popover" data-boundary="window" data-content="${conf.definition}" class=" vulnerabilityPopover fas fa-question-circle"></i>
                 </div>
             </div>
@@ -78,6 +81,15 @@ define([
                 <div class="form-check">
                     <div class="layerBox">
                         <input type="checkbox" class="popMetricsInput form-check-input" data-field="${key}" id="cBox${key}">
+                        <label class="form-check-label" for="cBox${key}">${conf.title}</label> <i title=${conf.title} data-toggle="popover" data-boundary="window" data-content="${conf.definition}" class=" vulnerabilityPopover fas fa-question-circle"></i>
+                    </div>
+                </div>
+            `);
+        } else if (key === "Covid_Zip") {
+            $("#populationMetrics").append(`
+                <div class="form-check">
+                    <div class="layerBox">
+                        <input checked type="checkbox" class="popMetricsInput form-check-input" data-field="${key}" id="cBox${key}">
                         <label class="form-check-label" for="cBox${key}">${conf.title}</label> <i title=${conf.title} data-toggle="popover" data-boundary="window" data-content="${conf.definition}" class=" vulnerabilityPopover fas fa-question-circle"></i>
                     </div>
                 </div>
@@ -98,20 +110,27 @@ define([
         $("#context-menu").hide();
         let tractsLyr = map.findLayerById("tracts");
         let covidLyr = map.findLayerById("covidCases");
+        let covidZipLyr = map.findLayerById("covidZipLayer");
+        covidZipLyr.visible = false;
         covidLyr.visible = false;
         tractsLyr.visible = true;
+        $("#dashboard").show();
+
         if (this.checked) {
             $(".popMetricsInput").prop("checked", false);
             $(this).prop("checked", true);
             let val = $(this).data("field");
+
             if (val === "Covid") {
                 tractsLyr.visible = false;
-                let covidLyr = map.findLayerById("covidCases");
                 covidLyr.renderer = GetCovidRenderer();
                 covidLyr.labelingInfo = GetCovidLabelInfo();
                 covidLyr.title = "COVID-19 Cases (By County)";
                 covidLyr.visible = true;
-                $("#dashboard").show();
+            } else if (val === "Covid_Zip") {
+                tractsLyr.visible = false;
+                covidLyr.visible = false;
+                covidZipLyr.visible = true;
             } else if (val === "Capacity") {
                 tractsLyr.visible = false;
                 let covidLyr = map.findLayerById("covidCases");
@@ -122,6 +141,7 @@ define([
                 $("#dashboard").hide();
             } else {
                 updateTractsRenderer(val);
+                covidZipLyr.visible;
             }
         } else {
             let checked = $(".popMetricsInput:checked").length;
@@ -378,8 +398,35 @@ define([
         ];
     }
 
-    async function addCovidLayer() {
-        let queryAllUrl = config.covidLayerURL;
+    async function addZipCovidLayer() {
+        var lyr = new FeatureLayer({
+            url: config.covidZipLayerURL,
+            title: "COVID-19 Cases (By Zip Code)",
+            outFields: ["*"],
+            popupTemplate: {
+                title:
+                    "COVID-19 Cases (By Zip Code)" +
+                    '<div style="display: none;">{*}</div>',
+                content: async function ({ graphic }) {
+                    let { POSTCODE, ConfirmedCaseCount } = graphic.attributes;
+
+                    return `
+                        <b>Zip Code:</b> ${POSTCODE} <br>
+                        <b>Confirmed Cases:</b> ${ConfirmedCaseCount.toLocaleString()}
+                    `;
+                },
+            },
+            opacity: 1,
+            id: "covidZipLayer",
+            visible: true,
+            // renderer: GetUVRRenderer(conf),
+        });
+
+        map.add(lyr);
+    }
+
+    async function addCountyCovidLayer() {
+        let queryAllUrl = config.covidCountyLayerURL;
 
         let res = await fetch(queryAllUrl);
         let { features } = await res.json();
@@ -538,8 +585,11 @@ define([
             id: "tracts",
             title: "Vulnerability",
             opacity: 0.95,
+            visible: false,
         });
         map.add(tractsLayer);
+
+        await addZipCovidLayer();
 
         var feedbackAction = {
             title: "Feedback",
@@ -655,7 +705,7 @@ define([
                 `);
             }
         });
-        await addCovidLayer();
+        await addCountyCovidLayer();
 
         $(".form-check-input").change(function (e) {
             let layId = $(this).data("id");

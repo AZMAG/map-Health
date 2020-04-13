@@ -1,4 +1,8 @@
-define(["mag/config", "mag/historicalData", "esri/tasks/QueryTask"], function (config, {createHistoricalChart}, QueryTask) {
+define(["mag/config", "mag/historicalData", "esri/tasks/QueryTask"], function (
+    config,
+    { createHistoricalChart },
+    QueryTask
+) {
     const pointsQt = new QueryTask({
         url: config.mainUrl + config.queryLayerIndex,
     });
@@ -62,17 +66,15 @@ define(["mag/config", "mag/historicalData", "esri/tasks/QueryTask"], function (c
         <option data-id="Jurisdiction">Jurisdiction</option>
         <option data-id="Congressional District">Congressional District</option>
         <option data-id="Legislative District">Legislative District</option>
-        `
+        `;
 
-        $reportType.append(tempHtml); 
+        $reportType.append(tempHtml);
 
         $(".selectpicker_health").selectpicker();
-        $reportType.selectpicker('val', 'County');
-
+        $reportType.selectpicker("val", "County");
 
         //Setting up initially as County
         await setupSpecificReportDropdown("County");
-
     }
 
     $reportType.change(() => {
@@ -96,8 +98,8 @@ define(["mag/config", "mag/historicalData", "esri/tasks/QueryTask"], function (c
             .children("option:selected")
             .data("id");
         let type = $reportType.val();
-        console.log({selectedReport, type});
-        
+        console.log({ selectedReport, type });
+
         openReport(selectedReport, type);
     });
 
@@ -146,8 +148,8 @@ define(["mag/config", "mag/historicalData", "esri/tasks/QueryTask"], function (c
         County: "sj_county",
         Jurisdiction: "sj_juris",
         Zip: "sj_zip",
-        'Legislative District': 'sj_legislative',
-        'Congressional District': 'sj_congress'
+        "Legislative District": "sj_legislative",
+        "Congressional District": "sj_congress",
     };
 
     async function getPointHTML(selectedReport, type) {
@@ -251,7 +253,7 @@ define(["mag/config", "mag/historicalData", "esri/tasks/QueryTask"], function (c
 
     async function getPolyData(selectedReport) {
         console.log(selectedReport);
-        
+
         const polyRes = await geoQt.execute({
             returnGeometry: false,
             outFields: ["*"],
@@ -394,6 +396,17 @@ define(["mag/config", "mag/historicalData", "esri/tasks/QueryTask"], function (c
             `
         );
         if (type === "County") {
+            let county = polyData.data["Name"];
+            $("#reportTabs").append(`
+                <li class="nav-item">
+                    <a class="nav-link" id="historical-tab" data-toggle="tab" href="#historical" 
+                    role="tab" aria-controls="historical" aria-selected="false">Historical Covid-19 Data</a>
+                </li>
+            `);
+            await createHistoricalChart(county, "historicalChart");
+        }
+        if (type === "Zip") {
+            alert("asdf");
             let county = polyData.data["Name"];
             $("#reportTabs").append(`
                 <li class="nav-item">

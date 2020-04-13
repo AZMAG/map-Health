@@ -1,0 +1,76 @@
+/****************
+* SASS Report-panel
+*****************/
+
+#helpInfo {
+    position: absolute;
+    z-index: 1;
+    margin: 15px;
+    background: white;
+    border-radius: 0;
+    border: 1px solid rgba(128, 128, 128, 0.185);
+    text-align: center;
+    padding: 12px 5px 5px 5px;
+    max-height: 80vh;
+    max-width: 100%;
+
+    hr {
+        margin-bottom: 5px;
+    }
+}
+
+.help-card {
+    padding: 0 5px 5px 2px;
+    padding-bottom: 2px;
+    max-height: 80vh;
+    max-width: 100%;
+    overflow-y: auto;
+
+    .borderArea {
+        margin: 0 5px 5px 5px;
+    }
+}
+
+.card-area {
+    direction: ltr;
+}
+
+.populationMetrics .layersList {
+    position: relative;
+}
+
+.tutorial-btn {
+    position: absolute;
+    right: 30px;
+    top: 10px;
+    cursor: pointer;
+}
+
+.mag-logo {
+    max-width: 200px;
+}
+
+.card-title {
+    margin-top: .50rem;
+}
+
+address.mag {
+    font-size: .85em;
+    margin: 0;
+
+    p {
+        margin: 0;
+    }
+
+    .mag-logo {
+        margin-bottom: 5px;
+    }
+}
+
+.form-group {
+    margin-bottom: .5rem;
+}
+
+.info-footer {
+    padding-left: 20px;
+}

@@ -496,7 +496,7 @@ SASS Partials
 }
 
 .chartContainer {
-  height: 350px;
+  height: 300px;
 }
 
 .populationMetrics .layersList {
@@ -601,6 +601,16 @@ address.mag .mag-logo {
   font-size: 22px;
 }
 
+.modal.fade.show {
+  background-color: transparent;
+  pointer-events: none;
+}
+
+.modal-backdrop {
+  background-color: transparent;
+  pointer-events: none;
+}
+
 .modalClose {
   position: absolute;
   top: 10px;
@@ -613,6 +623,10 @@ address.mag .mag-logo {
 
 .modalClose:active, .modalClose:hover {
   color: #777777;
+}
+
+.reportHeader {
+  cursor: move;
 }
 
 .modal {

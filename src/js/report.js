@@ -1,6 +1,11 @@
-define(["mag/config", "mag/historicalData", "esri/tasks/QueryTask"], function (
-    config,
-    { createHistoricalChart },
+
+define([
+    "mag/config",
+    "mag/layer",
+    "mag/historicalData",
+    "esri/tasks/QueryTask",
+], function(
+    config, { addHighlightGraphicToMap, clearHighlightLayer }, { createHistoricalChart },
     QueryTask
 ) {
     const pointsQt = new QueryTask({
@@ -15,7 +20,33 @@ define(["mag/config", "mag/historicalData", "esri/tasks/QueryTask"], function (
     let $specificReport = $("#specificReport");
 
     $("body").on("click", "#standardBtnSubmit", () => {
-        $("#reportModal").modal("show");
+        $("#reportModal").modal({
+            backdrop: 'static'
+        });
+    });
+
+    $("body").on("click", ".reportClose", () => {
+        clearHighlightLayer();
+    });
+
+
+    $(".reportHeader").on("mousedown", function(mousedownEvt) {
+        var $draggable = $(this);
+        var x = mousedownEvt.pageX - $draggable.offset().left,
+            y = mousedownEvt.pageY - $draggable.offset().top;
+        $("body").on("mousemove.draggable", function(mousemoveEvt) {
+            $draggable.closest(".modal-dialog").offset({
+                "left": mousemoveEvt.pageX - x,
+                "top": mousemoveEvt.pageY - y
+            });
+        });
+        $("body").one("mouseup", function() {
+            $("body").off("mousemove.draggable");
+        });
+        $draggable.closest(".modal").one("bs.modal.hide", function() {
+            $("body").off("mousemove.draggable");
+
+        });
     });
 
     setupDropdowns();
@@ -98,8 +129,6 @@ define(["mag/config", "mag/historicalData", "esri/tasks/QueryTask"], function (
             .children("option:selected")
             .data("id");
         let type = $reportType.val();
-        console.log({ selectedReport, type });
-
         openReport(selectedReport, type);
     });
 
@@ -183,14 +212,14 @@ define(["mag/config", "mag/historicalData", "esri/tasks/QueryTask"], function (
         });
 
         let categoryLines = Object.keys(categoryTitleLookup).map((category) => {
-            return categories[category]
-                ? `
+            return categories[category] ?
+                `
             <div class="categoryLine">
                 <img width="20" src="./icons/${category}.svg">
                 <b>${categoryTitleLookup[category]}: </b>
                 <span>${categories[category].toLocaleString()}</span>
-            </div>`
-                : "";
+            </div>` :
+                "";
         });
 
         return `
@@ -205,6 +234,8 @@ define(["mag/config", "mag/historicalData", "esri/tasks/QueryTask"], function (
                     ${getPointTableHTML(allPoints)}
                 </div>
             </div>
+            <br />
+            <button type="button" class="btn btn-info btn-xs source" data-toggle="modal" data-target="#sourceModal" data-dismiss="modal">Source</button>
         </div>
         `;
     }
@@ -255,21 +286,31 @@ define(["mag/config", "mag/historicalData", "esri/tasks/QueryTask"], function (
         console.log(selectedReport);
 
         const polyRes = await geoQt.execute({
-            returnGeometry: false,
+            returnGeometry: true,
             outFields: ["*"],
             where: `GEOID = '${selectedReport}'`,
         });
-        return polyRes.features[0].attributes;
+        return polyRes.features[0];
     }
 
     async function getPolyHTML(selectedReport) {
-        let data = await getPolyData(selectedReport);
+        let { geometry, attributes: data } = await getPolyData(selectedReport);
+        addHighlightGraphicToMap(geometry);
 
-        let leftPanelConf = [
-            {
-                field: "TOTAL_POP",
-                // iconClass: "fas fa-male",
-                title: "Total Population",
+        let leftPanelConf = [{
+                field: "POPESTIMATE2018",
+                title: "2018 Census Estimates",
+                valueFormat: (val, data, i) => {
+                    if (val) {
+                        return val.toLocaleString();
+                    } else {
+                        return data["TOTAL_POP"].toLocaleString();
+                    }
+                },
+                titleFormat: (val, data, i) => {
+                    // return leftPanelConf[i].title;
+                    return val ? leftPanelConf[i].title : " ACS 2017-2018 5 Year Population";
+                },
             },
             {
                 field: "AGE65PLUS",
@@ -320,16 +361,20 @@ define(["mag/config", "mag/historicalData", "esri/tasks/QueryTask"], function (
         ];
 
         let leftPanelLines = leftPanelConf.map(
-            ({ pctField, field, title, iconClass, valueFormat }) => {
-                let val = pctField
-                    ? (data[field] / data[pctField]) * 100
-                    : data[field];
+            ({ pctField, field, title, iconClass, valueFormat, titleFormat },
+                i
+            ) => {
+                let val = pctField ?
+                    (data[field] / data[pctField]) * 100 :
+                    data[field];
                 return `
             <div class="categoryLine">
                 <i class="${iconClass}"></i>
-                <b>${title}: </b>
+                <b>${titleFormat ? titleFormat(val, data, i) : title}: </b>
                 <span>${
-                    valueFormat ? valueFormat(val) : val.toLocaleString()
+                    valueFormat
+                        ? valueFormat(val, data, i)
+                        : val.toLocaleString()
                 }</span>
             </div>`;
             }
@@ -348,6 +393,12 @@ define(["mag/config", "mag/historicalData", "esri/tasks/QueryTask"], function (
                             ${getAgeTableHTML(data)}
                         </div>
                     </div>
+                    <br />
+                    <button type="button"
+                    class="btn btn-info btn-xs source"
+                    data-toggle="modal"
+                    data-target="#sourceModal"
+                    data-dismiss="modal">Source</button>
                 </div>
                 `,
             data,
@@ -355,7 +406,7 @@ define(["mag/config", "mag/historicalData", "esri/tasks/QueryTask"], function (
     }
 
     async function getTitle(selectedReport, type) {
-        let data = await getPolyData(selectedReport);
+        let { attributes: data } = await getPolyData(selectedReport);
         return `<h5>${data["Name"]} Report</h5>`;
     }
 
@@ -388,9 +439,11 @@ define(["mag/config", "mag/historicalData", "esri/tasks/QueryTask"], function (
                         <canvas id="historicalChart"></canvas>
                         </div>
                         <br />
-                        <small>Data Source:  
-                        <a href="https://www.nytimes.com/interactive/2020/us/coronavirus-us-cases.html" target="_blank" ><b>The New York Times</b></a>
-                        </small>
+                        <button type="button"
+                        class="btn btn-info btn-xs source"
+                        data-toggle="modal"
+                        data-target="#sourceModal"
+                        data-dismiss="modal">Source</button>
                 </div>
             </div>
             `
@@ -399,18 +452,7 @@ define(["mag/config", "mag/historicalData", "esri/tasks/QueryTask"], function (
             let county = polyData.data["Name"];
             $("#reportTabs").append(`
                 <li class="nav-item">
-                    <a class="nav-link" id="historical-tab" data-toggle="tab" href="#historical" 
-                    role="tab" aria-controls="historical" aria-selected="false">Historical Covid-19 Data</a>
-                </li>
-            `);
-            await createHistoricalChart(county, "historicalChart");
-        }
-        if (type === "Zip") {
-            alert("asdf");
-            let county = polyData.data["Name"];
-            $("#reportTabs").append(`
-                <li class="nav-item">
-                    <a class="nav-link" id="historical-tab" data-toggle="tab" href="#historical" 
+                    <a class="nav-link" id="historical-tab" data-toggle="tab" href="#historical"
                     role="tab" aria-controls="historical" aria-selected="false">Historical Covid-19 Data</a>
                 </li>
             `);

@@ -1,13 +1,11 @@
-define([], function () {
+define([], function() {
     var streetsURL =
         "https://server.arcgisonline.com/arcgis/rest/services/Reference/World_Transportation/MapServer";
 
     return {
         // mainUrl: "https://services1.arcgis.com/mpVYz37anSdrK4d8/arcgis/rest/services/AZLicensedFacilities/FeatureServer/",
-        mainUrl:
-            "https://geo.azmag.gov/arcgis/rest/services/maps/HealthData/MapServer/",
-        feedbackUrl:
-            "https://geo.azmag.gov/services/HealthcareFeedback/Feedback/SendFeedback",
+        mainUrl: "https://geo.azmag.gov/arcgis/rest/services/maps/HealthData/MapServer/",
+        feedbackUrl: "https://geo.azmag.gov/services/HealthcareFeedback/Feedback/SendFeedback",
 
         covidCountyLayerURL:
             "https://services1.arcgis.com/0MSEUqKaxRlEPj5g/ArcGIS/rest/services/ncov_cases_US/FeatureServer/0/query?where=Province_State+%3D+%27Arizona%27&outFields=*&f=json",
@@ -18,8 +16,7 @@ define([], function () {
         healthLayerURL:
             "https://geo.azmag.gov/arcgis/rest/services/maps/HealthData/MapServer/0",
 
-        historicalCovidDataURL:
-            "https://geo.azmag.gov/arcgis/rest/services/Hosted/Covid_19_NY_Times_Historical/FeatureServer/0",
+        historicalCovidDataURL: "https://geo.azmag.gov/arcgis/rest/services/Hosted/Covid_19_NY_Times_Historical/FeatureServer/0",
 
         queryLayerIndex: 6,
         demographicsLayerIndex: 7,
@@ -33,7 +30,7 @@ define([], function () {
             },
         },
 
-        version: "v1.0.0 | 2020-04-01",
+        version: "v1.1.1 | 2020-04-08",
         copyright: "2020",
 
         countyLookup: {
@@ -59,8 +56,7 @@ define([], function () {
             Totoal_Pop_Under_Poverty: [0, 440, 889, 1473, 2331, 3962],
         },
 
-        layers: [
-            {
+        layers: [{
                 type: "tile",
                 url: streetsURL,
                 title: "Streets",
@@ -77,8 +73,7 @@ define([], function () {
                 scalable: true,
                 showToc: true,
                 index: 4,
-                uvr: [
-                    {
+                uvr: [{
                         value: "AL CENTER",
                         label: "Assisted Living Center",
                         symbol: {
@@ -105,37 +100,32 @@ define([], function () {
                 scalable: true,
                 showToc: true,
                 index: 2,
-                uvr: [
-                    {
-                        value: "NH",
-                        label: "Nursing Home",
-                        symbol: {
-                            type: "picture-marker",
-                            url: "icons/NH_1.svg",
-                        },
+                uvr: [{
+                    value: "NH",
+                    label: "Nursing Home",
+                    symbol: {
+                        type: "picture-marker",
+                        url: "icons/NH_1.svg",
                     },
-                ],
+                }, ],
             },
             {
                 type: "feature",
                 title: "Diagnostic Facilities",
                 id: "Laboratory",
-                definition:
-                    "Laboratories and other medical testing facilities.",
+                definition: "Laboratories and other medical testing facilities.",
                 visible: false,
                 scalable: true,
                 showToc: true,
                 index: 5,
-                uvr: [
-                    {
-                        value: "LABORATORY",
-                        label: "Testing Facility",
-                        symbol: {
-                            type: "picture-marker",
-                            url: "icons/Laboratory.svg",
-                        },
+                uvr: [{
+                    value: "LABORATORY",
+                    label: "Testing Facility",
+                    symbol: {
+                        type: "picture-marker",
+                        url: "icons/Laboratory.svg",
                     },
-                ],
+                }, ],
             },
             {
                 type: "feature",
@@ -145,8 +135,7 @@ define([], function () {
                 showToc: true,
                 definition: "A variety of outpatient treatment facilities",
                 index: 3,
-                uvr: [
-                    {
+                uvr: [{
                         value: "MED - Other",
                         label: "Other Medical Facility",
                         symbol: {
@@ -188,16 +177,14 @@ define([], function () {
                 scalable: true,
                 showToc: true,
                 index: 1,
-                uvr: [
-                    {
-                        value: "HOSPITAL",
-                        label: "Hospital",
-                        symbol: {
-                            type: "picture-marker",
-                            url: "icons/HOSPITAL.svg",
-                        },
+                uvr: [{
+                    value: "HOSPITAL",
+                    label: "Hospital",
+                    symbol: {
+                        type: "picture-marker",
+                        url: "icons/HOSPITAL.svg",
                     },
-                ],
+                }, ],
             },
         ],
     };

@@ -1,3 +1,4 @@
+
 define([
     "mag/config",
     "mag/layer",
@@ -47,7 +48,6 @@ define([
 
         });
     });
-
 
     setupDropdowns();
 
@@ -129,8 +129,6 @@ define([
             .children("option:selected")
             .data("id");
         let type = $reportType.val();
-        // console.log({ selectedReport, type });
-
         openReport(selectedReport, type);
     });
 
@@ -285,6 +283,8 @@ define([
     }
 
     async function getPolyData(selectedReport) {
+        console.log(selectedReport);
+
         const polyRes = await geoQt.execute({
             returnGeometry: true,
             outFields: ["*"],

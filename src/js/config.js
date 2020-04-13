@@ -7,9 +7,14 @@ define([], function() {
         mainUrl: "https://geo.azmag.gov/arcgis/rest/services/maps/HealthData/MapServer/",
         feedbackUrl: "https://geo.azmag.gov/services/HealthcareFeedback/Feedback/SendFeedback",
 
-        covidLayerURL: "https://services1.arcgis.com/0MSEUqKaxRlEPj5g/ArcGIS/rest/services/ncov_cases_US/FeatureServer/0/query?where=Province_State+%3D+%27Arizona%27&outFields=*&f=json",
+        covidCountyLayerURL:
+            "https://services1.arcgis.com/0MSEUqKaxRlEPj5g/ArcGIS/rest/services/ncov_cases_US/FeatureServer/0/query?where=Province_State+%3D+%27Arizona%27&outFields=*&f=json",
 
-        healthLayerURL: "https://geo.azmag.gov/arcgis/rest/services/maps/HealthData/MapServer/0",
+        covidZipLayerURL:
+            "https://services1.arcgis.com/mpVYz37anSdrK4d8/ArcGIS/rest/services/CVD_ZIPS_FORWEBMAP/FeatureServer/0/query?where=1=1&outFields=*&f=json",
+
+        healthLayerURL:
+            "https://geo.azmag.gov/arcgis/rest/services/maps/HealthData/MapServer/0",
 
         historicalCovidDataURL: "https://geo.azmag.gov/arcgis/rest/services/Hosted/Covid_19_NY_Times_Historical/FeatureServer/0",
 

@@ -449,11 +449,11 @@ define([
             opacity: 1,
             id: "covidZipLayer",
             visible: false,
-            renderer: {
-                type: "class-breaks",
-                field: "NumberOfCases",
-                classBreakInfos: GetZipCBR(),
-            },
+            // renderer: {
+            //     type: "class-breaks",
+            //     field: "NumberOfCases",
+            //     classBreakInfos: GetZipCBR(),
+            // },
         });
 
         map.add(lyr);

@@ -41,7 +41,7 @@ define([
 
         //*** dashboard binding
         $("#dashboard").load("views/dashboard.html", function () {
-            // $("#dashboard").hide();
+            $("#dashboard").hide();
         });
 
         // $("#dashboardModal").load("views/modal-dashboard.html", function () {

@@ -22,6 +22,11 @@ define([
     let lyrs = addLayers();
 
     let popMetricsConf = {
+        Vulnerability: {
+            title: "Vulnerability (Index)",
+            definition:
+                "The Vulnerability Index is a weighted sum of selected attributes from the latest Census American Community Survey (2014-2018) by Census Block Group that indicate increased risk to the health of the populations that live there. The attributes that make up the index are Total Population, Population 65 and older, population under the poverty level, households lacking a computer or internet access, and population 65 and older that lack telephone service.",
+        },
         Covid_Zip: {
             title: "COVID-19 Cases (By Zip Code)",
             definition:
@@ -36,11 +41,6 @@ define([
             title: "Hospital Beds (By County)",
             definition:
                 "This feature layer contains the capcity in hospital beds by county. It covers hospital capacity in Arizona.",
-        },
-        Vulnerability: {
-            title: "Vulnerability (Index)",
-            definition:
-                "The Vulnerability Index is a weighted sum of selected attributes from the latest Census American Community Survey (2014-2018) by Census Block Group that indicate increased risk to the health of the populations that live there. The attributes that make up the index are Total Population, Population 65 and older, population under the poverty level, households lacking a computer or internet access, and population 65 and older that lack telephone service.",
         },
         TOTAL_POP: {
             title: "Total Population",
@@ -81,7 +81,7 @@ define([
             $("#populationMetrics").append(`
             <div class="form-check">
                 <div class="layerBox">
-                    <input type="checkbox" class="popMetricsInput form-check-input" data-field="${key}" id="cBox${key}">
+                    <input type="checkbox" checked class="popMetricsInput form-check-input" data-field="${key}" id="cBox${key}">
                     <label class="form-check-label" for="cBox${key}">${conf.title}</label> <i title=${conf.title} data-toggle="popover" data-boundary="window" data-content="${conf.definition}" class=" vulnerabilityPopover fas fa-question-circle"></i>
                 </div>
             </div>
@@ -99,7 +99,7 @@ define([
             $("#populationMetrics").append(`
                 <div class="form-check">
                     <div class="layerBox">
-                        <input checked type="checkbox" class="popMetricsInput form-check-input" data-field="${key}" id="cBox${key}">
+                        <input type="checkbox" class="popMetricsInput form-check-input" data-field="${key}" id="cBox${key}">
                         <label class="form-check-label" for="cBox${key}">${conf.title}</label> <i title=${conf.title} data-toggle="popover" data-boundary="window" data-content="${conf.definition}" class=" vulnerabilityPopover fas fa-question-circle"></i>
                     </div>
                 </div>
@@ -409,7 +409,26 @@ define([
         ];
     }
 
+    function GetZipUVR(vals){
+
+    }
+
     async function addZipCovidLayer() {
+        // const zipQt = new QueryTask({
+        //     url: config.covidZipLayerURL,
+        // });
+
+        // const res = await zipQt.execute({
+        //     where: "1=1",
+        //     outFields: ["ConfirmedCaseCount"],
+        //     returnDistinctValues: true,
+        //     returnGeometry: true,
+        // });
+
+        // let caseValues = res.features.map(({attributes}) => attributes.ConfirmedCaseCount);
+
+        // console.log(caseValues);
+
         var lyr = new FeatureLayer({
             url: config.covidZipLayerURL,
             title: "COVID-19 Cases (By Zip Code)",
@@ -429,32 +448,15 @@ define([
             },
             opacity: 1,
             id: "covidZipLayer",
-            visible: true,
-            // renderer: GetUVRRenderer(conf),
+            visible: false,
+            renderer: {
+                type: "class-breaks",
+                field: "NumberOfCases",
+                classBreakInfos: GetZipCBR(),
+            },
         });
 
         map.add(lyr);
-        return [
-            {
-                labelPlacement: "above-right",
-                labelExpressionInfo: {
-                    expression:
-                        "$feature.Admin2 + ' (' + IIf($feature.Capacity > 0, Text($feature.Capacity, '#,###'), '0') + ' Beds)'",
-                },
-                symbol: {
-                    type: "text",
-                    color: "black",
-                    haloSize: 1,
-                    haloColor: "white",
-                    font: {
-                        size: 12,
-                        weight: "bold",
-                    },
-                },
-                maxScale: 0,
-                minScale: 0,
-            },
-        ];
     }
 
     function GetCovidLabelInfo() {
@@ -647,7 +649,7 @@ define([
             id: "tracts",
             title: "Vulnerability",
             opacity: 0.95,
-            visible: false,
+            visible: true,
         });
         map.add(tractsLayer);
 

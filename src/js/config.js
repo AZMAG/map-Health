@@ -129,7 +129,7 @@ define([], function () {
                 uvr: [
                     {
                         value: "LABORATORY",
-                        label: "Testing Facility",
+                        label: "Diagnostic Facility",
                         symbol: {
                             type: "picture-marker",
                             url: "icons/Laboratory.svg",

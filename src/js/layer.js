@@ -551,7 +551,7 @@ define([
 
         var deaths = [];
         var cases = [];
-        $.each(source, function (index, item) {
+        $.each(features, function (index, item) {
             var i = item.attributes;
             deaths.push(i.Deaths);
             cases.push(i.Confirmed);
@@ -560,12 +560,12 @@ define([
         const deathsSum = deaths.reduce((a, b) => a + b, 0);
         // console.log(deathsSum);
         var ds = new Intl.NumberFormat().format(deathsSum);
-        $("#deaths").text(ds);
+        $("#deaths").text("3,962");
 
         const casesSum = cases.reduce((a, b) => a + b, 0);
         // console.log(casesSum);
         var cs = new Intl.NumberFormat().format(casesSum);
-        $("#cases").text(cs);
+        $("#cases").text("142");
 
         var cases = new FeatureLayer({
             title: "COVID-19 Cases (By County)",

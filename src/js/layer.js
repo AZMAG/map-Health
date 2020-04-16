@@ -389,26 +389,66 @@ define([
         }, ];
     }
 
-    function GetZipUVR(vals) {
-
+    function GetZipCBR() {
+        let outline = {
+            color: [0, 0, 0, 0.1],
+            width: 0.2,
+        };
+        let cbrInfos = [{
+                minValue: 0,
+                maxValue: 0,
+                symbol: {
+                    type: "simple-fill",
+                    color: '#fee5d9',
+                    outline
+                },
+                label: `0 Cases`,
+            },
+            {
+                minValue: 1,
+                maxValue: 10,
+                symbol: {
+                    type: "simple-fill",
+                    color: '#fcae91',
+                    outline
+                },
+                label: `1-10 Cases`,
+            },
+            {
+                minValue: 11,
+                maxValue: 25,
+                symbol: {
+                    type: "simple-fill",
+                    color: '#fb6a4a',
+                    outline
+                },
+                label: `11-25 Cases`,
+            },
+            {
+                minValue: 26,
+                maxValue: 50,
+                symbol: {
+                    type: "simple-fill",
+                    color: '#de2d26',
+                    outline
+                },
+                label: `26-50 Cases`,
+            },
+            {
+                minValue: 50,
+                maxValue: 1000,
+                symbol: {
+                    type: "simple-fill",
+                    color: '#a50f15',
+                    outline
+                },
+                label: `50+ Cases`,
+            }
+        ];
+        return cbrInfos;
     }
 
     async function addZipCovidLayer() {
-        // const zipQt = new QueryTask({
-        //     url: config.covidZipLayerURL,
-        // });
-
-        // const res = await zipQt.execute({
-        //     where: "1=1",
-        //     outFields: ["ConfirmedCaseCount"],
-        //     returnDistinctValues: true,
-        //     returnGeometry: true,
-        // });
-
-        // let caseValues = res.features.map(({attributes}) => attributes.ConfirmedCaseCount);
-
-        // console.log(caseValues);
-
         var lyr = new FeatureLayer({
             url: config.covidZipLayerURL,
             title: "COVID-19 Cases (By Zip Code)",
@@ -417,22 +457,31 @@ define([
                 title: "COVID-19 Cases (By Zip Code)" +
                     '<div style="display: none;">{*}</div>',
                 content: async function({ graphic }) {
-                    let { POSTCODE, ConfirmedCaseCount } = graphic.attributes;
+                    let { postcode, confirmedcasecount } = graphic.attributes;
 
                     return `
-                        <b>Zip Code:</b> ${POSTCODE} <br>
-                        <b>Confirmed Cases:</b> ${ConfirmedCaseCount.toLocaleString()}
+                        <b>Zip Code:</b> ${postcode} <br>
+                        <b>Confirmed Cases:</b> ${confirmedcasecount.toLocaleString()}
                     `;
                 },
             },
             opacity: 1,
             id: "covidZipLayer",
             visible: false,
-            // renderer: {
-            //     type: "class-breaks",
-            //     field: "NumberOfCases",
-            //     classBreakInfos: GetZipCBR(),
-            // },
+            renderer: {
+                type: "class-breaks",
+                field: "cases",
+                classBreakInfos: GetZipCBR(),
+                defaultSymbol: {
+                    type: "simple-fill",
+                    color: [178, 178, 178, 255],
+                    outline: {
+                        color: [0, 0, 0, 0.1],
+                        width: 0.2,
+                    }
+                },
+                defaultLabel: 'Data Suppressed'
+            },
         });
 
         map.add(lyr);

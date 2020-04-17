@@ -590,25 +590,35 @@ define([
         const { numberofdeaths, numberofcases, risk } = dashboardData[0];
         
 
-        // var deaths = [];
-        // var cases = [];
-        // $.each(features, function(index, item) {
-        //     var i = item.attributes;
-        //     deaths.push(i.Deaths);
-        //     cases.push(i.Confirmed);
-        // });
+        var deaths = [];
+        var cases = [];
+        $.each(features, function(index, item) {
+            var i = item.attributes;
+            deaths.push(i.Deaths);
+            cases.push(i.Confirmed);
+        });
 
-        // const deathsSum = deaths.reduce((a, b) => a + b, 0);
-        // // console.log(deathsSum);
-        // var ds = new Intl.NumberFormat().format(deathsSum);
-        $("#deaths").text(numberofdeaths.toLocaleString());
+        const deathsSum = deaths.reduce((a, b) => a + b, 0);
+        const casesSum = cases.reduce((a, b) => a + b, 0);
 
-        // const casesSum = cases.reduce((a, b) => a + b, 0);
-        // // console.log(casesSum);
-        // var cs = new Intl.NumberFormat().format(casesSum);
-        $("#cases").text(numberofcases.toLocaleString());
+        let deathsRatio = numberofdeaths / deathsSum;
+        if (deathsRatio >= 1.25 || deathsRatio <= 0.70){
+            $("#deaths").text(numberofdeaths.toLocaleString()); 
+        } else{
+            $("#deaths").text(deathsSum.toLocaleString()); 
+        }
 
-        $("#risk").text(risk);
+        let casesRatio = numberofcases / casesSum;
+        if (casesRatio >= 1.25 || casesRatio <= 0.70){
+            $("#cases").text(numberofcases.toLocaleString()); 
+        } else{
+            $("#cases").text(casesSum.toLocaleString()); 
+        }
+        if (risk) {
+            $("#risk").text(risk);
+        } else{
+            $("#risk").text('Increasing with some areas of heightened risk');
+        }
 
         var cases = new FeatureLayer({
             title: "COVID-19 Cases (By County)",

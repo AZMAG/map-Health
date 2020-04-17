@@ -452,6 +452,7 @@ define([
         var lyr = new FeatureLayer({
             url: config.covidZipLayerURL,
             title: "COVID-19 Cases (By Zip Code)",
+            definitionExpression: 'active = 1',
             outFields: ["*"],
             popupTemplate: {
                 title: "COVID-19 Cases (By Zip Code)" +

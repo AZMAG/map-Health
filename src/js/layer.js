@@ -603,16 +603,16 @@ define([
 
         let deathsRatio = numberofdeaths / deathsSum;
         if (deathsRatio >= 1.25 || deathsRatio <= 0.70){
-            $("#deaths").text(numberofdeaths.toLocaleString()); 
-        } else{
             $("#deaths").text(deathsSum.toLocaleString()); 
+        } else{
+            $("#deaths").text(numberofdeaths.toLocaleString()); 
         }
 
         let casesRatio = numberofcases / casesSum;
         if (casesRatio >= 1.25 || casesRatio <= 0.70){
-            $("#cases").text(numberofcases.toLocaleString()); 
-        } else{
             $("#cases").text(casesSum.toLocaleString()); 
+        } else{
+            $("#cases").text(numberofcases.toLocaleString());
         }
         if (risk) {
             $("#risk").text(risk);

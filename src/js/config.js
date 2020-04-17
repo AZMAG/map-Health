@@ -6,7 +6,9 @@ define([], function() {
         // mainUrl: "https://services1.arcgis.com/mpVYz37anSdrK4d8/arcgis/rest/services/AZLicensedFacilities/FeatureServer/",
         mainUrl: "https://geo.azmag.gov/arcgis/rest/services/maps/HealthData/MapServer/",
         feedbackUrl: "https://geo.azmag.gov/services/HealthcareFeedback/Feedback/SendFeedback",
-
+        
+        dashboardUrl: 'https://geo.azmag.gov/arcgis/rest/services/Hosted/DashboardData/FeatureServer/0',
+        
         covidCountyLayerURL: "https://services1.arcgis.com/0MSEUqKaxRlEPj5g/ArcGIS/rest/services/ncov_cases_US/FeatureServer/0/query?where=Province_State+%3D+%27Arizona%27&outFields=*&f=json",
 
         covidZipLayerURL: "https://geo.azmag.gov/arcgis/rest/services/Hosted/COVID19_By_Zip_Code/FeatureServer/0",

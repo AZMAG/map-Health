@@ -574,24 +574,41 @@ define([
                 return graphic;
             });
         // console.log(source);
-
-        var deaths = [];
-        var cases = [];
-        $.each(features, function(index, item) {
-            var i = item.attributes;
-            deaths.push(i.Deaths);
-            cases.push(i.Confirmed);
+        const dashboardDataQT = new QueryTask({
+            url: config.dashboardUrl,
+        });
+        const { features:dashboardDataFeatures } = await dashboardDataQT.execute({
+            where: "1=1",
+            outFields: ['*'],
+            returnGeometry: false,
         });
 
-        const deathsSum = deaths.reduce((a, b) => a + b, 0);
-        // console.log(deathsSum);
-        var ds = new Intl.NumberFormat().format(deathsSum);
-        $("#deaths").text("142");
+        const dashboardData = dashboardDataFeatures.map(({attributes}) => {
+            return attributes;
+        }).sort((a,b) => { return b.created_date - a.created_date });
 
-        const casesSum = cases.reduce((a, b) => a + b, 0);
-        // console.log(casesSum);
-        var cs = new Intl.NumberFormat().format(casesSum);
-        $("#cases").text("3,962");
+        const { numberofdeaths, numberofcases, risk } = dashboardData[0];
+        
+
+        // var deaths = [];
+        // var cases = [];
+        // $.each(features, function(index, item) {
+        //     var i = item.attributes;
+        //     deaths.push(i.Deaths);
+        //     cases.push(i.Confirmed);
+        // });
+
+        // const deathsSum = deaths.reduce((a, b) => a + b, 0);
+        // // console.log(deathsSum);
+        // var ds = new Intl.NumberFormat().format(deathsSum);
+        $("#deaths").text(numberofdeaths.toLocaleString());
+
+        // const casesSum = cases.reduce((a, b) => a + b, 0);
+        // // console.log(casesSum);
+        // var cs = new Intl.NumberFormat().format(casesSum);
+        $("#cases").text(numberofcases.toLocaleString());
+
+        $("#risk").text(risk);
 
         var cases = new FeatureLayer({
             title: "COVID-19 Cases (By County)",

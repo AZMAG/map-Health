@@ -420,7 +420,7 @@ define([
                 maxValue: 0,
                 symbol: {
                     type: "simple-fill",
-                    color: "#7b3294",
+                    color: "#ffffd4",
                     outline,
                 },
                 label: `0 Cases`,
@@ -430,7 +430,7 @@ define([
                 maxValue: 10,
                 symbol: {
                     type: "simple-fill",
-                    color: "#c2a5cf",
+                    color: "#fed98e",
                     outline,
                 },
                 label: `1-10 Cases`,
@@ -440,7 +440,7 @@ define([
                 maxValue: 25,
                 symbol: {
                     type: "simple-fill",
-                    color: "#f7f7f7",
+                    color: "#fe9929",
                     outline,
                 },
                 label: `11-25 Cases`,
@@ -450,7 +450,7 @@ define([
                 maxValue: 50,
                 symbol: {
                     type: "simple-fill",
-                    color: "#a6dba0",
+                    color: "#d95f0e",
                     outline,
                 },
                 label: `26-50 Cases`,
@@ -460,7 +460,7 @@ define([
                 maxValue: 1000,
                 symbol: {
                     type: "simple-fill",
-                    color: "#008837",
+                    color: "#993404",
                     outline,
                 },
                 label: `50+ Cases`,

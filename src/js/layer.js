@@ -8,8 +8,9 @@ define([
     "esri/layers/GraphicsLayer",
     "esri/Graphic",
     "esri/tasks/QueryTask",
-], function(
-    config, { map, view },
+], function (
+    config,
+    { map, view },
     historicalData,
     FeatureLayer,
     TileLayer,
@@ -23,19 +24,23 @@ define([
     let popMetricsConf = {
         Vulnerability: {
             title: "Vulnerability (Index)",
-            definition: "The Vulnerability Index is a weighted sum of selected attributes from the latest Census American Community Survey (2014-2018) by Census Block Group that indicate increased risk to the health of the populations that live there. The attributes that make up the index are Total Population, Population 65 and older, population under the poverty level, households lacking a computer or internet access, and population 65 and older that lack telephone service.",
+            definition:
+                "The Vulnerability Index is a weighted sum of selected attributes from the latest Census American Community Survey (2014-2018) by Census Block Group that indicate increased risk to the health of the populations that live there. The attributes that make up the index are Total Population, Population 65 and older, population under the poverty level, households lacking a computer or internet access, and population 65 and older that lack telephone service.",
         },
         Covid_Zip: {
             title: "COVID-19 Cases (By Zip Code)",
-            definition: "This feature layer contains the most up-to-date COVID-19 cases from AZDHS by Zip Code.",
+            definition:
+                "This feature layer contains the most up-to-date COVID-19 cases from AZDHS by Zip Code.",
         },
         Covid: {
             title: "COVID-19 Cases (By County)",
-            definition: "This feature layer contains the most up-to-date COVID-19 cases from JHU by county.",
+            definition:
+                "This feature layer contains the most up-to-date COVID-19 cases from JHU by county.",
         },
         Capacity: {
             title: "Hospital Beds (By County)",
-            definition: "This feature layer contains the capcity in hospital beds by county. It covers hospital capacity in Arizona.",
+            definition:
+                "This feature layer contains the capcity in hospital beds by county. It covers hospital capacity in Arizona.",
         },
         TOTAL_POP: {
             title: "Total Population",
@@ -59,11 +64,13 @@ define([
         },
         Covid: {
             title: "COVID-19 Cases (By County)",
-            definition: "This feature layer contains the most up-to-date COVID-19 data at state and county level.  This layer is created and maintained by the Center for Systems Science and Engineering (CSSE) at the Johns Hopkins University.",
+            definition:
+                "This feature layer contains the most up-to-date COVID-19 data at state and county level.  This layer is created and maintained by the Center for Systems Science and Engineering (CSSE) at the Johns Hopkins University.",
         },
         Capacity: {
             title: "Hospital Beds (By County)",
-            definition: "This feature layer contains the capacity in hospital beds by county. It covers hospital capacity in Arizona.",
+            definition:
+                "This feature layer contains the capacity in hospital beds by county. It covers hospital capacity in Arizona.",
         },
     };
 
@@ -109,7 +116,7 @@ define([
         }
     });
 
-    $(".popMetricsInput").change(function(e) {
+    $(".popMetricsInput").change(function (e) {
         $("#context-menu").hide();
         let tractsLyr = map.findLayerById("tracts");
         let covidLyr = map.findLayerById("covidCases");
@@ -178,7 +185,8 @@ define([
     }
 
     function GetVulnerabilityCB() {
-        let cbrInfos = [{
+        let cbrInfos = [
+            {
                 minValue: 0,
                 maxValue: 1,
                 symbol: {
@@ -272,36 +280,39 @@ define([
                     width: 1,
                 },
             },
-            visualVariables: [{
-                type: "size",
-                field: "Confirmed",
-                stops: [{
-                        //     value: 0,
-                        //     size: 5,
-                        //     label: "<15",
-                        // },
-                        // {
-                        value: 0,
-                        size: 15,
-                        label: "less than 50",
-                    },
-                    {
-                        value: 50,
-                        size: 30,
-                        label: "less than 100",
-                    },
-                    {
-                        value: 100,
-                        size: 45,
-                        label: "less than 500",
-                    },
-                    {
-                        value: 500,
-                        size: 75,
-                        label: "500 +",
-                    },
-                ],
-            }, ],
+            visualVariables: [
+                {
+                    type: "size",
+                    field: "Confirmed",
+                    stops: [
+                        {
+                            //     value: 0,
+                            //     size: 5,
+                            //     label: "<15",
+                            // },
+                            // {
+                            value: 0,
+                            size: 15,
+                            label: "less than 50",
+                        },
+                        {
+                            value: 50,
+                            size: 30,
+                            label: "less than 100",
+                        },
+                        {
+                            value: 100,
+                            size: 45,
+                            label: "less than 500",
+                        },
+                        {
+                            value: 500,
+                            size: 75,
+                            label: "500 +",
+                        },
+                    ],
+                },
+            ],
         };
     }
 
@@ -319,74 +330,83 @@ define([
                     width: 1,
                 },
             },
-            visualVariables: [{
-                type: "size",
-                field: "Capacity",
-                stops: [{
-                        value: 0,
-                        size: 15,
-                        label: "less than 100 Beds",
-                    },
-                    {
-                        value: 100,
-                        size: 30,
-                        label: "less than 1,000 Beds",
-                    },
-                    {
-                        value: 1000,
-                        size: 50,
-                        label: "less than 5,000 Beds",
-                    },
-                    {
-                        value: 5000,
-                        size: 70,
-                        label: "5000 + Beds",
-                    },
-                ],
-            }, ],
+            visualVariables: [
+                {
+                    type: "size",
+                    field: "Capacity",
+                    stops: [
+                        {
+                            value: 0,
+                            size: 15,
+                            label: "less than 100 Beds",
+                        },
+                        {
+                            value: 100,
+                            size: 30,
+                            label: "less than 1,000 Beds",
+                        },
+                        {
+                            value: 1000,
+                            size: 50,
+                            label: "less than 5,000 Beds",
+                        },
+                        {
+                            value: 5000,
+                            size: 70,
+                            label: "5000 + Beds",
+                        },
+                    ],
+                },
+            ],
         };
     }
 
     function GetCapacityLabelInfo() {
-        return [{
-            labelPlacement: "above-right",
-            labelExpressionInfo: {
-                expression: "$feature.Admin2 + ' (' + IIf($feature.Capacity > 0, Text($feature.Capacity, '#,###'), '0') + ' Beds)'",
-            },
-            symbol: {
-                type: "text",
-                color: "black",
-                haloSize: 1,
-                haloColor: "white",
-                font: {
-                    size: 12,
-                    weight: "bold",
+        return [
+            {
+                labelPlacement: "above-right",
+                labelExpressionInfo: {
+                    expression:
+                        "$feature.Admin2 + ' (' + IIf($feature.Capacity > 0, Text($feature.Capacity, '#,###'), '0') + ' Beds)'",
                 },
+                symbol: {
+                    type: "text",
+                    color: "black",
+                    haloSize: 1,
+                    haloColor: "white",
+                    font: {
+                        size: 12,
+                        weight: "bold",
+                    },
+                },
+                maxScale: 0,
+                minScale: 0,
             },
-            maxScale: 0,
-            minScale: 0,
-        }, ];
+        ];
     }
 
     function GetCovidLabelInfo() {
-        return [{
-            labelPlacement: "above-right",
-            labelExpressionInfo: {
-                expression: "$feature.Admin2 + ' (' + Text($feature.Confirmed, '#,###') + ' Cases)'",
-            },
-            symbol: {
-                type: "text",
-                color: "black",
-                haloSize: 1,
-                haloColor: "white",
-                font: {
-                    size: 12,
-                    weight: "bold",
+        return [
+            {
+                labelPlacement: "above-right",
+                labelExpressionInfo: {
+                    expression:
+                        "$feature.Admin2 + ' (' + Text($feature.Confirmed, '#,###') + ' Cases)'",
                 },
+                symbol: {
+                    type: "text",
+                    color: "black",
+                    haloSize: 1,
+                    haloColor: "white",
+                    font: {
+                        size: 12,
+                        weight: "bold",
+                    },
+                },
+                maxScale: 0,
+                minScale: 0,
             },
-            maxScale: 0,
-            minScale: 0,
-        }, ];
+        ];
     }
 
     function GetZipCBR() {
@@ -394,13 +414,14 @@ define([
             color: [0, 0, 0, 0.1],
             width: 0.2,
         };
-        let cbrInfos = [{
+        let cbrInfos = [
+            {
                 minValue: 0,
                 maxValue: 0,
                 symbol: {
                     type: "simple-fill",
-                    color: '#fee5d9',
-                    outline
+                    color: "#7b3294",
+                    outline,
                 },
                 label: `0 Cases`,
             },
@@ -409,8 +430,8 @@ define([
                 maxValue: 10,
                 symbol: {
                     type: "simple-fill",
-                    color: '#fcae91',
-                    outline
+                    color: "#c2a5cf",
+                    outline,
                 },
                 label: `1-10 Cases`,
             },
@@ -419,8 +440,8 @@ define([
                 maxValue: 25,
                 symbol: {
                     type: "simple-fill",
-                    color: '#fb6a4a',
-                    outline
+                    color: "#f7f7f7",
+                    outline,
                 },
                 label: `11-25 Cases`,
             },
@@ -429,8 +450,8 @@ define([
                 maxValue: 50,
                 symbol: {
                     type: "simple-fill",
-                    color: '#de2d26',
-                    outline
+                    color: "#a6dba0",
+                    outline,
                 },
                 label: `26-50 Cases`,
             },
@@ -439,11 +460,11 @@ define([
                 maxValue: 1000,
                 symbol: {
                     type: "simple-fill",
-                    color: '#a50f15',
-                    outline
+                    color: "#008837",
+                    outline,
                 },
                 label: `50+ Cases`,
-            }
+            },
         ];
         return cbrInfos;
     }
@@ -452,12 +473,13 @@ define([
         var lyr = new FeatureLayer({
             url: config.covidZipLayerURL,
             title: "COVID-19 Cases (By Zip Code)",
-            definitionExpression: 'active = 1',
+            definitionExpression: "active = 1",
             outFields: ["*"],
             popupTemplate: {
-                title: "COVID-19 Cases (By Zip Code)" +
+                title:
+                    "COVID-19 Cases (By Zip Code)" +
                     '<div style="display: none;">{*}</div>',
-                content: async function({ graphic }) {
+                content: async function ({ graphic }) {
                     let { postcode, confirmedcasecount } = graphic.attributes;
 
                     return `
@@ -479,9 +501,9 @@ define([
                     outline: {
                         color: [0, 0, 0, 0.1],
                         width: 0.2,
-                    }
+                    },
                 },
-                defaultLabel: 'Data Suppressed'
+                defaultLabel: "Data Suppressed",
             },
         });
 
@@ -489,24 +511,27 @@ define([
     }
 
     function GetCovidLabelInfo() {
-        return [{
-            labelPlacement: "above-right",
-            labelExpressionInfo: {
-                expression: "$feature.Admin2 + ' (' + Text($feature.Confirmed, '#,###') + ' Cases)'",
-            },
-            symbol: {
-                type: "text",
-                color: "black",
-                haloSize: 1,
-                haloColor: "white",
-                font: {
-                    size: 12,
-                    weight: "bold",
+        return [
+            {
+                labelPlacement: "above-right",
+                labelExpressionInfo: {
+                    expression:
+                        "$feature.Admin2 + ' (' + Text($feature.Confirmed, '#,###') + ' Cases)'",
                 },
+                symbol: {
+                    type: "text",
+                    color: "black",
+                    haloSize: 1,
+                    haloColor: "white",
+                    font: {
+                        size: 12,
+                        weight: "bold",
+                    },
+                },
+                maxScale: 0,
+                minScale: 0,
             },
-            maxScale: 0,
-            minScale: 0,
-        }, ];
+        ];
     }
 
     function addHighlightLayer() {
@@ -577,22 +602,27 @@ define([
         const dashboardDataQT = new QueryTask({
             url: config.dashboardUrl,
         });
-        const { features:dashboardDataFeatures } = await dashboardDataQT.execute({
+        const {
+            features: dashboardDataFeatures,
+        } = await dashboardDataQT.execute({
             where: "1=1",
-            outFields: ['*'],
+            outFields: ["*"],
             returnGeometry: false,
         });
 
-        const dashboardData = dashboardDataFeatures.map(({attributes}) => {
-            return attributes;
-        }).sort((a,b) => { return b.created_date - a.created_date });
+        const dashboardData = dashboardDataFeatures
+            .map(({ attributes }) => {
+                return attributes;
+            })
+            .sort((a, b) => {
+                return b.created_date - a.created_date;
+            });
 
         const { numberofdeaths, numberofcases, risk } = dashboardData[0];
-        
 
         var deaths = [];
         var cases = [];
-        $.each(features, function(index, item) {
+        $.each(features, function (index, item) {
             var i = item.attributes;
             deaths.push(i.Deaths);
             cases.push(i.Confirmed);
@@ -602,30 +632,31 @@ define([
         const casesSum = cases.reduce((a, b) => a + b, 0);
 
         let deathsRatio = numberofdeaths / deathsSum;
-        if (deathsRatio >= 1.25 || deathsRatio <= 0.70){
-            $("#deaths").text(deathsSum.toLocaleString()); 
-        } else{
-            $("#deaths").text(numberofdeaths.toLocaleString()); 
+        if (deathsRatio >= 1.25 || deathsRatio <= 0.7) {
+            $("#deaths").text(deathsSum.toLocaleString());
+        } else {
+            $("#deaths").text(numberofdeaths.toLocaleString());
         }
 
         let casesRatio = numberofcases / casesSum;
-        if (casesRatio >= 1.25 || casesRatio <= 0.70){
-            $("#cases").text(casesSum.toLocaleString()); 
-        } else{
+        if (casesRatio >= 1.25 || casesRatio <= 0.7) {
+            $("#cases").text(casesSum.toLocaleString());
+        } else {
             $("#cases").text(numberofcases.toLocaleString());
         }
         if (risk) {
             $("#risk").text(risk);
-        } else{
-            $("#risk").text('Increasing with some areas of heightened risk');
+        } else {
+            $("#risk").text("Increasing with some areas of heightened risk");
         }
 
         var cases = new FeatureLayer({
             title: "COVID-19 Cases (By County)",
             id: "covidCases",
             popupTemplate: {
-                title: '{Admin2} County <span style="display: none;">{*}</span>',
-                content: async function({ graphic }) {
+                title:
+                    '{Admin2} County <span style="display: none;">{*}</span>',
+                content: async function ({ graphic }) {
                     let {
                         Confirmed,
                         Deaths,
@@ -649,7 +680,8 @@ define([
             spatialReference: {
                 wkid: 4326,
             },
-            fields: [{
+            fields: [
+                {
                     name: "id",
                     type: "single",
                 },
@@ -721,7 +753,8 @@ define([
                     outFields: ["*"],
                     // definitionExpression: GetQueryStringWhere().include,
                     popupTemplate: {
-                        title: conf.title +
+                        title:
+                            conf.title +
                             '<div style="display: none;">{*}</div>',
                         content: GetMedicalFacilitiesPopup,
                         actions: [feedbackAction],
@@ -739,27 +772,30 @@ define([
 
                 view.whenLayerView(lyr).then(() => {
                     let renderer = lyr.renderer.clone();
-                    renderer.visualVariables = [{
-                        type: "size",
-                        valueExpression: "$view.scale",
-                        stops: [{
-                                size: 9,
-                                value: 1155581,
-                            },
-                            {
-                                size: 9,
-                                value: 750000,
-                            },
-                            {
-                                size: 12,
-                                value: 500000,
-                            },
-                            {
-                                size: 14,
-                                value: 300000,
-                            },
-                        ],
-                    }, ];
+                    renderer.visualVariables = [
+                        {
+                            type: "size",
+                            valueExpression: "$view.scale",
+                            stops: [
+                                {
+                                    size: 9,
+                                    value: 1155581,
+                                },
+                                {
+                                    size: 9,
+                                    value: 750000,
+                                },
+                                {
+                                    size: 12,
+                                    value: 500000,
+                                },
+                                {
+                                    size: 14,
+                                    value: 300000,
+                                },
+                            ],
+                        },
+                    ];
                     lyr.renderer = renderer;
                 });
             } else if (conf.type === "tile") {
@@ -782,11 +818,13 @@ define([
                     visible: conf.visible,
                     labelsVisible: false,
                     labelingInfo: [{}],
-                    sublayers: [{
-                        definitionExpression: conf.definitionExpression,
-                        id: conf.index,
-                        opacity: 1,
-                    }, ],
+                    sublayers: [
+                        {
+                            definitionExpression: conf.definitionExpression,
+                            id: conf.index,
+                            opacity: 1,
+                        },
+                    ],
                 });
                 map.add(imgLayer);
             }
@@ -816,7 +854,7 @@ define([
         });
         await addCountyCovidLayer();
 
-        $(".form-check-input").change(function(e) {
+        $(".form-check-input").change(function (e) {
             let layId = $(this).data("id");
 
             let lay = map.findLayerById(layId);

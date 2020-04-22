@@ -299,11 +299,11 @@ define([
         if (type === "Zip") {
             const res = await zipQT.execute({
                 returnGeometry: false,
-                outFields: ["ConfirmedCaseCount"],
+                outFields: ["cases"],
                 where: `POSTCODE = '${selectedReport.substring(2)}'`,
             });
             if (res.features.length === 1) {
-                covidCases = res.features[0].attributes["ConfirmedCaseCount"];
+                covidCases = res.features[0].attributes["cases"];
             }
         }
         addHighlightGraphicToMap(geometry);
@@ -484,7 +484,16 @@ define([
                     role="tab" aria-controls="historical" aria-selected="false">Historical Covid-19 Data</a>
                 </li>
             `);
-            await createHistoricalChart(county, "historicalChart");
+            await createHistoricalChart(county, "county", "historicalChart");
+        } else if (type === "Zip") {
+            let zip = polyData.data["Name"];
+            $("#reportTabs").append(`
+                <li class="nav-item">
+                    <a class="nav-link" id="historical-tab" data-toggle="tab" href="#historical"
+                    role="tab" aria-controls="historical" aria-selected="false">Historical Covid-19 Data</a>
+                </li>
+            `);
+            await createHistoricalChart(zip, "zip", "historicalChart");
         }
     }
 });

@@ -8,8 +8,9 @@ define([
     "esri/layers/GraphicsLayer",
     "esri/Graphic",
     "esri/tasks/QueryTask",
-], function(
-    config, { map, view },
+], function (
+    config,
+    { map, view },
     historicalData,
     FeatureLayer,
     TileLayer,
@@ -20,12 +21,26 @@ define([
 ) {
     let lyrs = addLayers();
 
-    let $rendererDropdown = $("#rendererDropdown");
-
     let popMetricsConf = {
         Vulnerability: {
             title: "Vulnerability (Index)",
-            definition: "The Vulnerability Index is a weighted sum of selected attributes from the latest Census American Community Survey (2014-2018) by Census Block Group that indicate increased risk to the health of the populations that live there. The attributes that make up the index are Total Population, Population 65 and older, population under the poverty level, households lacking a computer or internet access, and population 65 and older that lack telephone service.",
+            definition:
+                "The Vulnerability Index is a weighted sum of selected attributes from the latest Census American Community Survey (2014-2018) by Census Block Group that indicate increased risk to the health of the populations that live there. The attributes that make up the index are Total Population, Population 65 and older, population under the poverty level, households lacking a computer or internet access, and population 65 and older that lack telephone service.",
+        },
+        Covid_Zip: {
+            title: "COVID-19 Cases (By Zip Code)",
+            definition:
+                "This feature layer contains the most up-to-date COVID-19 cases from AZDHS by Zip Code.",
+        },
+        Covid: {
+            title: "COVID-19 Cases (By County)",
+            definition:
+                "This feature layer contains the most up-to-date COVID-19 cases from JHU by county.",
+        },
+        Capacity: {
+            title: "Hospital Beds (By County)",
+            definition:
+                "This feature layer contains the capcity in hospital beds by county. It covers hospital capacity in Arizona.",
         },
         TOTAL_POP: {
             title: "Total Population",
@@ -49,11 +64,13 @@ define([
         },
         Covid: {
             title: "COVID-19 Cases (By County)",
-            definition: "This feature layer contains the most up-to-date COVID-19 data at state and county level.  This layer is created and maintained by the Center for Systems Science and Engineering (CSSE) at the Johns Hopkins University.",
+            definition:
+                "This feature layer contains the most up-to-date COVID-19 data at state and county level.  This layer is created and maintained by the Center for Systems Science and Engineering (CSSE) at the Johns Hopkins University.",
         },
         Capacity: {
             title: "Hospital Beds (By County)",
-            definition: "This feature layer contains the capacity in hospital beds by county. It covers hospital capacity in Arizona.",
+            definition:
+                "This feature layer contains the capacity in hospital beds by county. It covers hospital capacity in Arizona.",
         },
     };
 
@@ -64,12 +81,21 @@ define([
             $("#populationMetrics").append(`
             <div class="form-check">
                 <div class="layerBox">
-                    <input checked type="checkbox" class="popMetricsInput form-check-input" data-field="${key}" id="cBox${key}">
+                    <input type="checkbox" checked class="popMetricsInput form-check-input" data-field="${key}" id="cBox${key}">
                     <label class="form-check-label" for="cBox${key}">${conf.title}</label> <i title=${conf.title} data-toggle="popover" data-boundary="window" data-content="${conf.definition}" class=" vulnerabilityPopover fas fa-question-circle"></i>
                 </div>
             </div>
         `);
         } else if (key === "Covid") {
+            $("#populationMetrics").append(`
+                <div class="form-check">
+                    <div class="layerBox">
+                        <input type="checkbox" class="popMetricsInput form-check-input" data-field="${key}" id="cBox${key}">
+                        <label class="form-check-label" for="cBox${key}">${conf.title}</label> <i title=${conf.title} data-toggle="popover" data-boundary="window" data-content="${conf.definition}" class=" vulnerabilityPopover fas fa-question-circle"></i>
+                    </div>
+                </div>
+            `);
+        } else if (key === "Covid_Zip") {
             $("#populationMetrics").append(`
                 <div class="form-check">
                     <div class="layerBox">
@@ -90,23 +116,30 @@ define([
         }
     });
 
-    $(".popMetricsInput").change(function(e) {
+    $(".popMetricsInput").change(function (e) {
         $("#context-menu").hide();
         let tractsLyr = map.findLayerById("tracts");
         let covidLyr = map.findLayerById("covidCases");
+        let covidZipLyr = map.findLayerById("covidZipLayer");
+        covidZipLyr.visible = false;
         covidLyr.visible = false;
         tractsLyr.visible = true;
+
         if (this.checked) {
             $(".popMetricsInput").prop("checked", false);
             $(this).prop("checked", true);
             let val = $(this).data("field");
             if (val === "Covid") {
                 tractsLyr.visible = false;
-                let covidLyr = map.findLayerById("covidCases");
                 covidLyr.renderer = GetCovidRenderer();
                 covidLyr.labelingInfo = GetCovidLabelInfo();
                 covidLyr.title = "COVID-19 Cases (By County)";
                 covidLyr.visible = true;
+                $("#dashboard").show();
+            } else if (val === "Covid_Zip") {
+                tractsLyr.visible = false;
+                covidLyr.visible = false;
+                covidZipLyr.visible = true;
                 $("#dashboard").show();
             } else if (val === "Capacity") {
                 tractsLyr.visible = false;
@@ -118,12 +151,14 @@ define([
                 $("#dashboard").hide();
             } else {
                 updateTractsRenderer(val);
+                covidZipLyr.visible = false;
+                $("#dashboard").hide();
             }
         } else {
             let checked = $(".popMetricsInput:checked").length;
             if (checked === 0) {
                 tractsLyr.visible = false;
-                $("#dashboardModal").modal("hide");
+                $("#dashboard").hide();
             }
         }
     });
@@ -150,7 +185,8 @@ define([
     }
 
     function GetVulnerabilityCB() {
-        let cbrInfos = [{
+        let cbrInfos = [
+            {
                 minValue: 0,
                 maxValue: 1,
                 symbol: {
@@ -244,36 +280,39 @@ define([
                     width: 1,
                 },
             },
-            visualVariables: [{
-                type: "size",
-                field: "Confirmed",
-                stops: [{
-                        //     value: 0,
-                        //     size: 5,
-                        //     label: "<15",
-                        // },
-                        // {
-                        value: 0,
-                        size: 15,
-                        label: "less than 50",
-                    },
-                    {
-                        value: 50,
-                        size: 30,
-                        label: "less than 100",
-                    },
-                    {
-                        value: 100,
-                        size: 45,
-                        label: "less than 500",
-                    },
-                    {
-                        value: 500,
-                        size: 75,
-                        label: "500 +",
-                    },
-                ],
-            }, ],
+            visualVariables: [
+                {
+                    type: "size",
+                    field: "Confirmed",
+                    stops: [
+                        {
+                            //     value: 0,
+                            //     size: 5,
+                            //     label: "<15",
+                            // },
+                            // {
+                            value: 0,
+                            size: 15,
+                            label: "less than 50",
+                        },
+                        {
+                            value: 50,
+                            size: 30,
+                            label: "less than 100",
+                        },
+                        {
+                            value: 100,
+                            size: 45,
+                            label: "less than 500",
+                        },
+                        {
+                            value: 500,
+                            size: 75,
+                            label: "500 +",
+                        },
+                    ],
+                },
+            ],
         };
     }
 
@@ -291,74 +330,208 @@ define([
                     width: 1,
                 },
             },
-            visualVariables: [{
-                type: "size",
-                field: "Capacity",
-                stops: [{
-                        value: 0,
-                        size: 15,
-                        label: "less than 100 Beds",
-                    },
-                    {
-                        value: 100,
-                        size: 30,
-                        label: "less than 1,000 Beds",
-                    },
-                    {
-                        value: 1000,
-                        size: 50,
-                        label: "less than 5,000 Beds",
-                    },
-                    {
-                        value: 5000,
-                        size: 70,
-                        label: "5000 + Beds",
-                    },
-                ],
-            }, ],
+            visualVariables: [
+                {
+                    type: "size",
+                    field: "Capacity",
+                    stops: [
+                        {
+                            value: 0,
+                            size: 15,
+                            label: "less than 100 Beds",
+                        },
+                        {
+                            value: 100,
+                            size: 30,
+                            label: "less than 1,000 Beds",
+                        },
+                        {
+                            value: 1000,
+                            size: 50,
+                            label: "less than 5,000 Beds",
+                        },
+                        {
+                            value: 5000,
+                            size: 70,
+                            label: "5000 + Beds",
+                        },
+                    ],
+                },
+            ],
         };
     }
 
     function GetCapacityLabelInfo() {
-        return [{
-            labelPlacement: "above-right",
-            labelExpressionInfo: {
-                expression: "$feature.Admin2 + ' (' + IIf($feature.Capacity > 0, Text($feature.Capacity, '#,###'), '0') + ' Beds)'",
-            },
-            symbol: {
-                type: "text",
-                color: "black",
-                haloSize: 1,
-                haloColor: "white",
-                font: {
-                    size: 12,
-                    weight: "bold",
+        return [
+            {
+                labelPlacement: "above-right",
+                labelExpressionInfo: {
+                    expression:
+                        "$feature.Admin2 + ' (' + IIf($feature.Capacity > 0, Text($feature.Capacity, '#,###'), '0') + ' Beds)'",
                 },
+                symbol: {
+                    type: "text",
+                    color: "black",
+                    haloSize: 1,
+                    haloColor: "white",
+                    font: {
+                        size: 12,
+                        weight: "bold",
+                    },
+                },
+                maxScale: 0,
+                minScale: 0,
             },
-            maxScale: 0,
-            minScale: 0,
-        }, ];
+        ];
     }
 
     function GetCovidLabelInfo() {
-        return [{
-            labelPlacement: "above-right",
-            labelExpressionInfo: {
-                expression: "$feature.Admin2 + ' (' + Text($feature.Confirmed, '#,###') + ' Cases)'",
+        return [
+            {
+                labelPlacement: "above-right",
+                labelExpressionInfo: {
+                    expression:
+                        "$feature.Admin2 + ' (' + Text($feature.Confirmed, '#,###') + ' Cases)'",
+                },
+                symbol: {
+                    type: "text",
+                    color: "black",
+                    haloSize: 1,
+                    haloColor: "white",
+                    font: {
+                        size: 12,
+                        weight: "bold",
+                    },
+                },
+                maxScale: 0,
+                minScale: 0,
             },
-            symbol: {
-                type: "text",
-                color: "black",
-                haloSize: 1,
-                haloColor: "white",
-                font: {
-                    size: 12,
-                    weight: "bold",
+        ];
+    }
+
+    function GetZipCBR() {
+        let outline = {
+            color: [0, 0, 0, 0.1],
+            width: 0.2,
+        };
+        let cbrInfos = [
+            {
+                minValue: 0,
+                maxValue: 0,
+                symbol: {
+                    type: "simple-fill",
+                    color: "#ffffd4",
+                    outline,
+                },
+                label: `0 Cases`,
+            },
+            {
+                minValue: 1,
+                maxValue: 10,
+                symbol: {
+                    type: "simple-fill",
+                    color: "#fed98e",
+                    outline,
+                },
+                label: `1-10 Cases`,
+            },
+            {
+                minValue: 11,
+                maxValue: 25,
+                symbol: {
+                    type: "simple-fill",
+                    color: "#fe9929",
+                    outline,
+                },
+                label: `11-25 Cases`,
+            },
+            {
+                minValue: 26,
+                maxValue: 50,
+                symbol: {
+                    type: "simple-fill",
+                    color: "#d95f0e",
+                    outline,
+                },
+                label: `26-50 Cases`,
+            },
+            {
+                minValue: 50,
+                maxValue: 1000,
+                symbol: {
+                    type: "simple-fill",
+                    color: "#993404",
+                    outline,
+                },
+                label: `50+ Cases`,
+            },
+        ];
+        return cbrInfos;
+    }
+
+    async function addZipCovidLayer() {
+        var lyr = new FeatureLayer({
+            url: config.covidZipLayerURL,
+            title: "COVID-19 Cases (By Zip Code)",
+            definitionExpression: "active = 1",
+            outFields: ["*"],
+            popupTemplate: {
+                title:
+                    "COVID-19 Cases (By Zip Code)" +
+                    '<div style="display: none;">{*}</div>',
+                content: async function ({ graphic }) {
+                    let { postcode, confirmedcasecount } = graphic.attributes;
+
+                    return `
+                        <b>Zip Code:</b> ${postcode} <br>
+                        <b>Confirmed Cases:</b> ${confirmedcasecount.toLocaleString()}
+                    `;
                 },
             },
-            maxScale: 0,
-            minScale: 0,
-        }, ];
+            opacity: 1,
+            id: "covidZipLayer",
+            visible: false,
+            renderer: {
+                type: "class-breaks",
+                field: "cases",
+                classBreakInfos: GetZipCBR(),
+                defaultSymbol: {
+                    type: "simple-fill",
+                    color: [178, 178, 178, 255],
+                    outline: {
+                        color: [0, 0, 0, 0.1],
+                        width: 0.2,
+                    },
+                },
+                defaultLabel: "Data Suppressed",
+            },
+        });
+
+        map.add(lyr);
+    }
+
+    function GetCovidLabelInfo() {
+        return [
+            {
+                labelPlacement: "above-right",
+                labelExpressionInfo: {
+                    expression:
+                        "$feature.Admin2 + ' (' + Text($feature.Confirmed, '#,###') + ' Cases)'",
+                },
+                symbol: {
+                    type: "text",
+                    color: "black",
+                    haloSize: 1,
+                    haloColor: "white",
+                    font: {
+                        size: 12,
+                        weight: "bold",
+                    },
+                },
+                maxScale: 0,
+                minScale: 0,
+            },
+        ];
     }
 
     function addHighlightLayer() {
@@ -367,13 +540,11 @@ define([
         return gfxLayer;
     }
 
-    async function addCovidLayer() {
-        let queryAllUrl = config.covidLayerURL;
+    async function addCountyCovidLayer() {
+        let queryAllUrl = config.covidCountyLayerURL;
 
         let res = await fetch(queryAllUrl);
-        let {
-            features
-        } = await res.json();
+        let { features } = await res.json();
 
         const pointsQt = new QueryTask({
             url: config.mainUrl + config.queryLayerIndex,
@@ -428,31 +599,64 @@ define([
                 return graphic;
             });
         // console.log(source);
+        const dashboardDataQT = new QueryTask({
+            url: config.dashboardUrl,
+        });
+        const {
+            features: dashboardDataFeatures,
+        } = await dashboardDataQT.execute({
+            where: "1=1",
+            outFields: ["*"],
+            returnGeometry: false,
+        });
+
+        const dashboardData = dashboardDataFeatures
+            .map(({ attributes }) => {
+                return attributes;
+            })
+            .sort((a, b) => {
+                return b.created_date - a.created_date;
+            });
+
+        const { numberofdeaths, numberofcases, risk } = dashboardData[0];
 
         var deaths = [];
         var cases = [];
-        $.each(source, function(index, item) {
+        $.each(features, function (index, item) {
             var i = item.attributes;
             deaths.push(i.Deaths);
             cases.push(i.Confirmed);
         });
 
         const deathsSum = deaths.reduce((a, b) => a + b, 0);
-        // console.log(deathsSum);
-        var ds = new Intl.NumberFormat().format(deathsSum);
-        $("#deaths").text(ds);
-
         const casesSum = cases.reduce((a, b) => a + b, 0);
-        // console.log(casesSum);
-        var cs = new Intl.NumberFormat().format(casesSum);
-        $("#cases").text(cs);
+
+        let deathsRatio = numberofdeaths / deathsSum;
+        if (deathsRatio >= 1.25 || deathsRatio <= 0.7) {
+            $("#deaths").text(deathsSum.toLocaleString());
+        } else {
+            $("#deaths").text(numberofdeaths.toLocaleString());
+        }
+
+        let casesRatio = numberofcases / casesSum;
+        if (casesRatio >= 1.25 || casesRatio <= 0.7) {
+            $("#cases").text(casesSum.toLocaleString());
+        } else {
+            $("#cases").text(numberofcases.toLocaleString());
+        }
+        if (risk) {
+            $("#risk").text(risk);
+        } else {
+            $("#risk").text("Increasing with some areas of heightened risk");
+        }
 
         var cases = new FeatureLayer({
             title: "COVID-19 Cases (By County)",
             id: "covidCases",
             popupTemplate: {
-                title: '{Admin2} County <span style="display: none;">{*}</span>',
-                content: async function({ graphic }) {
+                title:
+                    '{Admin2} County <span style="display: none;">{*}</span>',
+                content: async function ({ graphic }) {
                     let {
                         Confirmed,
                         Deaths,
@@ -476,7 +680,8 @@ define([
             spatialReference: {
                 wkid: 4326,
             },
-            fields: [{
+            fields: [
+                {
                     name: "id",
                     type: "single",
                 },
@@ -527,8 +732,11 @@ define([
             id: "tracts",
             title: "Vulnerability",
             opacity: 0.95,
+            visible: true,
         });
         map.add(tractsLayer);
+
+        await addZipCovidLayer();
 
         var feedbackAction = {
             title: "Feedback",
@@ -545,7 +753,8 @@ define([
                     outFields: ["*"],
                     // definitionExpression: GetQueryStringWhere().include,
                     popupTemplate: {
-                        title: conf.title +
+                        title:
+                            conf.title +
                             '<div style="display: none;">{*}</div>',
                         content: GetMedicalFacilitiesPopup,
                         actions: [feedbackAction],
@@ -563,27 +772,30 @@ define([
 
                 view.whenLayerView(lyr).then(() => {
                     let renderer = lyr.renderer.clone();
-                    renderer.visualVariables = [{
-                        type: "size",
-                        valueExpression: "$view.scale",
-                        stops: [{
-                                size: 9,
-                                value: 1155581,
-                            },
-                            {
-                                size: 9,
-                                value: 750000,
-                            },
-                            {
-                                size: 12,
-                                value: 500000,
-                            },
-                            {
-                                size: 14,
-                                value: 300000,
-                            },
-                        ],
-                    }, ];
+                    renderer.visualVariables = [
+                        {
+                            type: "size",
+                            valueExpression: "$view.scale",
+                            stops: [
+                                {
+                                    size: 9,
+                                    value: 1155581,
+                                },
+                                {
+                                    size: 9,
+                                    value: 750000,
+                                },
+                                {
+                                    size: 12,
+                                    value: 500000,
+                                },
+                                {
+                                    size: 14,
+                                    value: 300000,
+                                },
+                            ],
+                        },
+                    ];
                     lyr.renderer = renderer;
                 });
             } else if (conf.type === "tile") {
@@ -606,11 +818,13 @@ define([
                     visible: conf.visible,
                     labelsVisible: false,
                     labelingInfo: [{}],
-                    sublayers: [{
-                        definitionExpression: conf.definitionExpression,
-                        id: conf.index,
-                        opacity: 1,
-                    }, ],
+                    sublayers: [
+                        {
+                            definitionExpression: conf.definitionExpression,
+                            id: conf.index,
+                            opacity: 1,
+                        },
+                    ],
                 });
                 map.add(imgLayer);
             }
@@ -638,9 +852,9 @@ define([
                 `);
             }
         });
-        await addCovidLayer();
+        await addCountyCovidLayer();
 
-        $(".form-check-input").change(function(e) {
+        $(".form-check-input").change(function (e) {
             let layId = $(this).data("id");
 
             let lay = map.findLayerById(layId);
@@ -807,7 +1021,7 @@ define([
         });
 
         highlightLayer.add(graphic);
-        view.goTo(geometry)
+        view.goTo(geometry);
     }
 
     async function clearHighlightLayer() {

@@ -3,8 +3,10 @@ define([
     "mag/layer",
     "mag/historicalData",
     "esri/tasks/QueryTask",
-], function(
-    config, { addHighlightGraphicToMap, clearHighlightLayer }, { createHistoricalChart },
+], function (
+    config,
+    { addHighlightGraphicToMap, clearHighlightLayer },
+    { createHistoricalChart },
     QueryTask
 ) {
     const pointsQt = new QueryTask({
@@ -13,6 +15,9 @@ define([
     const geoQt = new QueryTask({
         url: config.mainUrl + config.demographicsLayerIndex,
     });
+    const zipQT = new QueryTask({
+        url: config.covidZipLayerURL,
+    });
 
     let $reportForm = $("#reportForm");
     let $reportType = $("#reportType");
@@ -20,7 +25,7 @@ define([
 
     $("body").on("click", "#standardBtnSubmit", () => {
         $("#reportModal").modal({
-            backdrop: 'static'
+            backdrop: "static",
         });
     });
 
@@ -28,26 +33,23 @@ define([
         clearHighlightLayer();
     });
 
-
-    $(".reportHeader").on("mousedown", function(mousedownEvt) {
+    $(".reportHeader").on("mousedown", function (mousedownEvt) {
         var $draggable = $(this);
         var x = mousedownEvt.pageX - $draggable.offset().left,
             y = mousedownEvt.pageY - $draggable.offset().top;
-        $("body").on("mousemove.draggable", function(mousemoveEvt) {
+        $("body").on("mousemove.draggable", function (mousemoveEvt) {
             $draggable.closest(".modal-dialog").offset({
-                "left": mousemoveEvt.pageX - x,
-                "top": mousemoveEvt.pageY - y
+                left: mousemoveEvt.pageX - x,
+                top: mousemoveEvt.pageY - y,
             });
         });
-        $("body").one("mouseup", function() {
+        $("body").one("mouseup", function () {
             $("body").off("mousemove.draggable");
         });
-        $draggable.closest(".modal").one("bs.modal.hide", function() {
+        $draggable.closest(".modal").one("bs.modal.hide", function () {
             $("body").off("mousemove.draggable");
-
         });
     });
-
 
     setupDropdowns();
 
@@ -129,8 +131,6 @@ define([
             .children("option:selected")
             .data("id");
         let type = $reportType.val();
-        // console.log({ selectedReport, type });
-
         openReport(selectedReport, type);
     });
 
@@ -214,14 +214,14 @@ define([
         });
 
         let categoryLines = Object.keys(categoryTitleLookup).map((category) => {
-            return categories[category] ?
-                `
+            return categories[category]
+                ? `
             <div class="categoryLine">
                 <img width="20" src="./icons/${category}.svg">
                 <b>${categoryTitleLookup[category]}: </b>
                 <span>${categories[category].toLocaleString()}</span>
-            </div>` :
-                "";
+            </div>`
+                : "";
         });
 
         return `
@@ -293,11 +293,23 @@ define([
         return polyRes.features[0];
     }
 
-    async function getPolyHTML(selectedReport) {
+    async function getPolyHTML(selectedReport, type) {
         let { geometry, attributes: data } = await getPolyData(selectedReport);
+        let covidCases = null;
+        if (type === "Zip") {
+            const res = await zipQT.execute({
+                returnGeometry: false,
+                outFields: ["cases"],
+                where: `POSTCODE = '${selectedReport.substring(2)}'`,
+            });
+            if (res.features.length === 1) {
+                covidCases = res.features[0].attributes["cases"];
+            }
+        }
         addHighlightGraphicToMap(geometry);
 
-        let leftPanelConf = [{
+        let leftPanelConf = [
+            {
                 field: "POPESTIMATE2018",
                 title: "2018 Census Estimates",
                 valueFormat: (val, data, i) => {
@@ -309,7 +321,9 @@ define([
                 },
                 titleFormat: (val, data, i) => {
                     // return leftPanelConf[i].title;
-                    return val ? leftPanelConf[i].title : " ACS 2017-2018 5 Year Population";
+                    return val
+                        ? leftPanelConf[i].title
+                        : " ACS 2017-2018 5 Year Population";
                 },
             },
             {
@@ -361,12 +375,13 @@ define([
         ];
 
         let leftPanelLines = leftPanelConf.map(
-            ({ pctField, field, title, iconClass, valueFormat, titleFormat },
+            (
+                { pctField, field, title, iconClass, valueFormat, titleFormat },
                 i
             ) => {
-                let val = pctField ?
-                    (data[field] / data[pctField]) * 100 :
-                    data[field];
+                let val = pctField
+                    ? (data[field] / data[pctField]) * 100
+                    : data[field];
                 return `
             <div class="categoryLine">
                 <i class="${iconClass}"></i>
@@ -379,6 +394,19 @@ define([
             </div>`;
             }
         );
+
+        if (covidCases) {
+            leftPanelLines.unshift(
+                `
+            <div class="categoryLine">
+            <i class=""></i>
+                <b>COVID-19 Cases: </b>
+                <span> ${covidCases}</span>
+            </div>
+        `
+            );
+        }
+
         return {
             html: `
                 <div class="container">
@@ -412,7 +440,7 @@ define([
 
     async function openReport(selectedReport, type) {
         const [polyData, pointHtml, title] = await Promise.all([
-            getPolyHTML(selectedReport),
+            getPolyHTML(selectedReport, type),
             getPointHTML(selectedReport, type),
             getTitle(selectedReport, type),
         ]);
@@ -456,7 +484,16 @@ define([
                     role="tab" aria-controls="historical" aria-selected="false">Historical Covid-19 Data</a>
                 </li>
             `);
-            await createHistoricalChart(county, "historicalChart");
+            await createHistoricalChart(county, "county", "historicalChart");
+        } else if (type === "Zip") {
+            let zip = polyData.data["Name"];
+            $("#reportTabs").append(`
+                <li class="nav-item">
+                    <a class="nav-link" id="historical-tab" data-toggle="tab" href="#historical"
+                    role="tab" aria-controls="historical" aria-selected="false">Historical Covid-19 Data</a>
+                </li>
+            `);
+            await createHistoricalChart(zip, "zip", "historicalChart");
         }
     }
 });

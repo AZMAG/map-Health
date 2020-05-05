@@ -11,7 +11,7 @@
 [![Built with Grunt](http://cdn.gruntjs.com/builtwith.png)](http://gruntjs.com/)
 [![MIT licensed](https://img.shields.io/badge/license-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 
-The Maricopa Association of Governments (MAG) mapping page showing various healthcare realated faclities and census information.
+The Maricopa Association of Governments (MAG) mapping page showing various healthcare related facilities and census information.
 
 This JavaScript web-page was developed by MAG staff for MAG member agencies and the public.
 
@@ -20,6 +20,12 @@ This JavaScript web-page was developed by MAG staff for MAG member agencies and 
 `healthcare` `health` `hospitals` `census data` `Maricopa County` `Pinal County` `State` `Arizona` `MAG` `maps` `ESRI` `#MAGmaps`
 
 ## Version
+
+### Version | 1.1.1 ###
+
+* #### Updated | 2020-04-08 ####
+
+* #### Created | 2020-03-16 ####
 
 Releases will be numbered with the following format:
 
@@ -30,12 +36,6 @@ And constructed with the following guidelines:
 1. **MAJOR** version when you make incompatible API changes **bumps the major** resets minor and patch
 2. **MINOR** version when you add functionality in a backwards-compatible manner **bumps the minor** resets patch
 3. **PATCH** version when you make backwards-compatible bug fixes and misc changes **bumps only the patch**
-
-### version | 1.1.1 ###
-
-* #### Updated | 2020-04-08 ####
-
-* #### Created | 2020-03-16 ####
 
 ## Credits
 
@@ -53,10 +53,11 @@ A detailed list of the changes and fixes in each version update can be found in 
 
 ## Technologies
 
-* Bootstrap v3.3.7
+* jQuery v3.5.0
+* Bootstrap v4.4.0
+* ESRI JavaScript API v4.15
 * Modernizr v3.5.0
-* Font-Awesome v4.7
-* jQuery v3.3.1
+* Font-Awesome v5.8.1
 * Google Analytics
 * Grunt v1.0.4
 

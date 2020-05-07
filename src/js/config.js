@@ -152,7 +152,7 @@ define([], function () {
                 index: 6,
                 uvr: [
                     {
-                        value: "DRIVE_THRU",
+                        value: "DRIVE THRU",
                         label: "Drive-Thru COVID-19 Testing Location",
                         symbol: {
                             type: "picture-marker",

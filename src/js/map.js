@@ -2,9 +2,8 @@ define([
     "mag/config",
     "esri/Map",
     "esri/views/MapView",
-    "esri/geometry/Extent"
+    "esri/geometry/Extent",
 ], function (config, Map, MapView, Extent) {
-
     let map = new Map({
         basemap: "gray-vector",
     });
@@ -16,10 +15,10 @@ define([
         zoom: 7,
         constraints: {
             rotationEnabled: false,
-            minZoom: 3
+            // minZoom: 3
         },
         ui: {
-            components: []
+            components: [],
         },
         popup: {
             dockEnabled: false,
@@ -27,8 +26,8 @@ define([
             dockOptions: {
                 buttonEnabled: false,
                 breakpoint: false,
-            }
-        }
+            },
+        },
     });
 
     // Instantiate a slider
@@ -46,9 +45,6 @@ define([
 
     // }).data('slider');
 
-
-
-
     $(".btnInstructions").click(function () {
         $("#contactModal").modal("hide");
     });
@@ -60,6 +56,6 @@ define([
     }
     return {
         map,
-        view
+        view,
     };
 });

@@ -3,16 +3,20 @@ function randomString(length, chars) {
     for (var i = length; i > 0; --i) result += chars[Math.round(Math.random() * (chars.length - 1))];
     return result;
 }
-const fileHash = randomString(32, "0123456789abcdefghijklmnopqrstuvwxyz");
-const jsFilePath = `dist/js/main.${fileHash}.js`;
-const fileName = "main.${fileHash}.js";
+// const fileHash = randomString(32, "0123456789abcdefghijklmnopqrstuvwxyz");
+// const jsFilePath = `dist/js/main.${fileHash}.js`;
+// const fileName = "main.${fileHash}.js";
 
 module.exports = function(grunt) {
 
     "use strict";
 
-    const sass = require("node-sass");
+    const fileHash = '<%= pkg.version %>' + '.' + '<%= grunt.template.today("yyyymmddHHMM") %>';
+    const jsFilePath = `dist/js/main.${fileHash}.js`;
+    const jsName = `mag/main.${fileHash}`;
+    const cssName = `./css/master.min.css?v=${fileHash}`;
 
+    const sass = require("node-sass");
     require('load-grunt-tasks')(grunt);
     require("matchdep").filterDev("grunt-*").forEach(grunt.loadNpmTasks);
 
@@ -167,7 +171,7 @@ module.exports = function(grunt) {
                 src: ["dist/sass/"]
             },
             clean_js: {
-                src: ["dist/js/main.REPLACE.js", "dist/js/main.REPLACE.js.map"]
+                src: ["dist/js/main.js", "dist/js/main.REPLACE.js"]
             }
         },
 
@@ -178,7 +182,7 @@ module.exports = function(grunt) {
                     removeCommands: true
                 },
                 files: {
-                    "dist/index.html": "dist/index.html",
+                    "dist/index.html": "dist/index.html"
                 }
             }
         },
@@ -222,14 +226,21 @@ module.exports = function(grunt) {
                     // LICENSE
                     from: /(Copyright \(c\) )[0-9]{4}/g,
                     to: "Copyright (c) " + "<%= pkg.copyright %>",
+                }, {
+                    // html pages - build-info
+                    from: /(<meta name="build-info" content=")([0-9]+)(?:\.([0-9]+))(?:\.([0-9]+))(?:\.)(\d{12})(">)/g,
+                    to: '<meta name="build-info" content="' + '<%= pkg.version %>' + '.' + '<%= grunt.template.today("yyyymmddHHMM") %>' + '">',
                 }]
             },
             release: {
                 src: ["dist/index.html"],
                 overwrite: true,
                 replacements: [{
-                    from: "REPLACE",
-                    to: fileHash,
+                    from: "mag/main.REPLACE",
+                    to: jsName,
+                }, {
+                    from: "./css/main.css",
+                    to: cssName,
                 }]
             }
         }
@@ -241,10 +252,7 @@ module.exports = function(grunt) {
     grunt.registerTask("build-css", ["sass", "cssmin", "postcss", "clean:clean_css", "clean:clean_sass"]);
     grunt.registerTask("build-js", ["babel"]);
     grunt.registerTask("build-rename", ["replace:release", "copy:rename", "clean:clean_js"]);
-
-    grunt.registerTask("ts", ["postcss"]);
-    grunt.registerTask("tsjs", ["clean:build", "copy", "requirejs"]);
-
+    // grunt.registerTask("build-rename", ["replace:release"]);
 
     grunt.registerTask("build", ["clean:build", "build-html", "build-css", "build-js", "build-rename"]);
 };

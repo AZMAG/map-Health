@@ -48,16 +48,29 @@
     <div class="successMessage alert alert-success" role="alert">
         Thank you, MAG has received your feedback.
     </div>
-    <div class="introTarget" style="display: block; position: absolute; z-index: 1; margin-left: 41%; top: 400px;">
-    </div>
-    <!--info card-->
-    <div id="helpInfo" class="card" role="dialog"></div>
+    <div class="introTarget" style="display: block; position: absolute; z-index: 1; margin-left: 41%; top: 400px;"></div>
 
-    <!-- Map -->
-    <div id="viewDiv">
-        <!-- icon Tooltip -->
-        <span class="iconTooltip"><span class="iconTooltiptext"></span></span>
-    </div>
+
+    <!-- Fixed navbar -->
+    <header id="mag-header"></header>
+
+    <!-- Begin page content -->
+    <main id="main-container" role="main" class="flex-shrink-0">
+        <div id="main-page" class="container-fluid">
+
+            <!-- Side Panel Div -->
+            <div id="sidePanel" class="col-sm-4"></div>
+
+            <!-- Map Div -->
+            <div id="mapDiv" class="col-sm-8">
+                <!-- icon Tooltip -->
+                <span class="iconTooltip"><span class="iconTooltiptext"></span></span>
+            </div>
+
+        </div>
+    </main>
+
+
 
     <div id="feedbackModal" class="modal" tabindex="-1" role="dialog"></div>
 
@@ -67,6 +80,8 @@
         <a class="dropdown-item btn-sm" id="addFeedback" href="#">Add Feedback</a>
     </div>
 
+    <!--about modal-->
+    <div class="modal fade" id="aboutModal" role="dialog" tabindex="-1"></div>
     <!--source modal-->
     <div class="" id="dashboard" role="dialog"></div>
     <!--source modal-->
@@ -82,6 +97,8 @@
     <!--report modal-->
     <div class="modal fade" id="reportModal" role="dialog"></div>
 
+    <!-- Sticky footer -->
+    <footer id="mag-footer" class="footer w-100 py-1"></footer>
 
     <!-- Polyfills -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-polyfill/7.2.5/polyfill.min.js"></script>

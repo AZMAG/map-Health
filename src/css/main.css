@@ -360,6 +360,17 @@ template {
 SASS Partials
 */
 /****************
+* Map
+*****************/
+#mapDiv {
+  float: right;
+  height: 100%;
+  padding: 0;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
+/****************
 * SASS Widgets
 *****************/
 .esri-ui {
@@ -480,9 +491,6 @@ SASS Partials
 .help-card {
   padding: 0 5px 5px 2px;
   padding-bottom: 2px;
-  max-height: 85vh;
-  max-width: 100%;
-  overflow-y: auto;
 }
 
 .borderArea {
@@ -495,10 +503,6 @@ SASS Partials
   direction: ltr;
 }
 
-.chartContainer {
-  height: 300px;
-}
-
 .populationMetrics .layersList {
   position: relative;
 }
@@ -508,14 +512,6 @@ SASS Partials
   right: 30px;
   top: 10px;
   cursor: pointer;
-}
-
-.mag-logo {
-  max-width: 200px;
-}
-
-.card-title {
-  margin-top: 0.5rem;
 }
 
 address.mag {
@@ -701,6 +697,18 @@ a.modal-anchor.link:hover {
 
 .footer-section {
   margin: 15px 0 0 0;
+}
+
+#mag-footer {
+  position: fixed;
+  text-align: center;
+  background-color: #eeeeee;
+  /* Set the fixed height of the footer here */
+  padding-right: 15px;
+  padding-left: 15px;
+  bottom: 0;
+  font-size: 11px;
+  z-index: 1000;
 }
 
 /*******************
@@ -1003,19 +1011,97 @@ a.modal-anchor.link:hover {
   font-size: smaller;
 }
 
-html,
-body,
-#viewDiv {
-  padding: 0;
+/*******************
+ Header
+********************/
+.bg-dark {
+  background-color: #06547a !important;
+}
+
+.mag-logo {
+  max-width: 80px;
+}
+
+.navbar-text {
   margin: 0;
+  font-size: 12px;
+}
+
+@media (min-width: 768px) {
+  .mag-logo {
+    max-width: 200px;
+  }
+  .navbar-text {
+    font-size: 18px;
+  }
+}
+
+@media (min-width: 992px) {
+  .navbar-text {
+    font-size: 22px;
+  }
+}
+
+/*******************
+ Panel
+********************/
+#sidePanel {
+  float: left;
+  height: 100%;
+  overflow-x: hidden;
+  overflow-y: auto;
+  background-color: #f6f6f6;
+  border: 2px solid #dddddd;
+}
+
+html,
+body {
+  position: relative;
   height: 100%;
   width: 100%;
+  margin: 0;
+  padding: 0;
 }
 
 body {
   overflow: hidden;
   font-family: "Poppins", sans-serif;
   -webkit-font-smoothing: subpixel-antialiased;
+}
+
+#main-container {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  position: relative;
+  height: 100%;
+  width: 100%;
+  padding: 0;
+  margin-bottom: -24px;
+}
+
+#main-page {
+  height: 100%;
+  width: 100%;
+}
+
+.container-fluid {
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  padding-top: 56px;
+  padding-bottom: 40px;
+  padding-left: 0;
+  padding-right: 0;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
+@media (min-width: 576px) {
+  .container-fluid {
+    padding-bottom: 24px;
+  }
 }
 
 div.hopscotch-bubble .hopscotch-nav-button.next,

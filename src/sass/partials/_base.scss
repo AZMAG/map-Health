@@ -2,6 +2,7 @@
 SASS Partials
 */
 
+@import "map";
 @import "widgets";
 @import "report-panel";
 @import "tooltip";
@@ -12,3 +13,5 @@ SASS Partials
 @import "popup";
 @import "dashboard";
 @import "report";
+@import "header";
+@import "panel";

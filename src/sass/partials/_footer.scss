@@ -13,3 +13,15 @@
 .footer-section {
     margin: 15px 0 0 0;
 }
+
+#mag-footer {
+    position: fixed;
+    text-align: center;
+    background-color: $footer-background;
+    /* Set the fixed height of the footer here */
+    padding-right: 15px;
+    padding-left: 15px;
+    bottom: 0;
+    font-size: 11px;
+    z-index: 1000;
+}

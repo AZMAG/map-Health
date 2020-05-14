@@ -23,9 +23,9 @@
 .help-card {
   padding: 0 5px 5px 2px;
   padding-bottom: 2px;
-  max-height: 85vh;
-  max-width: 100%;
-  overflow-y: auto;
+  // max-height: 85vh;
+  // max-width: 100%;
+  // overflow-y: auto;
 }
 .borderArea {
     border: 0.2rem solid #e9e9ea;
@@ -37,9 +37,9 @@
   direction: ltr;
 }
 
-.chartContainer{
-    height: 300px;
-}
+// .chartContainer{
+//     height: 300px;
+// }
 
 .populationMetrics .layersList {
   position: relative;
@@ -52,13 +52,13 @@
   cursor: pointer;
 }
 
-.mag-logo {
-  max-width: 200px;
-}
+// .mag-logo {
+//   max-width: 200px;
+// }
 
-.card-title {
-  margin-top: 0.5rem;
-}
+// .card-title {
+  //   margin-top: 0.5rem;
+  // }
 
 address.mag {
   font-size: 0.85em;

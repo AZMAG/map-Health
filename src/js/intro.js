@@ -16,10 +16,10 @@ function startupIntro() {
         steps: [{
                 title: "Instructions",
                 content: 'Welcome to the Arizona Healthcare Assets Map.  Click next to continue to view the instructions on using this tool.',
-                target: $("#helpInfo")[0],
+                target: $("#sidePanel")[0],
                 placement: "right",
                 onShow: function() {
-                    Focusable.setFocus($("#helpInfo"));
+                    Focusable.setFocus($("#sidePanel"));
                 }
             }, {
                 title: "Navigation",

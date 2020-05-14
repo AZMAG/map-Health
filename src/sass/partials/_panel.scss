@@ -1,0 +1,12 @@
+/*******************
+ Panel
+********************/
+
+#sidePanel {
+    float: left;
+    height: 100%;
+    overflow-x: hidden;
+    overflow-y: auto;
+    background-color: $panel-background;
+    border: 2px solid darken($panel-background, 10%);
+}

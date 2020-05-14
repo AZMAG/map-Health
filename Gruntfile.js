@@ -216,8 +216,8 @@ module.exports = function(grunt) {
                     to: "Last updated: " + '<%= pkg.date %>',
                 }, {
                     // README.md
-                    from: /(### version \| )([0-9]+)(?:\.([0-9]+))(?:\.([0-9]+))/g,
-                    to: "### version | " + '<%= pkg.version %>',
+                    from: /(### Version \| )([0-9]+)(?:\.([0-9]+))(?:\.([0-9]+))/g,
+                    to: "### Version | " + '<%= pkg.version %>',
                 }, {
                     // README.md
                     from: /(\* #### Updated \| )[0-9]{4}-[0-9]{2}-[0-9]{2}/g,

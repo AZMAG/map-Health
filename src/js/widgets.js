@@ -7,58 +7,97 @@ define([
     "esri/widgets/Locate",
     "esri/widgets/Search",
     "esri/tasks/Locator",
-    "esri/geometry/Extent"
+    "esri/geometry/Extent",
+    "esri/widgets/Expand"
 ], function({
     map,
     view
-}, Zoom, Home, Legend, BasemapToggle, Locate, Search, Locator, Extent) {
+}, Zoom, Home, Legend, BasemapToggle, Locate, Search, Locator, Extent, Expand) {
 
-
-
-
-    //Add legend widget
+    //Add legend widget - Desktop
     var legend = new Legend({
         view,
         container: "legendContainer"
     });
     view.ui.add(legend, 'top-right');
 
-    //Add basemap toggle widget
-    var basemapToggle = new BasemapToggle({
-        view,
-        nextBasemap: "hybrid"
+    // Legend widget - Mobile
+    var expandLegend = new Expand({
+        view: view,
+        content: new Legend({
+            view: view,
+            container: document.createElement("div")
+        })
     });
+    // Load
+    isResponsiveSize = view.widthBreakpoint === "xsmall";
+    updateView(isResponsiveSize);
 
-    
-    basemapToggle.on('toggle', function(event) {
-        const tractsLayer = map.findLayerById("tracts");
-        
-        if (event.current.title === "Imagery with Labels") {
-            tractsLayer.opacity = .5;
-        } else{
-            tractsLayer.opacity = .9;
+    // Breakpoints
+    view.watch("widthBreakpoint", function(breakpoint) {
+        switch (breakpoint) {
+            case "xsmall":
+                updateView(true);
+                break;
+            case "small":
+            case "medium":
+            case "large":
+            case "xlarge":
+                updateView(false);
+                break;
+            default:
         }
     });
 
+    function updateView(isMobile) {
+        setLegendMobile(isMobile);
+    }
+
+    function setLegendMobile(isMobile) {
+        var toAdd = isMobile ? expandLegend : legend;
+        var toRemove = isMobile ? legend : expandLegend;
+
+        view.ui.remove(toRemove);
+        view.ui.add(toAdd, "top-right");
+    }
+
+    //Add basemap toggle widget
+    var basemapToggle = new BasemapToggle({
+        view: view,
+        nextBasemap: "hybrid"
+    });
+    basemapToggle.visibleElements = {
+        title: true
+    };
+
+    basemapToggle.on('toggle', function(event) {
+        const tractsLayer = map.findLayerById("tracts");
+
+        if (event.current.title === "Imagery with Labels") {
+            tractsLayer.opacity = .5;
+        } else {
+            tractsLayer.opacity = .9;
+        }
+    });
     view.ui.add(basemapToggle, "bottom-left");
 
     //Add zoom widget
     var zoom = new Zoom({
         view
     });
-    view.ui.add(zoom, 'bottom-left');
+    view.ui.add(zoom, 'top-left');
 
     //Add home widget
     var home = new Home({
         view
     });
-    view.ui.add(home, 'bottom-left');
+    view.ui.add(home, 'top-left');
 
     //Add locate widget
     var locate = new Locate({
         view
     });
-    view.ui.add(locate, 'bottom-left');
+    view.ui.add(locate, 'top-left');
 
     //Add search widget
     let search = new Search({
@@ -92,6 +131,6 @@ define([
     //     }
     // });
 
-    view.ui.add(search, "bottom-left");
+    view.ui.add(search, "bottom-right");
 
 });

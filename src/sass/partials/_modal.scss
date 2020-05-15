@@ -5,10 +5,10 @@
 .modal-header {
     // display: inline;
     background-color: $modal-head;
-    color: $text-alt;
+    color: $theme2;
 
     .close {
-        color: $text-alt;
+        color: $theme2;
     }
 }
 
@@ -22,11 +22,12 @@
     }
 }
 
-.modal.fade.show{
+.modal.fade.show {
     background-color: transparent;
     pointer-events: none;
 }
-.modal-backdrop{
+
+.modal-backdrop {
     background-color: transparent;
     pointer-events: none;
 }
@@ -47,7 +48,7 @@
     }
 }
 
-.reportHeader{
+.reportHeader {
     cursor: move;
 }
 

@@ -470,24 +470,6 @@ SASS Partials
 /****************
 * SASS Report-panel
 *****************/
-#helpInfo {
-  position: absolute;
-  z-index: 1;
-  margin: 15px;
-  background: white;
-  border-radius: 0;
-  border: 1px solid rgba(128, 128, 128, 0.185);
-  text-align: center;
-  padding: 12px 5px 5px 5px;
-  max-height: 85vh;
-  width: 20vw;
-  min-width: 370px;
-}
-
-#helpInfo hr {
-  margin-bottom: 5px;
-}
-
 .help-card {
   padding: 0 5px 5px 2px;
   padding-bottom: 2px;
@@ -579,12 +561,12 @@ address.mag .mag-logo {
 * SASS modal
 *****************/
 .modal-header {
-  background-color: #1c314a;
-  color: #ccd1d6;
+  background-color: #06547a;
+  color: #45a4b8;
 }
 
 .modal-header .close {
-  color: #ccd1d6;
+  color: #45a4b8;
 }
 
 .modal-body {
@@ -795,13 +777,13 @@ a.modal-anchor.link:hover {
  SASS Popup
 ********************/
 .esri-popup__header-title {
-  background-color: #1c314a;
+  background-color: #06547a;
   color: #ccd1d6;
 }
 
 .esri-popup__header-title:hover {
   background-color: #ccd1d6;
-  color: #1c314a;
+  color: #06547a;
 }
 
 /****************
@@ -1025,6 +1007,17 @@ a.modal-anchor.link:hover {
 .navbar-text {
   margin: 0;
   font-size: 12px;
+  padding-top: .2rem;
+  padding-bottom: .2rem;
+}
+
+@media (min-width: 576px) {
+  .mag-logo {
+    max-width: 180px;
+  }
+  .navbar-text {
+    font-size: 16px;
+  }
 }
 
 @media (min-width: 768px) {
@@ -1032,7 +1025,7 @@ a.modal-anchor.link:hover {
     max-width: 200px;
   }
   .navbar-text {
-    font-size: 18px;
+    font-size: 20px;
   }
 }
 
@@ -1048,10 +1041,12 @@ a.modal-anchor.link:hover {
 #sidePanel {
   float: left;
   height: 100%;
+  text-align: center;
   overflow-x: hidden;
   overflow-y: auto;
   background-color: #f6f6f6;
   border: 2px solid #dddddd;
+  padding-bottom: 10px;
 }
 
 html,

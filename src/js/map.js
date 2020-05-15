@@ -20,7 +20,7 @@ define([
             minZoom: 6
         },
         ui: {
-            components: ["attribution"],
+            components: [],
         },
         popup: {
             dockEnabled: false,

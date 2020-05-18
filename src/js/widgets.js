@@ -30,7 +30,7 @@ define([
         })
     });
     // Load
-    isResponsiveSize = view.widthBreakpoint === "xsmall";
+    var isResponsiveSize = view.widthBreakpoint === "xsmall";
     updateView(isResponsiveSize);
 
     // Breakpoints

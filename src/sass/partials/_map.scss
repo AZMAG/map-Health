@@ -5,7 +5,10 @@
 #mapDiv {
     // float: right;
     height: 100%;
-    padding: 0;
+    padding-top: 0;
+    padding-left: 0;
+    padding-right: 0;
+    padding-bottom: 0;
     overflow-x: hidden;
     overflow-y: auto;
 }
@@ -15,7 +18,9 @@
 
 // Medium devices (tablets, 768px and up)
 @media (min-width: 768px) {
-
+    // #mapDiv {
+    //     padding-bottom: 15px;
+    // }
 }
 
 // Large devices (desktops, 992px and up)

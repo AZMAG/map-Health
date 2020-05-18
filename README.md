@@ -21,7 +21,7 @@ This JavaScript web-page was developed by MAG staff for MAG member agencies and 
 
 ## Version
 
-### Version | 1.1.1 ###
+### Version | 1.1.3 ###
 
 * #### Updated | 2020-05-07 ####
 

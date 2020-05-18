@@ -27,7 +27,7 @@ body {
     height: 100%;
     width: 100%;
     padding: 0;
-    margin-bottom: -24px;
+    margin-bottom: -40px;
 }
 
 #main-page {
@@ -37,6 +37,7 @@ body {
     .row {
         height: 100%;
         width: 100%;
+        margin: 0;
     }
 }
 
@@ -53,6 +54,10 @@ body {
 
 // Small devices (landscape phones, 576px and up)
 @media (min-width: 576px) {
+    #main-container {
+        margin-bottom: -24px;
+    }
+
     .container-fluid {
         padding-bottom: 24px;
     }

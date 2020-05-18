@@ -1054,7 +1054,13 @@ a.modal-anchor.link:hover {
   overflow-y: auto;
   background-color: #f6f6f6;
   border: 2px solid #dddddd;
-  padding-bottom: 10px;
+  padding-bottom: 45px;
+}
+
+@media (min-width: 768px) {
+  #sidePanel {
+    padding-bottom: 15px;
+  }
 }
 
 html,
@@ -1080,7 +1086,7 @@ body {
   height: 100%;
   width: 100%;
   padding: 0;
-  margin-bottom: -24px;
+  margin-bottom: -40px;
 }
 
 #main-page {
@@ -1091,6 +1097,7 @@ body {
 #main-page .row {
   height: 100%;
   width: 100%;
+  margin: 0;
 }
 
 .container-fluid {
@@ -1107,6 +1114,9 @@ body {
 }
 
 @media (min-width: 576px) {
+  #main-container {
+    margin-bottom: -24px;
+  }
   .container-fluid {
     padding-bottom: 24px;
   }

@@ -10,14 +10,18 @@
     overflow-y: auto;
     background-color: $panel-background;
     border: 2px solid darken($panel-background, 10%);
-    padding-bottom: 10px;
+    padding-bottom: 45px;
 }
 
 // Small devices (landscape phones, 576px and up)
 @media (min-width: 576px) {}
 
 // Medium devices (tablets, 768px and up)
-@media (min-width: 768px) {}
+@media (min-width: 768px) {
+    #sidePanel {
+        padding-bottom: 15px;
+    }
+}
 
 // Large devices (desktops, 992px and up)
 @media (min-width: 992px) {}

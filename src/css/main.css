@@ -804,16 +804,10 @@ a.modal-anchor.link:hover {
 #dashboard {
   position: absolute;
   bottom: 55px;
-  right: 0;
-  margin-right: 15px;
   z-index: 10;
-  background: white;
-  border-radius: 0;
-  border: 1px solid rgba(128, 128, 128, 0.185);
-  width: 500px;
-  height: 160px;
+  width: 100%;
   text-align: center;
-  padding: 7px;
+  margin: 0 auto;
 }
 
 #dashboard .card-deck {
@@ -832,7 +826,10 @@ a.modal-anchor.link:hover {
   -webkit-box-align: baseline;
       -ms-flex-align: baseline;
           align-items: baseline;
-  margin-top: 5px;
+  background: white;
+  border-radius: 0;
+  border: 1px solid rgba(128, 128, 128, 0.185);
+  padding: 7px;
 }
 
 #dashboard .card-deck .card {
@@ -845,10 +842,13 @@ a.modal-anchor.link:hover {
           flex-grow: 1;
   max-height: 145px;
   max-width: 150px;
+  margin: 0 2px;
 }
 
 #dashboard .card-deck .card-header {
   padding: .55rem;
+  background-color: #45a4b8;
+  color: #ffffff;
 }
 
 #dashboard .card-deck .card-header h6 {

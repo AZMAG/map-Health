@@ -1116,10 +1116,7 @@ body {
   overflow-y: auto;
 }
 
-@media (min-width: 576px) {
-  #main-container {
-    margin-bottom: -24px;
-  }
+@media (min-width: 768px) {
   .container-fluid {
     padding-bottom: 24px;
   }

@@ -632,18 +632,20 @@ define([
         const casesSum = cases.reduce((a, b) => a + b, 0);
 
         let deathsRatio = numberofdeaths / deathsSum;
-        if (deathsRatio >= 1.25 || deathsRatio <= 0.7) {
-            $("#deaths").text(deathsSum.toLocaleString());
-        } else {
-            $("#deaths").text(numberofdeaths.toLocaleString());
-        }
+        $("#deaths").text(deathsSum.toLocaleString());
+        // if (deathsRatio >= 1.25 || deathsRatio <= 0.7) {
+        //     $("#deaths").text(deathsSum.toLocaleString());
+        // } else {
+        //     $("#deaths").text(numberofdeaths.toLocaleString());
+        // }
 
         let casesRatio = numberofcases / casesSum;
-        if (casesRatio >= 1.25 || casesRatio <= 0.7) {
-            $("#cases").text(casesSum.toLocaleString());
-        } else {
-            $("#cases").text(numberofcases.toLocaleString());
-        }
+        $("#cases").text(casesSum.toLocaleString());
+        // if (casesRatio >= 1.25 || casesRatio <= 0.7) {
+        //     $("#cases").text(casesSum.toLocaleString());
+        // } else {
+        //     $("#cases").text(numberofcases.toLocaleString());
+        // }
         if (risk) {
             $("#risk").text(risk);
         } else {

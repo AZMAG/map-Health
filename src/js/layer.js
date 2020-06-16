@@ -447,23 +447,23 @@ define([
             },
             {
                 minValue: 151,
-                maxValue: 350,
+                maxValue: 300,
                 symbol: {
                     type: "simple-fill",
                     color: "#d95f0e",
                     outline,
                 },
-                label: `151-350 Cases`,
+                label: `151-300 Cases`,
             },
             {
-                minValue: 351,
+                minValue: 301,
                 maxValue: 10000,
                 symbol: {
                     type: "simple-fill",
                     color: "#993404",
                     outline,
                 },
-                label: `350+ Cases`,
+                label: `300+ Cases`,
             },
         ];
         return cbrInfos;

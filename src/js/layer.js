@@ -293,22 +293,22 @@ define([
                             // {
                             value: 0,
                             size: 15,
-                            label: "less than 50",
-                        },
-                        {
-                            value: 50,
-                            size: 30,
-                            label: "less than 100",
-                        },
-                        {
-                            value: 100,
-                            size: 45,
                             label: "less than 500",
                         },
                         {
                             value: 500,
+                            size: 30,
+                            label: "less than 1500",
+                        },
+                        {
+                            value: 1500,
+                            size: 45,
+                            label: "less than 3000",
+                        },
+                        {
+                            value: 3000,
                             size: 75,
-                            label: "500 +",
+                            label: "3000 +",
                         },
                     ],
                 },
@@ -423,47 +423,47 @@ define([
                     color: "#ffffd4",
                     outline,
                 },
-                label: `0 Cases`,
+                label: `less than 10 Cases`,
             },
             {
-                minValue: 1,
-                maxValue: 10,
+                minValue: 10,
+                maxValue: 50,
                 symbol: {
                     type: "simple-fill",
                     color: "#fed98e",
                     outline,
                 },
-                label: `1-10 Cases`,
+                label: `10-50 Cases`,
             },
             {
-                minValue: 11,
-                maxValue: 25,
+                minValue: 51,
+                maxValue: 150,
                 symbol: {
                     type: "simple-fill",
                     color: "#fe9929",
                     outline,
                 },
-                label: `11-25 Cases`,
+                label: `51-150 Cases`,
             },
             {
-                minValue: 26,
-                maxValue: 50,
+                minValue: 151,
+                maxValue: 300,
                 symbol: {
                     type: "simple-fill",
                     color: "#d95f0e",
                     outline,
                 },
-                label: `26-50 Cases`,
+                label: `151-300 Cases`,
             },
             {
-                minValue: 50,
-                maxValue: 1000,
+                minValue: 301,
+                maxValue: 10000,
                 symbol: {
                     type: "simple-fill",
                     color: "#993404",
                     outline,
                 },
-                label: `50+ Cases`,
+                label: `300+ Cases`,
             },
         ];
         return cbrInfos;
@@ -632,18 +632,20 @@ define([
         const casesSum = cases.reduce((a, b) => a + b, 0);
 
         let deathsRatio = numberofdeaths / deathsSum;
-        if (deathsRatio >= 1.25 || deathsRatio <= 0.7) {
-            $("#deaths").text(deathsSum.toLocaleString());
-        } else {
-            $("#deaths").text(numberofdeaths.toLocaleString());
-        }
+        $("#deaths").text(deathsSum.toLocaleString());
+        // if (deathsRatio >= 1.25 || deathsRatio <= 0.7) {
+        //     $("#deaths").text(deathsSum.toLocaleString());
+        // } else {
+        //     $("#deaths").text(numberofdeaths.toLocaleString());
+        // }
 
         let casesRatio = numberofcases / casesSum;
-        if (casesRatio >= 1.25 || casesRatio <= 0.7) {
-            $("#cases").text(casesSum.toLocaleString());
-        } else {
-            $("#cases").text(numberofcases.toLocaleString());
-        }
+        $("#cases").text(casesSum.toLocaleString());
+        // if (casesRatio >= 1.25 || casesRatio <= 0.7) {
+        //     $("#cases").text(casesSum.toLocaleString());
+        // } else {
+        //     $("#cases").text(numberofcases.toLocaleString());
+        // }
         if (risk) {
             $("#risk").text(risk);
         } else {

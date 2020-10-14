@@ -53,7 +53,7 @@ A detailed list of the changes and fixes in each version update can be found in 
 
 ## Technologies
 
-* jQuery v3.5.0
+* jQuery v3.5.1
 * Bootstrap v4.4.0
 * ESRI JavaScript API v4.15
 * Modernizr v3.5.0

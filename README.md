@@ -23,7 +23,7 @@ This JavaScript web-page was developed by MAG staff for MAG member agencies and 
 
 ### Version | 1.1.1 ###
 
-* #### Updated | 2020-05-07 ####
+* #### Updated | 2020-10-14 ####
 
 * #### Created | 2020-03-16 ####
 
@@ -53,7 +53,7 @@ A detailed list of the changes and fixes in each version update can be found in 
 
 ## Technologies
 
-* jQuery v3.5.0
+* jQuery v3.5.1
 * Bootstrap v4.4.0
 * ESRI JavaScript API v4.15
 * Modernizr v3.5.0

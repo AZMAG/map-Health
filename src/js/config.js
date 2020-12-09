@@ -36,7 +36,7 @@ define([], function () {
             },
         },
 
-        version: "v1.1.3 | 2020-05-07",
+        version: "v1.2.0 | 2020-10-14",
         copyright: "2020",
 
         countyLookup: {

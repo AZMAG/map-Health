@@ -463,15 +463,13 @@ define([
                     ${pointHtml}
                 </div>
                 <div class="tab-pane fade" id="historical" role="tabpanel" aria-labelledby="historical-tab">
-                    <div class="chartContainer">
-                        <canvas id="historicalChart"></canvas>
-                        </div>
-                        <br />
-                        <button type="button"
-                        class="btn btn-info btn-xs source"
-                        data-toggle="modal"
-                        data-target="#sourceModal"
-                        data-dismiss="modal">Source</button>
+                    <div class="chartContainer"></div>
+                    <br />
+                    <button type="button"
+                    class="btn btn-info btn-xs source"
+                    data-toggle="modal"
+                    data-target="#sourceModal"
+                    data-dismiss="modal">Source</button>
                 </div>
             </div>
             `
@@ -484,7 +482,8 @@ define([
                     role="tab" aria-controls="historical" aria-selected="false">Historical Covid-19 Data</a>
                 </li>
             `);
-            await createHistoricalChart(county, "county", "historicalChart");
+            await createHistoricalChart(county, "county", "cases", "historicalChart1");
+            await createHistoricalChart(county, "county", "deaths", "historicalChart2");
         } else if (type === "Zip") {
             let zip = polyData.data["Name"];
             $("#reportTabs").append(`
@@ -493,7 +492,7 @@ define([
                     role="tab" aria-controls="historical" aria-selected="false">Historical Covid-19 Data</a>
                 </li>
             `);
-            await createHistoricalChart(zip, "zip", "historicalChart");
+            await createHistoricalChart(zip, "zip", "cases", "historicalChart");
         }
     }
 });

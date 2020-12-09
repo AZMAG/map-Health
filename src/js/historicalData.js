@@ -25,7 +25,8 @@ define(["mag/config", "esri/tasks/QueryTask"], function (config, QueryTask) {
         });
     }
 
-    async function createHistoricalChart(value, type, chartId) {
+    async function createHistoricalChart(value, type, dataType, chartId) {
+        $(".chartContainer").append(`<canvas id="${chartId}"></canvas>`);
         let $chart = $(`#${chartId}`)[0];
         $chart.height = 350;
 
@@ -50,8 +51,14 @@ define(["mag/config", "esri/tasks/QueryTask"], function (config, QueryTask) {
                 fill: false,
             },
         ];
-        if (type === "zip") {
+
+
+        if (type === "zip" || dataType === "cases") {
             datasets.pop();
+        }
+
+        if (dataType === "deaths") {
+            datasets.shift();
         }
 
         new Chart($chart, {

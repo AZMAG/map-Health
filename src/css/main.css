@@ -497,6 +497,7 @@ SASS Partials
 
 .chartContainer {
   height: 300px;
+  overflow: auto;
 }
 
 .populationMetrics .layersList {
@@ -1078,4 +1079,3 @@ ol {
 ol li {
   margin-bottom: 10px;
 }
-/*# sourceMappingURL=main.css.map */

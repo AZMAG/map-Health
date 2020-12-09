@@ -293,22 +293,22 @@ define([
                             // {
                             value: 0,
                             size: 15,
-                            label: "less than 500",
-                        },
-                        {
-                            value: 500,
-                            size: 30,
-                            label: "less than 1500",
+                            label: "less than 1,500",
                         },
                         {
                             value: 1500,
-                            size: 45,
-                            label: "less than 3000",
+                            size: 30,
+                            label: "less than 5,000",
                         },
                         {
-                            value: 3000,
+                            value: 3500,
+                            size: 45,
+                            label: "less than 10,000",
+                        },
+                        {
+                            value: 10000,
                             size: 75,
-                            label: "3000 +",
+                            label: "10,000 +",
                         },
                     ],
                 },
@@ -417,53 +417,53 @@ define([
         let cbrInfos = [
             {
                 minValue: 0,
-                maxValue: 0,
+                maxValue: 300,
                 symbol: {
                     type: "simple-fill",
                     color: "#ffffd4",
                     outline,
                 },
-                label: `less than 10 Cases`,
+                label: `less than 301 Cases`,
             },
             {
-                minValue: 10,
-                maxValue: 50,
+                minValue: 301,
+                maxValue: 500,
                 symbol: {
                     type: "simple-fill",
                     color: "#fed98e",
                     outline,
                 },
-                label: `10-50 Cases`,
+                label: `301-500 Cases`,
             },
             {
-                minValue: 51,
-                maxValue: 150,
+                minValue: 501,
+                maxValue: 1000,
                 symbol: {
                     type: "simple-fill",
                     color: "#fe9929",
                     outline,
                 },
-                label: `51-150 Cases`,
+                label: `501-1000 Cases`,
             },
             {
-                minValue: 151,
-                maxValue: 300,
+                minValue: 1001,
+                maxValue: 3000,
                 symbol: {
                     type: "simple-fill",
                     color: "#d95f0e",
                     outline,
                 },
-                label: `151-300 Cases`,
+                label: `1001-3000 Cases`,
             },
             {
-                minValue: 301,
-                maxValue: 10000,
+                minValue: 3001,
+                maxValue: 50000,
                 symbol: {
                     type: "simple-fill",
                     color: "#993404",
                     outline,
                 },
-                label: `300+ Cases`,
+                label: `3001+ Cases`,
             },
         ];
         return cbrInfos;
